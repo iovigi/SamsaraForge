@@ -6,6 +6,9 @@ export const metadata: Metadata = {
   description: 'Exit the loop. Forge the path.',
 };
 
+import Navbar from '../components/Navbar';
+import MainSidebar from '../components/MainSidebar';
+
 export default function RootLayout({
   children,
 }: {
@@ -24,8 +27,10 @@ export default function RootLayout({
         {/* Theme style */}
         <link rel="stylesheet" href="/assets/dist/css/adminlte.min.css" />
       </head>
-      <body className="hold-transition layout-top-nav">
+      <body className="hold-transition sidebar-mini layout-fixed">
         <div className="wrapper">
+          <Navbar />
+          <MainSidebar />
           {children}
         </div>
         {/* jQuery */}

@@ -34,11 +34,15 @@ export async function POST(req: Request) {
             );
         }
 
-        const token = jwt.sign({ userId: user._id, email: user.email }, JWT_SECRET, {
-            expiresIn: '1h',
+        const accessToken = jwt.sign({ userId: user._id, email: user.email }, JWT_SECRET, {
+            expiresIn: '15m',
         });
 
-        return NextResponse.json({ token, message: 'Login successful' });
+        const refreshToken = jwt.sign({ userId: user._id, email: user.email }, JWT_SECRET, {
+            expiresIn: '7d',
+        });
+
+        return NextResponse.json({ accessToken, refreshToken, message: 'Login successful' });
     } catch (error: any) {
         return NextResponse.json({ message: error.message }, { status: 500 });
     }

@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import dbConnect from '@/lib/db';
 import User from '@/lib/models/User';
 import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 
 export async function POST(req: Request) {
     try {
@@ -31,8 +32,17 @@ export async function POST(req: Request) {
             password: hashedPassword,
         });
 
+        // Generate JWT token for auto-login
+        const accessToken = jwt.sign({ userId: user._id, email: user.email }, process.env.JWT_SECRET || 'your-secret-key', {
+            expiresIn: '15m',
+        });
+
+        const refreshToken = jwt.sign({ userId: user._id, email: user.email }, process.env.JWT_SECRET || 'your-secret-key', {
+            expiresIn: '7d',
+        });
+
         return NextResponse.json(
-            { message: 'User created successfully', userId: user._id },
+            { message: 'User created successfully', accessToken, refreshToken, userId: user._id },
             { status: 201 }
         );
     } catch (error: any) {

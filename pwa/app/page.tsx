@@ -1,12 +1,31 @@
+'use client';
+
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 export default function Home() {
+  const router = useRouter();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    setIsLoggedIn(!!token);
+  }, []);
+
+  const handleGetStarted = (e: React.MouseEvent) => {
+    if (isLoggedIn) {
+      e.preventDefault();
+      router.push('/kanban');
+    }
+  };
+
   return (
     <div
-      className="content-wrapper d-flex align-items-center justify-content-center"
+      className="landing-page-wrapper d-flex align-items-center justify-content-center"
       style={{
         minHeight: '100vh',
-        background: 'linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("/assets/dist/img/photo1.png") no-repeat center center', // Fallback/Placeholder
+        background: 'linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("/assets/dist/img/landing-bg.png") no-repeat center center',
         backgroundSize: 'cover',
         marginLeft: 0,
         color: 'white',
@@ -28,15 +47,20 @@ export default function Home() {
               A mindful self-mastery system for breaking cycles and building habits that last
             </p>
 
-            <Link href="/auth/register" className="btn btn-lg" style={{
-              backgroundColor: '#b8860b',
-              borderColor: '#b8860b',
-              color: 'white',
-              padding: '12px 30px',
-              borderRadius: '5px',
-              fontSize: '1.2rem',
-              boxShadow: '0 4px 6px rgba(0,0,0,0.3)'
-            }}>
+            <Link
+              href="/auth/register"
+              onClick={handleGetStarted}
+              className="btn btn-lg"
+              style={{
+                backgroundColor: '#b8860b',
+                borderColor: '#b8860b',
+                color: 'white',
+                padding: '12px 30px',
+                borderRadius: '5px',
+                fontSize: '1.2rem',
+                boxShadow: '0 4px 6px rgba(0,0,0,0.3)'
+              }}
+            >
               Get Started
             </Link>
           </div>
