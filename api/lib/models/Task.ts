@@ -20,6 +20,26 @@ const TaskSchema = new mongoose.Schema({
         enum: ['TODO', 'IN_PROGRESS', 'DONE'],
         default: 'TODO',
     },
+    notify: {
+        type: Boolean,
+        default: true,
+    },
+    snoozeUntil: {
+        type: Date,
+    },
+    // Habit Fields
+    streak: {
+        type: Number,
+        default: 0,
+    },
+    lastCompletedAt: {
+        type: Date,
+    },
+    intention: {
+        type: String,
+        maxlength: [200, 'Intention is too long'],
+    },
+    // Recurrence Pattern
     recurrence: {
         type: String,
         enum: ['ONCE', 'DAILY', 'WEEKLY', 'MONTHLY'],
@@ -27,7 +47,7 @@ const TaskSchema = new mongoose.Schema({
     },
     timeFrame: {
         start: { type: String, default: '00:00' },
-        end: { type: String, default: '00:00' },
+        end: { type: String, default: '23:59' },
     },
     // Scheduling Fields
     scheduledDate: {

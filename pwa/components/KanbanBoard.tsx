@@ -3,7 +3,7 @@
 
 import { useState, useEffect } from 'react';
 import TaskModal from './TaskModal';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { authenticatedFetch } from '../utils/api';
 import { DndContext, useDraggable, useDroppable, DragEndEvent, DragStartEvent, DragOverlay, useSensor, useSensors, PointerSensor } from '@dnd-kit/core';
 import { CSS } from '@dnd-kit/utilities';
@@ -20,6 +20,7 @@ interface Task {
         end: string;
     };
     reminderCron: string;
+    streak: number;
 }
 
 export default function KanbanBoard() {
@@ -34,6 +35,7 @@ export default function KanbanBoard() {
     const [activeTab, setActiveTab] = useState<'TODO' | 'IN_PROGRESS' | 'DONE'>('TODO');
 
     const router = useRouter();
+    const searchParams = useSearchParams();
 
     const sensors = useSensors(
         useSensor(PointerSensor, {
@@ -49,6 +51,7 @@ export default function KanbanBoard() {
             if (res.ok) {
                 const data = await res.json();
                 setTasks(data.tasks);
+                return data.tasks; // Return for chaining
             }
         } catch (error) {
             console.error('Error fetching tasks:', error);
@@ -58,8 +61,23 @@ export default function KanbanBoard() {
     };
 
     useEffect(() => {
-        fetchTasks();
-    }, []);
+        const init = async () => {
+            const loadedTasks = await fetchTasks();
+
+            // Check for deep link
+            const openTaskId = searchParams.get('openTask');
+            if (openTaskId && loadedTasks) {
+                const targetTask = loadedTasks.find((t: Task) => t._id === openTaskId);
+                if (targetTask) {
+                    setCurrentTask(targetTask);
+                    setIsModalOpen(true);
+                    // Clear param so refresh doesn't reopen? Or keep it?
+                    // router.replace('/kanban'); // Optional
+                }
+            }
+        };
+        init();
+    }, [searchParams]);
 
     const updateTaskState = (task: Task) => {
         setTasks(prev => {
@@ -349,10 +367,15 @@ function DraggableTaskCard({ task, onEdit, onDelete, onMove }: any) {
                 </div>
                 <div className="card-body">
                     <p>{task.description}</p>
-                    <small className="text-muted">
+                    <small className="text-muted d-block">
                         <i className="far fa-clock mr-1"></i> {recurrenceLabel}
                         {task.timeFrame?.start && ` • ${task.timeFrame.start} - ${task.timeFrame.end}`}
                     </small>
+                    {task.streak > 0 && (
+                        <span className="badge badge-warning mt-2">
+                            <i className="fas fa-fire mr-1"></i> {task.streak}
+                        </span>
+                    )}
                 </div>
             </div>
         </div>

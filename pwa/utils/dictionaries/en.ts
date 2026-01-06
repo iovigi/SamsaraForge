@@ -61,6 +61,8 @@ export const en = {
     'kanban.addComment': 'Add Comment',
     'kanban.noComments': 'No comments yet.',
     'kanban.writeComment': 'Write a comment...',
+    'kanban.enableNotifications': 'Enable Notifications',
+    'kanban.intention': 'Intention (Why are you doing this?)',
     'kanban.cron.atMinute': 'At minute',
     'kanban.cron.prefix.every': 'Every',
     'kanban.cron.suffix.minute': 'minute',

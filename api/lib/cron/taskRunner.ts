@@ -1,11 +1,32 @@
 import cron from 'node-cron';
 import Task from '../models/Task';
 import { sendNotification } from '../services/notificationService';
+import jwt from 'jsonwebtoken';
 // We need a Subscription model to fetch subs. For now assuming we have a way to get subs.
 // Actually, we likely need to store subscriptions in DB linked to User.
 
 // Placeholder Subscription Model import (will implement next)
-// import Subscription from '../models/Subscription';
+import Subscription from '../models/Subscription';
+import User from '../models/User';
+
+import fs from 'fs';
+import path from 'path';
+
+const logFile = path.join(process.cwd(), 'debug_cron.log');
+
+const log = (msg: string) => {
+    const timestamp = new Date().toISOString();
+    fs.appendFileSync(logFile, `[${timestamp}] ${msg}\n`);
+    console.log(msg);
+};
+
+// Force model registration
+if (!User) {
+    log('User model not loaded!');
+} else {
+    // Accessing modelName ensures the import is not elided and model is registered
+    // log(`User model loaded: ${User.modelName}`);
+}
 
 const checkTasks = async () => {
     try {
@@ -15,12 +36,46 @@ const checkTasks = async () => {
         const currentDay = now.getDate();
         const currentWeekDay = now.getDay(); // 0-6
 
+        log(`[TaskRunner] Running Check at ${currentHeight}:${currentMinute}`);
+
+        // --- HABIT RESET LOGIC ---
+        // Find recurring tasks that are DONE but shouldn't be anymore (new day/period)
+        // For MVP, we reset DAILY and WEEKLY tasks if lastCompletedAt is not today.
+        // (For Weekly, you might want to reset only on specific days, but "Habit" usually implies "Do it again today" or "Do it again this week")
+        // If it's a "Daily" habit, we reset it at midnight (effectively now if lastCompleted < today).
+        const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+
+        const tasksToReset = await Task.find({
+            status: 'DONE',
+            recurrence: { $in: ['DAILY', 'WEEKLY', 'MONTHLY'] },
+            lastCompletedAt: { $lt: startOfToday }
+        });
+
+        if (tasksToReset.length > 0) {
+            log(`[TaskRunner] Found ${tasksToReset.length} habits to reset.`);
+            for (const task of tasksToReset) {
+                // For WEEKLY, we might only want to reset if today IS one of the weekdays? 
+                // OR we reset it immediately so it appears as TODO for the next occurrence?
+                // "Habit" usually means "Daily Streak".
+                // Let's assume Daily Reset for all for now to keep them appearing in "To Do" list.
+                // A "Weekly" task appearing in TODO on a Tuesday when it's due Friday is fine.
+                task.status = 'TODO';
+                await task.save();
+                log(`Reset Task ${task.title} to TODO`);
+            }
+        }
+        // -------------------------
+
         // Find all TODO tasks
         // This is inefficient for large DBs, but fine for MVP.
-        // We should populate user to get email/sub if needed, or query Subscription by userId.
-        const tasks = await Task.find({ status: 'TODO' }).populate('userId');
+        // We also check notify: { $ne: false } to handle legacy docs where field might be missing (default true)
+        const tasks = await Task.find({ status: 'TODO', notify: { $ne: false } }).populate('userId');
+
+        log(`[TaskRunner] Found ${tasks.length} TODO tasks`);
 
         for (const task of tasks) {
+            log(`Checking Task: ${task.title} (ID: ${task._id})`);
+
             // Check TimeFrame
             if (task.timeFrame) {
                 const [startH, startM] = task.timeFrame.start.split(':').map(Number);
@@ -29,9 +84,14 @@ const checkTasks = async () => {
                 const startMinutes = startH * 60 + startM;
                 const endMinutes = endH * 60 + endM;
 
+                log(`Timeframe Check: Now=${nowMinutes}, Start=${startMinutes}, End=${endMinutes}`);
+
                 if (nowMinutes < startMinutes || nowMinutes > endMinutes) {
+                    log(`Skipping - Outside timeframe`);
                     continue; // Outside timeframe
                 }
+            } else {
+                log(`No timeframe, proceeding.`);
             }
 
             // Check Recurrence
@@ -56,6 +116,8 @@ const checkTasks = async () => {
                 }
             }
 
+            log(`Recurrence Match: ${recurrenceMatch} (${task.recurrence})`);
+
             if (!recurrenceMatch) continue;
 
             // Check Cron
@@ -73,15 +135,55 @@ const checkTasks = async () => {
             // m */n
             // m S/I
 
+            log(`Checking Cron: ${task.reminderCron}`);
+
+            // CHECK SNOOZE
+            if (task.snoozeUntil && new Date(task.snoozeUntil) > now) {
+                log(`Skipping - Snoozed until ${task.snoozeUntil}`);
+                continue;
+            }
+
             if (cronMatches(task.reminderCron, now)) {
                 // SEND NOTIFICATION
-                console.log(`Sending notification for task: ${task.title}`);
-                // Fetch subscription for user
-                // const sub = await Subscription.findOne({ userId: task.userId._id });
-                // if (sub) sendNotification(sub, { title: 'Task Reminder', body: task.title });
+                log(`Cron matched! Sending notification...`);
+                // Fetch subscriptions for user
+                const subs = await Subscription.find({ userId: task.userId._id });
+                if (subs.length > 0) {
+                    log(`Found ${subs.length} subscriptions, sending...`);
+
+                    // Generate Snooze Token
+                    const snoozeToken = jwt.sign(
+                        { taskId: task._id, action: 'snooze' },
+                        process.env.JWT_SECRET || 'your-secret-key',
+                        { expiresIn: '1h' }
+                    );
+
+                    const payload = {
+                        title: 'Task Reminder',
+                        body: task.title,
+                        data: {
+                            taskId: task._id,
+                            url: `/kanban?openTask=${task._id}`, // Deep link to specific task
+                            snoozeToken
+                        },
+                        actions: [
+                            { action: 'snooze', title: 'Snooze 30m' }
+                        ]
+                    };
+
+                    for (const sub of subs) {
+                        const result = await sendNotification(sub, payload);
+                        log(`Send result: ${result}`);
+                    }
+                } else {
+                    log('No subscription found for user');
+                }
+            } else {
+                log(`Cron did not match.`);
             }
         }
     } catch (err) {
+        log(`Error in Task Runner: ${err}`);
         console.error('Error in Task Runner:', err);
     }
 };

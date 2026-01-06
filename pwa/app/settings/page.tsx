@@ -3,8 +3,11 @@
 import { useState } from 'react';
 import { useLanguage } from '../../context/LanguageContext';
 
+import { usePushSubscription } from '../../hooks/usePushSubscription';
+
 export default function SettingsPage() {
     const { language, setLanguage, t } = useLanguage();
+    const { isSubscribed, subscribe, unsubscribe, loading, error: pushError } = usePushSubscription();
 
     // Password change state
     const [currentPassword, setCurrentPassword] = useState('');
@@ -87,6 +90,39 @@ export default function SettingsPage() {
                                                 🇧🇬 Български
                                             </button>
                                         </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Notification Settings */}
+                            <div className="card card-info mt-3">
+                                <div className="card-header">
+                                    <h3 className="card-title">Notifications</h3>
+                                </div>
+                                <div className="card-body">
+                                    {pushError && <div className="alert alert-danger">{pushError}</div>}
+                                    <div className="form-group">
+                                        <label>Push Notifications</label>
+                                        <div className="custom-control custom-switch">
+                                            <div className="form-check form-switch">
+                                                <input
+                                                    className="form-check-input"
+                                                    type="checkbox"
+                                                    id="pushSwitch"
+                                                    checked={isSubscribed}
+                                                    onChange={(e) => e.target.checked ? subscribe() : unsubscribe()}
+                                                    disabled={loading}
+                                                />
+                                                <label className="form-check-label" htmlFor="pushSwitch">
+                                                    {loading ? 'Processing...' : (isSubscribed ? 'Enabled' : 'Disabled')}
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <small className="form-text text-muted">
+                                            {isSubscribed
+                                                ? 'You will receive notifications for updates.'
+                                                : 'Enable to receive push notifications.'}
+                                        </small>
                                     </div>
                                 </div>
                             </div>

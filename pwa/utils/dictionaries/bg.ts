@@ -61,6 +61,8 @@ export const bg: Dictionary = {
     'kanban.addComment': 'Добави коментар',
     'kanban.noComments': 'Няма коментари все още.',
     'kanban.writeComment': 'Напишете коментар...',
+    'kanban.enableNotifications': 'Включи известия',
+    'kanban.intention': 'Намерение (Защо правиш това?)',
     'kanban.cron.atMinute': 'На минута',
     'kanban.cron.prefix.every': 'Всеки',
     'kanban.cron.suffix.minute': 'минута',
