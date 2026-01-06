@@ -9,6 +9,11 @@ export const metadata: Metadata = {
 import Navbar from '../components/Navbar';
 import MainSidebar from '../components/MainSidebar';
 
+import PushManager from '../components/PushManager';
+
+import Providers from '../components/Providers';
+import LanguageModal from '../components/LanguageModal';
+
 export default function RootLayout({
   children,
 }: {
@@ -24,15 +29,22 @@ export default function RootLayout({
         />
         {/* Font Awesome */}
         <link rel="stylesheet" href="/assets/plugins/fontawesome-free/css/all.min.css" />
+        {/* icheck bootstrap */}
+        <link rel="stylesheet" href="/assets/plugins/icheck-bootstrap/icheck-bootstrap.min.css" />
         {/* Theme style */}
         <link rel="stylesheet" href="/assets/dist/css/adminlte.min.css" />
       </head>
       <body className="hold-transition sidebar-mini layout-fixed">
-        <div className="wrapper">
-          <Navbar />
-          <MainSidebar />
-          {children}
-        </div>
+        <Providers>
+          <PushManager />
+          <div className="wrapper">
+            <Navbar />
+            <MainSidebar />
+            {children}
+          </div>
+          <LanguageModal />
+        </Providers>
+
         {/* jQuery */}
         <script src="/assets/plugins/jquery/jquery.min.js" defer></script>
         {/* Bootstrap 4 */}

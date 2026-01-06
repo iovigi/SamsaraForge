@@ -12,7 +12,7 @@ export default function Navbar() {
         setIsLoggedIn(!!token);
     }, [pathname]);
 
-    if (!isLoggedIn || pathname === '/') {
+    if (!isLoggedIn || pathname === '/' || pathname?.startsWith('/auth/')) {
         return null;
     }
 

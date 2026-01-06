@@ -1,12 +1,17 @@
+'use client';
+
+import { useLanguage } from '../../context/LanguageContext';
 
 export default function PrivacyPage() {
+    const { t } = useLanguage();
+
     return (
-        <div className="content-wrapper">
+        <div className="content-wrapper" suppressHydrationWarning>
             <div className="content-header">
                 <div className="container">
                     <div className="row mb-2">
                         <div className="col-sm-6">
-                            <h1 className="m-0">Privacy & GDPR Policy</h1>
+                            <h1 className="m-0">{t('privacy.title')}</h1>
                         </div>
                     </div>
                 </div>
@@ -16,16 +21,16 @@ export default function PrivacyPage() {
                 <div className="container">
                     <div className="card">
                         <div className="card-body">
-                            <h5>1. Data Collection</h5>
-                            <p>We collect only the email address you provide for authentication purposes.</p>
+                            <h5>{t('privacy.collection.title')}</h5>
+                            <p>{t('privacy.collection.text')}</p>
 
-                            <h5>2. Data Usage</h5>
-                            <p>Your data is used solely to provide you access to your personal account and progress tracking.</p>
+                            <h5>{t('privacy.usage.title')}</h5>
+                            <p>{t('privacy.usage.text')}</p>
 
-                            <h5>3. Your Rights (GDPR)</h5>
-                            <p>You have the right to access, rectify, or delete your personal data at any time. Contact us to exercise these rights.</p>
+                            <h5>{t('privacy.rights.title')}</h5>
+                            <p>{t('privacy.rights.text')}</p>
 
-                            <p className="mt-4 text-muted">Last updated: January 2026</p>
+                            <p className="mt-4 text-muted">{t('privacy.lastUpdated')}</p>
                         </div>
                     </div>
                 </div>

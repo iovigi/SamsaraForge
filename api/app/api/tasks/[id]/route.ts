@@ -30,6 +30,7 @@ export async function PUT(req: Request, { params }: { params: Promise<{ id: stri
         }
 
         const body = await req.json();
+        console.log('PUT Task Body:', body);
         const task = await Task.findOneAndUpdate(
             { _id: id, userId },
             body,

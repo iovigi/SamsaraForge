@@ -36,7 +36,9 @@ export const authenticatedFetch = async (url: string, options: RequestInit = {})
             if (refreshRes.ok) {
                 const data = await refreshRes.json();
                 token = data.accessToken;
-                localStorage.setItem('token', token); // Update storage
+                if (token) {
+                    localStorage.setItem('token', token); // Update storage
+                }
 
                 // 3. Retry Original Request with NEW Token
                 res = await fetch(fullUrl, {
@@ -63,3 +65,17 @@ export const authenticatedFetch = async (url: string, options: RequestInit = {})
 
     return res;
 };
+
+export function parseJwt(token: string) {
+    try {
+        const base64Url = token.split('.')[1];
+        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        const jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function (c) {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
+
+        return JSON.parse(jsonPayload);
+    } catch (e) {
+        return null;
+    }
+}

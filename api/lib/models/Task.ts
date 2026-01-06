@@ -25,12 +25,30 @@ const TaskSchema = new mongoose.Schema({
         enum: ['ONCE', 'DAILY', 'WEEKLY', 'MONTHLY'],
         default: 'ONCE',
     },
-    duration: {
-        type: String, // e.g., "25h", "30m"
+    timeFrame: {
+        start: { type: String, default: '00:00' },
+        end: { type: String, default: '00:00' },
+    },
+    // Scheduling Fields
+    scheduledDate: {
+        type: Date, // For ONCE recurrence
+    },
+    weekDays: {
+        type: [Number], // 0-6 (Sun-Sat) for WEEKLY
+    },
+    monthDay: {
+        type: Number, // 1-31 for MONTHLY
     },
     reminderCron: {
         type: String, // Cron expression
     },
+    comments: [
+        {
+            text: { type: String, required: true },
+            authorEmail: { type: String },
+            createdAt: { type: Date, default: Date.now }
+        }
+    ],
 }, { timestamps: true });
 
 export default mongoose.models.Task || mongoose.model('Task', TaskSchema);

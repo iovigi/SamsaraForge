@@ -3,10 +3,12 @@
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function Home() {
   const router = useRouter();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { t } = useLanguage();
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -35,16 +37,21 @@ export default function Home() {
       <div className="container">
         <div className="row justify-content-center">
           <div className="col-md-8">
-            <div className="mb-4">
-              <img src="/assets/dist/img/logo.png" alt="Samsara Forge" style={{ height: 500, width: 'auto' }} />
+            <div className="mb-4 d-flex justify-content-center">
+              <img
+                src="/assets/dist/img/logo.png"
+                alt="Samsara Forge"
+                className="img-fluid"
+                style={{ maxHeight: 500, width: 'auto' }}
+              />
             </div>
 
             <h2 className="mb-3" style={{ fontSize: '2.5rem', fontWeight: 300 }}>
-              Exit the loop. Forge the path.
+              {t('landing.title')}
             </h2>
 
             <p className="lead mb-5" style={{ fontSize: '1.25rem', opacity: 0.9 }}>
-              A mindful self-mastery system for breaking cycles and building habits that last
+              {t('landing.subtitle')}
             </p>
 
             <Link
@@ -61,7 +68,7 @@ export default function Home() {
                 boxShadow: '0 4px 6px rgba(0,0,0,0.3)'
               }}
             >
-              Get Started
+              {t('landing.getStarted')}
             </Link>
           </div>
         </div>

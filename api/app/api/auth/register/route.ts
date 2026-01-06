@@ -18,6 +18,13 @@ export async function POST(req: Request) {
             );
         }
 
+        if (password.length < 6) {
+            return NextResponse.json(
+                { message: 'Password must be at least 6 characters' },
+                { status: 400 }
+            );
+        }
+
         const existingUser = await User.findOne({ email });
         if (existingUser) {
             return NextResponse.json(

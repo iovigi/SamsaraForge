@@ -2,10 +2,12 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useLanguage } from '../context/LanguageContext';
 
 import { API_BASE_URL } from '../utils/config';
 
 export default function AuthForm({ mode }: { mode: 'login' | 'register' }) {
+    const { t } = useLanguage();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
@@ -21,16 +23,20 @@ export default function AuthForm({ mode }: { mode: 'login' | 'register' }) {
 
         // Client-side validation
         if (mode === 'register') {
+            if (password.length < 6) {
+                setError(t('auth.passwordTooShort') || 'Password must be at least 6 characters');
+                return;
+            }
             if (password !== confirmPassword) {
-                setError('Passwords do not match');
+                setError(t('auth.passwordMismatch'));
                 return;
             }
             if (!acceptTerms) {
-                setError('You must accept the Terms & Conditions');
+                setError(t('auth.termsError'));
                 return;
             }
             if (!acceptGdpr) {
-                setError('You must confirm that you have read the GDPR Policy');
+                setError(t('auth.gdprError'));
                 return;
             }
         }
@@ -57,13 +63,15 @@ export default function AuthForm({ mode }: { mode: 'login' | 'register' }) {
             if (mode === 'login') {
                 localStorage.setItem('token', data.accessToken);
                 localStorage.setItem('refreshToken', data.refreshToken);
-                alert('Login Successful!');
+                localStorage.setItem('userEmail', email); // Store email
+                // alert('Login Successful!'); // Removed as per request
                 router.push('/kanban');
             } else {
                 // Register success handling - Auto Login
                 if (data.accessToken) {
                     localStorage.setItem('token', data.accessToken);
                     localStorage.setItem('refreshToken', data.refreshToken);
+                    localStorage.setItem('userEmail', email); // Store email
                     alert('Registration Successful! Logging you in...');
                     router.push('/kanban');
                 } else {
@@ -82,7 +90,7 @@ export default function AuthForm({ mode }: { mode: 'login' | 'register' }) {
     return (
         <div className="card">
             <div className="card-body login-card-body">
-                <p className="login-box-msg">{mode === 'login' ? 'Sign in to start your session' : 'Register a new membership'}</p>
+                <p className="login-box-msg">{mode === 'login' ? t('auth.login.title') : t('auth.register.title')}</p>
 
                 {error && <div className="alert alert-danger">{error}</div>}
 
@@ -91,7 +99,7 @@ export default function AuthForm({ mode }: { mode: 'login' | 'register' }) {
                         <input
                             type="email"
                             className="form-control"
-                            placeholder="Email"
+                            placeholder={t('auth.email')}
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             required
@@ -106,7 +114,7 @@ export default function AuthForm({ mode }: { mode: 'login' | 'register' }) {
                         <input
                             type="password"
                             className="form-control"
-                            placeholder="Password"
+                            placeholder={t('auth.password')}
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             required
@@ -124,7 +132,7 @@ export default function AuthForm({ mode }: { mode: 'login' | 'register' }) {
                                 <input
                                     type="password"
                                     className="form-control"
-                                    placeholder="Retype password"
+                                    placeholder={t('auth.confirmPassword')}
                                     value={confirmPassword}
                                     onChange={(e) => setConfirmPassword(e.target.value)}
                                     required
@@ -145,7 +153,7 @@ export default function AuthForm({ mode }: { mode: 'login' | 'register' }) {
                                             onChange={(e) => setAcceptTerms(e.target.checked)}
                                         />
                                         <label htmlFor="agreeTerms">
-                                            I agree to the <a href="/terms" target="_blank">terms</a>
+                                            {t('auth.agreeTerms')} <a href="/terms" target="_blank">{t('auth.terms')}</a>
                                         </label>
                                     </div>
                                 </div>
@@ -160,7 +168,7 @@ export default function AuthForm({ mode }: { mode: 'login' | 'register' }) {
                                             onChange={(e) => setAcceptGdpr(e.target.checked)}
                                         />
                                         <label htmlFor="agreeGdpr">
-                                            I confirm I have read the <a href="/privacy" target="_blank">GDPR Policy</a>
+                                            {t('auth.confirmGdpr')} <a href="/privacy" target="_blank">{t('auth.gdpr')}</a>
                                         </label>
                                     </div>
                                 </div>
@@ -171,7 +179,7 @@ export default function AuthForm({ mode }: { mode: 'login' | 'register' }) {
                     <div className="row">
                         <div className="col-12">
                             <button type="submit" className="btn btn-primary btn-block" disabled={loading}>
-                                {loading ? 'Processing...' : (mode === 'login' ? 'Sign In' : 'Register')}
+                                {loading ? t('auth.processing') : (mode === 'login' ? t('auth.signIn') : t('auth.register'))}
                             </button>
                         </div>
                     </div>
@@ -179,15 +187,15 @@ export default function AuthForm({ mode }: { mode: 'login' | 'register' }) {
 
                 {mode === 'login' && (
                     <p className="mb-1 mt-3">
-                        <a href="/auth/forgot-password">I forgot my password</a>
+                        <a href="/auth/forgot-password">{t('auth.forgotPassword')}</a>
                     </p>
                 )}
 
                 <p className="mb-0 mt-1">
                     {mode === 'login' ? (
-                        <a href="/auth/register" className="text-center">Register a new membership</a>
+                        <a href="/auth/register" className="text-center">{t('auth.newMembership')}</a>
                     ) : (
-                        <a href="/auth/login" className="text-center">I already have a membership</a>
+                        <a href="/auth/login" className="text-center">{t('auth.hasMembership')}</a>
                     )}
                 </p>
             </div>
