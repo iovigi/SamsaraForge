@@ -33,6 +33,7 @@ export default function RootLayout({
         <link rel="stylesheet" href="/assets/plugins/icheck-bootstrap/icheck-bootstrap.min.css" />
         {/* Theme style */}
         <link rel="stylesheet" href="/assets/dist/css/adminlte.min.css" />
+        <link rel="manifest" href="/manifest.json" />
       </head>
       <body className="hold-transition sidebar-mini layout-fixed">
         <Providers>
