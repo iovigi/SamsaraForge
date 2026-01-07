@@ -54,7 +54,7 @@ export default function Home() {
               {t('landing.subtitle')}
             </p>
 
-            <Link
+            <a
               href="/auth/register"
               onClick={handleGetStarted}
               className="btn btn-lg"
@@ -69,7 +69,7 @@ export default function Home() {
               }}
             >
               {t('landing.getStarted')}
-            </Link>
+            </a>
           </div>
         </div>
       </div>
