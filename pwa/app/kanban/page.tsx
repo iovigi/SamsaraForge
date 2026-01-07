@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, Suspense } from 'react';
 import { useRouter } from 'next/navigation';
 import KanbanBoard from '@/components/KanbanBoard';
 
@@ -29,7 +29,9 @@ export default function KanbanPage() {
                 </div>
             </section>
 
-            <KanbanBoard />
+            <Suspense fallback={<div>Loading...</div>}>
+                <KanbanBoard />
+            </Suspense>
         </div>
     );
 }
