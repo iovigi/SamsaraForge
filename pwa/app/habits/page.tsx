@@ -2,11 +2,11 @@
 
 import { useEffect, Suspense } from 'react';
 import { useRouter } from 'next/navigation';
-import KanbanBoard from '@/components/KanbanBoard';
+import HabitBoard from '@/components/HabitBoard';
 
 import { useLanguage } from '../../context/LanguageContext';
 
-export default function KanbanPage() {
+export default function HabitsPage() {
     const router = useRouter();
     const { t } = useLanguage();
 
@@ -23,14 +23,14 @@ export default function KanbanPage() {
                 <div className="container-fluid">
                     <div className="row mb-2">
                         <div className="col-sm-6">
-                            <h1>{t('nav.kanban')}</h1>
+                            <h1>{t('nav.habits')}</h1>
                         </div>
                     </div>
                 </div>
             </section>
 
             <Suspense fallback={<div>Loading...</div>}>
-                <KanbanBoard />
+                <HabitBoard />
             </Suspense>
         </div>
     );

@@ -1,78 +1,34 @@
 'use client';
 
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { useLanguage } from '../context/LanguageContext';
+import { useRouter } from 'next/navigation';
+import LandingPage from './landing/page';
 
 export default function Home() {
   const router = useRouter();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const { t } = useLanguage();
+  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
+    setIsClient(true);
     const token = localStorage.getItem('token');
-    setIsLoggedIn(!!token);
+    if (token) {
+      router.push('/dashboard');
+    }
   }, []);
 
-  const handleGetStarted = (e: React.MouseEvent) => {
-    if (isLoggedIn) {
-      e.preventDefault();
-      router.push('/kanban');
-    }
-  };
+  // While checking, or if not logged in, show Landing Page.
+  // Ideally, we might want to check token validity, but for now existence is enough for redirect.
+  // If not logged in, we render LandingPage (which is now a component we can reuse or just import the page content).
+  // Note: Importing page from another route is tricky in Next.js app dir if it's default export.
+  // It's better to render the Landing UI here if not logged in.
+  // But since I moved it to `app/landing/page.tsx`, I can import it if it's exported as a component.
+  // However, next.js pages are server components by default (though this one is 'use client').
 
-  return (
-    <div
-      className="landing-page-wrapper d-flex align-items-center justify-content-center"
-      style={{
-        minHeight: '100vh',
-        background: 'linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("/assets/dist/img/landing-bg.png") no-repeat center center',
-        backgroundSize: 'cover',
-        marginLeft: 0,
-        color: 'white',
-        textAlign: 'center',
-      }}
-    >
-      <div className="container">
-        <div className="row justify-content-center">
-          <div className="col-md-8">
-            <div className="mb-4 d-flex justify-content-center">
-              <img
-                src="/assets/dist/img/logo.png"
-                alt="Samsara Forge"
-                className="img-fluid"
-                style={{ maxHeight: 500, width: 'auto' }}
-              />
-            </div>
+  if (!isClient) return null; // Avoid hydration mismatch
 
-            <h2 className="mb-3" style={{ fontSize: '2.5rem', fontWeight: 300 }}>
-              {t('landing.title')}
-            </h2>
+  if (localStorage.getItem('token')) {
+    return <div className="d-flex justify-content-center align-items-center" style={{ height: '100vh', color: 'white' }}>Loading Dashboard...</div>;
+  }
 
-            <p className="lead mb-5" style={{ fontSize: '1.25rem', opacity: 0.9 }}>
-              {t('landing.subtitle')}
-            </p>
-
-            <a
-              href="/auth/register"
-              onClick={handleGetStarted}
-              className="btn btn-lg"
-              style={{
-                backgroundColor: '#b8860b',
-                borderColor: '#b8860b',
-                color: 'white',
-                padding: '12px 30px',
-                borderRadius: '5px',
-                fontSize: '1.2rem',
-                boxShadow: '0 4px 6px rgba(0,0,0,0.3)'
-              }}
-            >
-              {t('landing.getStarted')}
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+  return <LandingPage />;
 }

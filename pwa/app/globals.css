@@ -40,3 +40,225 @@ a {
     color-scheme: dark;
   }
 }
+
+/* --- Habit Board Redesign --- */
+:root {
+  --primary-color: #6366f1;
+  /* Indigo */
+  --secondary-color: #ec4899;
+  /* Pink */
+  --accent-color: #8b5cf6;
+  /* Violet */
+  --success-color: #22c55e;
+  --bg-gradient: linear-gradient(135deg, #f0fdf4 0%, #fef2f2 100%);
+  --card-bg: rgba(255, 255, 255, 0.8);
+  --card-border: rgba(255, 255, 255, 0.5);
+  --text-primary: #1f2937;
+  --text-secondary: #6b7280;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-gradient: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+    --card-bg: rgba(30, 41, 59, 0.7);
+    --card-border: rgba(255, 255, 255, 0.1);
+    --text-primary: #f3f4f6;
+    --text-secondary: #9ca3af;
+  }
+}
+
+/* Modern Kanban Container */
+.kanban-container {
+  background: var(--bg-gradient);
+  min-height: calc(100vh - 57px);
+  /* Adjust for navbar */
+  padding: 2rem;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+.kanban-column {
+  background: transparent !important;
+  /* Override AdminLTE */
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.kanban-column-header {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  opacity: 0.9;
+}
+
+/* Focus Mode Special Styling */
+.column-focus-mode {
+  background: rgba(99, 102, 241, 0.05) !important;
+  border-radius: 20px;
+  padding: 1rem;
+  border: 1px dashed var(--primary-color);
+}
+
+/* Glassmorphic Task Card */
+.habit-card {
+  background: var(--card-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--card-border);
+  border-radius: 16px;
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  /* overflow: hidden; Removed to allow dropdowns to overflow */
+  cursor: grab;
+}
+
+/* Ensure card appears above others when dropdown is open */
+.habit-card:has(.show) {
+  z-index: 100;
+  border-color: var(--primary-color);
+  /* Highlight active card */
+}
+
+.habit-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  border-color: var(--primary-color);
+}
+
+.habit-card.dragging {
+  opacity: 0.6;
+  transform: scale(1.02);
+  cursor: grabbing;
+}
+
+/* Card Content */
+.habit-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.habit-desc {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+  margin-bottom: 1rem;
+}
+
+/* Streak Badge */
+.streak-badge {
+  display: inline-flex;
+  align-items: center;
+  background: linear-gradient(45deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%);
+  color: #9f1239;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  box-shadow: 0 2px 4px rgba(255, 107, 107, 0.2);
+}
+
+.streak-badge i {
+  margin-right: 4px;
+  color: #e11d48;
+}
+
+.streak-badge.high-streak {
+  background: linear-gradient(to right, #f59e0b, #ef4444);
+  color: white;
+}
+
+.streak-badge.high-streak i {
+  color: #fff;
+  animation: flame-pulse 1.5s infinite;
+}
+
+@keyframes flame-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.9;
+  }
+
+  50% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 0.9;
+  }
+}
+
+/* Recurrence & Time Tags */
+.meta-tag {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  background: rgba(0, 0, 0, 0.05);
+  padding: 2px 8px;
+  border-radius: 6px;
+  margin-right: 8px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .meta-tag {
+    background: rgba(255, 255, 255, 0.1);
+  }
+}
+
+/* Add Button FAB styling override */
+.custom-fab {
+  background: var(--primary-color) !important;
+  border: none !important;
+  box-shadow: 0 10px 25px -5px rgba(99, 102, 241, 0.4) !important;
+  transition: transform 0.2s;
+}
+
+.custom-fab:hover {
+  transform: scale(1.1) rotate(90deg);
+}
+
+/* Empty State */
+.empty-placeholder {
+  border: 2px dashed var(--card-border);
+  border-radius: 12px;
+  padding: 2rem;
+  text-align: center;
+  color: var(--text-secondary);
+  opacity: 0.6;
+}
+
+/* Streak Risk Animation */
+.streak-risk {
+  border: 1px solid #ef4444 !important;
+  box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
+  animation: pulse-red 2s infinite;
+}
+
+@keyframes pulse-red {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
+  }
+
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 10px rgba(239, 68, 68, 0);
+  }
+
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+  }
+}

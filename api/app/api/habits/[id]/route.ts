@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import dbConnect from '@/lib/db';
-import Task from '@/lib/models/Task';
+import Habit from '@/lib/models/Habit';
 import jwt from 'jsonwebtoken';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
@@ -30,45 +30,49 @@ export async function PUT(req: Request, { params }: { params: Promise<{ id: stri
         }
 
         const body = await req.json();
-        console.log('PUT Task Body:', body);
+        console.log('PUT Habit Body:', body);
 
         // Habit Logic: Check for completion
         if (body.status === 'DONE') {
-            const currentTask = await Task.findOne({ _id: id, userId });
-            if (currentTask && currentTask.recurrence !== 'ONCE') {
+            const currentHabit = await Habit.findOne({ _id: id, userId });
+            if (currentHabit) {
                 const now = new Date();
-                const lastCompleted = currentTask.lastCompletedAt ? new Date(currentTask.lastCompletedAt) : null;
+                const lastCompleted = currentHabit.lastCompletedAt ? new Date(currentHabit.lastCompletedAt) : null;
                 const isSameDay = lastCompleted &&
                     lastCompleted.getDate() === now.getDate() &&
                     lastCompleted.getMonth() === now.getMonth() &&
                     lastCompleted.getFullYear() === now.getFullYear();
 
+                // Always record the completion in history (counts as a Victory)
+                const completionTime = new Date();
+                await Habit.updateOne({ _id: id }, { $push: { completionDates: completionTime } });
+                body.lastCompletedAt = completionTime;
+                console.log(`[API] Habit ${id} completed. Added to history.`);
+
                 if (!isSameDay) {
-                    body.streak = (currentTask.streak || 0) + 1;
-                    body.lastCompletedAt = now;
+                    // Only increment streak if NOT 'ONCE'
+                    if (currentHabit.recurrence !== 'ONCE') {
+                        body.streak = (currentHabit.streak || 0) + 1;
+                        console.log(`[API] Habit ${id} streak incremented to ${body.streak}`);
+                    }
                 } else {
-                    // Already completed today, don't increment, but keep lastCompletedAt if passed?
-                    // actually if body has lastCompletedAt we might overwrite.
-                    // Let's ensure we don't accidentally reset it if frontend sends junk.
-                    // But typically frontend sends whole object.
-                    // We should strictly handle streak on backend.
-                    body.streak = currentTask.streak; // Keep existing
-                    body.lastCompletedAt = currentTask.lastCompletedAt; // Keep existing
+                    body.streak = currentHabit.streak;
+                    console.log(`[API] Habit ${id} isSameDay. Streak kept at ${body.streak}`);
                 }
             }
         }
 
-        const task = await Task.findOneAndUpdate(
+        const habit = await Habit.findOneAndUpdate(
             { _id: id, userId },
             body,
             { new: true, runValidators: true }
         );
 
-        if (!task) {
-            return NextResponse.json({ message: 'Task not found' }, { status: 404 });
+        if (!habit) {
+            return NextResponse.json({ message: 'Habit not found' }, { status: 404 });
         }
 
-        return NextResponse.json({ task }, { status: 200 });
+        return NextResponse.json({ habit }, { status: 200 });
     } catch (error: any) {
         return NextResponse.json({ message: error.message }, { status: 500 });
     }
@@ -84,13 +88,13 @@ export async function DELETE(req: Request, { params }: { params: Promise<{ id: s
             return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
         }
 
-        const task = await Task.findOneAndDelete({ _id: id, userId });
+        const habit = await Habit.findOneAndDelete({ _id: id, userId });
 
-        if (!task) {
-            return NextResponse.json({ message: 'Task not found' }, { status: 404 });
+        if (!habit) {
+            return NextResponse.json({ message: 'Habit not found' }, { status: 404 });
         }
 
-        return NextResponse.json({ message: 'Task deleted successfully' }, { status: 200 });
+        return NextResponse.json({ message: 'Habit deleted successfully' }, { status: 200 });
     } catch (error: any) {
         return NextResponse.json({ message: error.message }, { status: 500 });
     }

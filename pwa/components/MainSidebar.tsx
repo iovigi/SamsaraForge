@@ -22,14 +22,14 @@ export default function MainSidebar() {
         window.location.href = '/';
     };
 
-    if (!isLoggedIn || pathname === '/' || pathname?.startsWith('/auth/')) {
+    if (!isLoggedIn || pathname === '/' || pathname === '/landing' || pathname?.startsWith('/auth/')) {
         return null;
     }
 
     return (
         <aside className="main-sidebar sidebar-dark-primary elevation-4">
             {/* Brand Logo */}
-            <a href="/kanban" className="brand-link">
+            <a href="/landing" className="brand-link">
                 <img src="/assets/logo2.png" alt="Samsara Logo" className="brand-image img-circle elevation-3" style={{ opacity: .8, backgroundColor: 'white' }} />
                 <span className="brand-text font-weight-light">Samsara Forge</span>
             </a>
@@ -41,9 +41,15 @@ export default function MainSidebar() {
                     <ul className="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 
                         <li className="nav-item">
-                            <a href="/kanban" className={`nav-link ${pathname === '/kanban' ? 'active' : ''}`}>
+                            <a href="/dashboard" className={`nav-link ${pathname === '/dashboard' ? 'active' : ''}`}>
+                                <i className="nav-icon fas fa-tachometer-alt"></i>
+                                <p>{t('nav.dashboard')}</p>
+                            </a>
+                        </li>
+                        <li className="nav-item">
+                            <a href="/habits" className={`nav-link ${pathname === '/habits' ? 'active' : ''}`}>
                                 <i className="nav-icon fas fa-columns"></i>
-                                <p>{t('nav.kanban')}</p>
+                                <p>{t('nav.habits')}</p>
                             </a>
                         </li>
                         <li className="nav-item">

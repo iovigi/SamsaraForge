@@ -4,17 +4,15 @@ export const en = {
     'nav.contact': 'Contact',
     'nav.logout': 'Logout',
     'nav.dashboard': 'Dashboard',
-    'nav.kanban': 'Habit Board',
+    'nav.habits': 'Habits',
     'nav.settings': 'Settings',
 
     // Sidebar
-    'sidebar.habitBoard': 'Habit Board',
+    'sidebar.habitBoard': 'Habit Tracker',
     'sidebar.settings': 'Settings',
     'sidebar.logout': 'Log Out',
-
-    // Auth
-    'auth.login.title': 'Sign in to start your session',
-    'auth.register.title': 'Register a new membership',
+    'auth.login.title': 'Sign In',
+    'auth.register.title': 'Register',
     'auth.email': 'Email',
     'auth.password': 'Password',
     'auth.confirmPassword': 'Retype password',
@@ -33,19 +31,21 @@ export const en = {
     'auth.passwordTooShort': 'Password must be at least 6 characters',
     'auth.processing': 'Processing...',
 
-    // Kanban
-    'kanban.todo': 'To Do',
-    'kanban.inProgress': 'In Progress',
-    'kanban.done': 'Done',
-    'kanban.addTask': 'Add Task',
-    'kanban.editTask': 'Edit Task',
-    'kanban.deleteTask': 'Delete Task',
-    'kanban.title': 'Title',
+    // Habits
+    'kanban.todo': 'On Deck',
+    'kanban.inProgress': 'On Focus',
+    'kanban.done': 'Victories',
+    'kanban.addTask': 'Add Habit',
+    'kanban.newTask': 'New Habit',
+    'kanban.editTask': 'Edit Habit',
+    'kanban.deleteTask': 'Delete Habit',
+    'kanban.title': 'Habit',
     'kanban.description': 'Description',
+    'kanban.intention': 'Intention',
     'kanban.status': 'Status',
     'kanban.save': 'Save',
     'kanban.cancel': 'Cancel',
-    'kanban.deleteConfirm': 'Are you sure you want to delete this task?',
+    'kanban.deleteConfirm': 'Are you sure you want to delete this habit?',
     'kanban.recurrence': 'Recurrence',
     'kanban.duration': 'Duration',
     'kanban.timeFrame': 'Time Frame',
@@ -56,13 +56,11 @@ export const en = {
     'kanban.daily': 'Daily',
     'kanban.weekly': 'Weekly',
     'kanban.monthly': 'Monthly',
-    'kanban.newTask': 'New Task',
     'kanban.comments': 'Comments',
     'kanban.addComment': 'Add Comment',
     'kanban.noComments': 'No comments yet.',
     'kanban.writeComment': 'Write a comment...',
     'kanban.enableNotifications': 'Enable Notifications',
-    'kanban.intention': 'Intention (Why are you doing this?)',
     'kanban.cron.atMinute': 'At minute',
     'kanban.cron.prefix.every': 'Every',
     'kanban.cron.suffix.minute': 'minute',
@@ -116,9 +114,16 @@ export const en = {
     'settings.passwordUpdated': 'Password updated successfully',
     'settings.passwordUpdateFailed': 'Failed to update password',
     'settings.error': 'An error occurred',
+    'settings.notifications': 'Notifications',
+    'settings.pushNotifications': 'Push Notifications',
+    'settings.pushEnabled': 'Enabled',
+    'settings.pushDisabled': 'Disabled',
+    'settings.pushEnabledDesc': 'You will receive notifications for updates.',
+    'settings.pushDisabledDesc': 'Enable to receive push notifications.',
 
     // Common
     'common.close': 'Close',
+    'common.delete': 'Delete',
     'common.welcome': 'Welcome',
 
     // Terms
@@ -140,6 +145,21 @@ export const en = {
     'privacy.rights.title': '3. Your Rights (GDPR)',
     'privacy.rights.text': 'You have the right to access, rectify, or delete your personal data at any time. Contact us to exercise these rights.',
     'privacy.lastUpdated': 'Last updated: January 2026',
+
+    // Dashboard
+    'dashboard.totalHabits': 'Total Habits',
+    'dashboard.activeStreaks': 'Active Streaks',
+    'dashboard.totalVictories': 'Total Victories',
+    'dashboard.goToBoard': 'Go to Board',
+    'dashboard.viewHabits': 'View Habits',
+    'dashboard.globalHistory': 'Global Habit History',
+    'dashboard.quote': '"We are what we repeatedly do. Excellence, then, is not an act, but a habit."',
+    'dashboard.quoteAuthor': '- Aristotle',
+    'dashboard.less': 'Less',
+    'dashboard.more': 'More',
+    'dashboard.victoriesInYear': '{{count}} victories in {{year}}',
 };
 
 export type Dictionary = typeof en;
+
+

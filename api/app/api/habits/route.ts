@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import dbConnect from '@/lib/db';
-import Task from '@/lib/models/Task';
+import Habit from '@/lib/models/Habit';
 import jwt from 'jsonwebtoken';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
@@ -29,8 +29,13 @@ export async function GET(req: Request) {
             return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
         }
 
-        const tasks = await Task.find({ userId }).sort({ createdAt: -1 });
-        return NextResponse.json({ tasks }, { status: 200 });
+        const habits = await Habit.find({ userId }).sort({ createdAt: -1 });
+        console.log('[API] GET /habits found:', habits.length, 'habits');
+        if (habits.length > 0) {
+            console.log('[API] Sample Habit 0 completionDates:', habits[0].completionDates);
+            console.log('[API] Sample Habit 0 recurrence:', habits[0].recurrence);
+        }
+        return NextResponse.json({ habits }, { status: 200 });
     } catch (error: any) {
         return NextResponse.json({ message: error.message }, { status: 500 });
     }
@@ -46,9 +51,9 @@ export async function POST(req: Request) {
         }
 
         const body = await req.json();
-        const task = await Task.create({ ...body, userId });
+        const habit = await Habit.create({ ...body, userId });
 
-        return NextResponse.json({ task }, { status: 201 });
+        return NextResponse.json({ habit }, { status: 201 });
     } catch (error: any) {
         return NextResponse.json({ message: error.message }, { status: 500 });
     }

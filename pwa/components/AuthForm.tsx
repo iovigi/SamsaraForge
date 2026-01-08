@@ -65,7 +65,7 @@ export default function AuthForm({ mode }: { mode: 'login' | 'register' }) {
                 localStorage.setItem('refreshToken', data.refreshToken);
                 localStorage.setItem('userEmail', email); // Store email
                 // alert('Login Successful!'); // Removed as per request
-                router.push('/kanban');
+                router.push('/dashboard');
             } else {
                 // Register success handling - Auto Login
                 if (data.accessToken) {
@@ -73,7 +73,7 @@ export default function AuthForm({ mode }: { mode: 'login' | 'register' }) {
                     localStorage.setItem('refreshToken', data.refreshToken);
                     localStorage.setItem('userEmail', email); // Store email
                     alert('Registration Successful! Logging you in...');
-                    router.push('/kanban');
+                    router.push('/dashboard');
                 } else {
                     // Fallback if no token (shouldn't happen with new API)
                     alert('Registration Successful! Please login.');

@@ -1,8 +1,9 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { useLanguage } from '../context/LanguageContext';
-import { authenticatedFetch, parseJwt } from '../utils/api';
+import { authenticatedFetch } from '../utils/api';
+import { ActivityCalendar } from 'react-activity-calendar';
 
 interface TaskModalProps {
     isOpen: boolean;
@@ -27,7 +28,6 @@ export default function TaskModal({ isOpen, onClose, task, onSave, onUpdate }: T
     const [comments, setComments] = useState<any[]>([]);
     const [newComment, setNewComment] = useState('');
 
-    // Edit State
     const [editIndex, setEditIndex] = useState<number | null>(null);
     const [editText, setEditText] = useState('');
     const [currentUserEmail, setCurrentUserEmail] = useState('');
@@ -71,14 +71,9 @@ export default function TaskModal({ isOpen, onClose, task, onSave, onUpdate }: T
         }
     }, [cronType, cronMinutesInterval, cronHourlyInterval, cronHourlyMinute, cronHourlyStart]);
 
-    // Initialize State from Task - PREVENT RESET ON EVERY RENDER
+    // Initialize State from Task
     useEffect(() => {
         if (task && isOpen) {
-            // Only reset if we are opening for a different task or fresh open
-            // We can check if title is empty (fresh init) or IDs dont match?
-            // But simplest is to just set it. 
-            // The issue before was maybe re-renders causing resets?
-            // Or closing/opening?
             setTitle(task.title);
             setDescription(task.description || '');
             setIntention(task.intention || '');
@@ -107,7 +102,6 @@ export default function TaskModal({ isOpen, onClose, task, onSave, onUpdate }: T
             if (task.reminderCron) {
                 const cron = task.reminderCron.trim();
                 setReminderCron(cron);
-                // ... (simplified cron parsing for brevity, assuming standard reuse)
             } else {
                 setReminderCron('* * * * *');
             }
@@ -124,13 +118,13 @@ export default function TaskModal({ isOpen, onClose, task, onSave, onUpdate }: T
             setComments([]);
             setReminderCron('* * * * *');
             setCronType('MINUTES');
-            // ...
+            setEditIndex(null);
         }
-    }, [task, isOpen]); // Only run when task changes or modal opens
+    }, [task, isOpen]);
 
     const syncComments = async (updatedComments: any[]) => {
         try {
-            const res = await authenticatedFetch(`/api/tasks/${task._id}`, {
+            const res = await authenticatedFetch(`/api/habits/${task._id}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ comments: updatedComments })
@@ -138,9 +132,9 @@ export default function TaskModal({ isOpen, onClose, task, onSave, onUpdate }: T
 
             if (res.ok) {
                 const data = await res.json();
-                setComments(data.task.comments || []);
-                if (onUpdate) onUpdate(data.task);
-                else onSave(data.task);
+                setComments(data.habit.comments || []);
+                if (onUpdate) onUpdate(data.habit);
+                else onSave(data.habit);
                 return true;
             }
         } catch (err) {
@@ -231,9 +225,8 @@ export default function TaskModal({ isOpen, onClose, task, onSave, onUpdate }: T
             monthDay: recurrence === 'MONTHLY' ? monthDay : null,
         };
 
-        // ... (rest of handleSubmit) ...
         const method = task ? 'PUT' : 'POST';
-        const url = task ? `/api/tasks/${task._id}` : '/api/tasks';
+        const url = task ? `/api/habits/${task._id}` : '/api/habits';
 
         try {
             const res = await authenticatedFetch(url, {
@@ -246,7 +239,7 @@ export default function TaskModal({ isOpen, onClose, task, onSave, onUpdate }: T
 
             if (res.ok) {
                 const data = await res.json();
-                onSave(data.task);
+                onSave(data.habit);
             } else {
                 const data = await res.json();
                 alert(data.message);
@@ -270,7 +263,6 @@ export default function TaskModal({ isOpen, onClose, task, onSave, onUpdate }: T
                     </div>
                     <form onSubmit={handleSubmit}>
                         <div className="modal-body" style={{ maxHeight: '70vh', overflowY: 'auto' }}>
-                            {/* ... (previous inputs) ... */}
                             <div className="form-group">
                                 <label>{t('kanban.title')}</label>
                                 <input type="text" className="form-control" value={title} onChange={e => setTitle(e.target.value)} required />
@@ -505,66 +497,87 @@ export default function TaskModal({ isOpen, onClose, task, onSave, onUpdate }: T
                             {task && (
                                 <>
                                     <hr />
-                                    <h5>{t('kanban.comments')}</h5>
-                                    <div className="card-footer card-comments mb-3" style={{ maxHeight: '200px', overflowY: 'auto' }}>
-                                        {comments.length === 0 && <p className="text-muted">{t('kanban.noComments')}</p>}
-                                        {comments.map((comment: any, idx: number) => (
-                                            <div className="card-comment" key={idx}>
-                                                <div className="comment-text" style={{ marginLeft: 0 }}>
-                                                    <span className="username">
-                                                        {comment.authorEmail || 'User'}
-                                                        <span className="text-muted float-right">
-                                                            {new Date(comment.createdAt).toLocaleString()}
-                                                            <button type="button" className="btn btn-tool ml-2" onClick={() => startEdit(idx, comment.text)}>
-                                                                <i className="fas fa-pen"></i>
-                                                            </button>
-                                                            <button type="button" className="btn btn-tool text-danger" onClick={() => handleDeleteComment(idx)}>
-                                                                <i className="fas fa-times"></i>
-                                                            </button>
-                                                        </span>
-                                                    </span>
-                                                    {editIndex === idx ? (
-                                                        <div className="input-group input-group-sm mt-1">
-                                                            <input
-                                                                type="text"
-                                                                className="form-control"
-                                                                value={editText}
-                                                                onChange={e => setEditText(e.target.value)}
-                                                            />
-                                                            <span className="input-group-append">
-                                                                <button type="button" className="btn btn-info btn-flat" onClick={() => handleSaveEdit(idx)}>Save</button>
-                                                                <button type="button" className="btn btn-default btn-flat" onClick={() => setEditIndex(null)}>Cancel</button>
-                                                            </span>
-                                                        </div>
-                                                    ) : (
-                                                        comment.text
-                                                    )}
-                                                </div>
-                                            </div>
-                                        ))}
+                                    {/* Activity Calendar */}
+                                    <div className="form-group mb-4">
+                                        <label className="form-label font-weight-bold d-block mb-3">Consistency History</label>
+                                        <div className="d-flex justify-content-center p-3 bg-white rounded border">
+                                            <ActivityCalendar
+                                                data={(() => {
+                                                    const startDate = new Date();
+                                                    startDate.setFullYear(startDate.getFullYear() - 1);
+                                                    const endDate = new Date();
+
+                                                    const history = task.completionDates?.reduce((acc: any[], dateString: string) => {
+                                                        const date = new Date(dateString).toISOString().split('T')[0];
+                                                        const existing = acc.find((item: any) => item.date === date);
+                                                        if (existing) {
+                                                            existing.count += 1;
+                                                            existing.level = Math.min(existing.count, 4);
+                                                        } else {
+                                                            acc.push({ date, count: 1, level: 1 });
+                                                        }
+                                                        return acc;
+                                                    }, []) || [];
+
+                                                    // Ensure at least one entry exists to prevent crash
+                                                    if (history.length === 0) {
+                                                        return [{
+                                                            date: new Date().toISOString().split('T')[0],
+                                                            count: 0,
+                                                            level: 0
+                                                        }];
+                                                    }
+
+                                                    return history;
+                                                })()}
+                                                theme={{
+                                                    light: ['#ebedf0', '#9be9a8', '#40c463', '#30a14e', '#216e39'],
+                                                    dark: ['#161b22', '#0e4429', '#006d32', '#26a641', '#39d353'],
+                                                }}
+                                                labels={{
+                                                    totalCount: '{{count}} completions in the last year',
+                                                }}
+                                            />
+                                        </div>
                                     </div>
-                                    <div className="img-push">
-                                        <input
-                                            type="text"
-                                            className="form-control form-control-sm"
-                                            placeholder={t('kanban.writeComment')}
-                                            value={newComment}
-                                            onChange={e => setNewComment(e.target.value)}
-                                            onKeyDown={async (e) => {
-                                                if (e.key === 'Enter') {
-                                                    e.preventDefault();
-                                                    await handleAddComment();
-                                                }
-                                            }}
-                                        />
-                                        <button
-                                            type="button"
-                                            className="btn btn-sm btn-default mt-2"
-                                            onClick={handleAddComment}
-                                            disabled={!newComment.trim()}
-                                        >
-                                            {t('kanban.addComment')}
-                                        </button>
+
+                                    {/* Comments Section */}
+                                    <div className="form-group mb-4">
+                                        <label className="form-label font-weight-bold">{t('kanban.comments')}</label>
+                                        <div className="comments-section p-3 bg-light rounded" style={{ maxHeight: '200px', overflowY: 'auto' }}>
+                                            {comments.length === 0 ? (
+                                                <p className="text-muted small">{t('kanban.noComments')}</p>
+                                            ) : (
+                                                <ul className="list-unstyled mb-0">
+                                                    {comments.map((comment: any, index: number) => (
+                                                        <li key={index} className="mb-2 pb-2 border-bottom last-no-border">
+                                                            <div className="d-flex justify-content-between">
+                                                                <strong className="small">{comment.authorEmail || 'User'}</strong>
+                                                                <span className="text-muted" style={{ fontSize: '0.7rem' }}>
+                                                                    {new Date(comment.createdAt).toLocaleString()}
+                                                                </span>
+                                                            </div>
+                                                            <p className="mb-0 small">{comment.text}</p>
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                            )}
+                                        </div>
+                                        <div className="input-group mt-2">
+                                            <input
+                                                type="text"
+                                                className="form-control form-control-sm"
+                                                placeholder={t('kanban.writeComment')}
+                                                value={newComment}
+                                                onChange={(e) => setNewComment(e.target.value)}
+                                                onKeyPress={(e) => e.key === 'Enter' && handleAddComment()}
+                                            />
+                                            <div className="input-group-append">
+                                                <button className="btn btn-sm btn-secondary" type="button" onClick={handleAddComment}>
+                                                    <i className="fas fa-paper-plane"></i>
+                                                </button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </>
                             )}

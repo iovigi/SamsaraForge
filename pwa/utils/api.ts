@@ -9,6 +9,7 @@ export const authenticatedFetch = async (url: string, options: RequestInit = {})
     // 1. Initial Request
     let res = await fetch(fullUrl, {
         ...options,
+        cache: 'no-store', // Ensure fresh data
         headers: {
             ...options.headers,
             'Authorization': `Bearer ${token}`,

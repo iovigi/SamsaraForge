@@ -25,7 +25,7 @@ self.addEventListener('notificationclick', function (event) {
         const { taskId, snoozeToken } = event.notification.data;
         const apiBase = 'http://localhost:5000'; // Define API Base (Env is hard in SW)
 
-        const promise = fetch(`${apiBase}/api/tasks/${taskId}/snooze`, {
+        const promise = fetch(`${apiBase}/api/habits/${taskId}/snooze`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ token: snoozeToken })

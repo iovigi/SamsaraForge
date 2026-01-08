@@ -1,0 +1,1929 @@
+[2026-01-08T12:35:00.020Z] [TaskRunner] Running Check at 14:35
+[2026-01-08T12:35:00.050Z] [TaskRunner] Found 3 TODO tasks
+[2026-01-08T12:35:00.052Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T12:35:00.053Z] Timeframe Check: Now=875, Start=0, End=1439
+[2026-01-08T12:35:00.053Z] Recurrence Match: false (ONCE)
+[2026-01-08T12:35:00.054Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T12:35:00.055Z] Timeframe Check: Now=875, Start=0, End=1439
+[2026-01-08T12:35:00.056Z] Recurrence Match: true (DAILY)
+[2026-01-08T12:35:00.056Z] Checking Cron: * * * * *
+[2026-01-08T12:35:00.057Z] Cron matched! Sending notification...
+[2026-01-08T12:35:00.063Z] No subscription found for user
+[2026-01-08T12:35:00.064Z] Checking Task: fdads (ID: 695d45523d6968bda34b3075)
+[2026-01-08T12:35:00.069Z] Timeframe Check: Now=875, Start=0, End=1439
+[2026-01-08T12:35:00.070Z] Recurrence Match: true (DAILY)
+[2026-01-08T12:35:00.070Z] Checking Cron: * * * * *
+[2026-01-08T12:35:00.071Z] Cron matched! Sending notification...
+[2026-01-08T12:35:00.075Z] No subscription found for user
+[2026-01-08T12:36:00.024Z] [TaskRunner] Running Check at 14:36
+[2026-01-08T12:36:00.044Z] [TaskRunner] Found 3 TODO tasks
+[2026-01-08T12:36:00.046Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T12:36:00.047Z] Timeframe Check: Now=876, Start=0, End=1439
+[2026-01-08T12:36:00.048Z] Recurrence Match: false (ONCE)
+[2026-01-08T12:36:00.048Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T12:36:00.049Z] Timeframe Check: Now=876, Start=0, End=1439
+[2026-01-08T12:36:00.049Z] Recurrence Match: true (DAILY)
+[2026-01-08T12:36:00.050Z] Checking Cron: * * * * *
+[2026-01-08T12:36:00.051Z] Cron matched! Sending notification...
+[2026-01-08T12:36:00.055Z] No subscription found for user
+[2026-01-08T12:36:00.056Z] Checking Task: fdads (ID: 695d45523d6968bda34b3075)
+[2026-01-08T12:36:00.057Z] Timeframe Check: Now=876, Start=0, End=1439
+[2026-01-08T12:36:00.058Z] Recurrence Match: true (DAILY)
+[2026-01-08T12:36:00.058Z] Checking Cron: * * * * *
+[2026-01-08T12:36:00.059Z] Cron matched! Sending notification...
+[2026-01-08T12:36:00.063Z] No subscription found for user
+[2026-01-08T12:37:00.019Z] [TaskRunner] Running Check at 14:37
+[2026-01-08T12:37:00.030Z] [TaskRunner] Found 3 TODO tasks
+[2026-01-08T12:37:00.030Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T12:37:00.031Z] Timeframe Check: Now=877, Start=0, End=1439
+[2026-01-08T12:37:00.031Z] Recurrence Match: false (ONCE)
+[2026-01-08T12:37:00.032Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T12:37:00.032Z] Timeframe Check: Now=877, Start=0, End=1439
+[2026-01-08T12:37:00.032Z] Recurrence Match: true (DAILY)
+[2026-01-08T12:37:00.033Z] Checking Cron: * * * * *
+[2026-01-08T12:37:00.033Z] Cron matched! Sending notification...
+[2026-01-08T12:37:00.037Z] No subscription found for user
+[2026-01-08T12:37:00.037Z] Checking Task: fdads (ID: 695d45523d6968bda34b3075)
+[2026-01-08T12:37:00.038Z] Timeframe Check: Now=877, Start=0, End=1439
+[2026-01-08T12:37:00.038Z] Recurrence Match: true (DAILY)
+[2026-01-08T12:37:00.039Z] Checking Cron: * * * * *
+[2026-01-08T12:37:00.039Z] Cron matched! Sending notification...
+[2026-01-08T12:37:00.043Z] No subscription found for user
+[2026-01-08T12:38:00.027Z] [TaskRunner] Running Check at 14:38
+[2026-01-08T12:38:00.039Z] [TaskRunner] Found 3 TODO tasks
+[2026-01-08T12:38:00.040Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T12:38:00.041Z] Timeframe Check: Now=878, Start=0, End=1439
+[2026-01-08T12:38:00.041Z] Recurrence Match: false (ONCE)
+[2026-01-08T12:38:00.042Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T12:38:00.043Z] Timeframe Check: Now=878, Start=0, End=1439
+[2026-01-08T12:38:00.043Z] Recurrence Match: true (DAILY)
+[2026-01-08T12:38:00.044Z] Checking Cron: * * * * *
+[2026-01-08T12:38:00.045Z] Cron matched! Sending notification...
+[2026-01-08T12:38:00.048Z] No subscription found for user
+[2026-01-08T12:38:00.049Z] Checking Task: fdads (ID: 695d45523d6968bda34b3075)
+[2026-01-08T12:38:00.050Z] Timeframe Check: Now=878, Start=0, End=1439
+[2026-01-08T12:38:00.050Z] Recurrence Match: true (DAILY)
+[2026-01-08T12:38:00.051Z] Checking Cron: * * * * *
+[2026-01-08T12:38:00.052Z] Cron matched! Sending notification...
+[2026-01-08T12:38:00.056Z] No subscription found for user
+[2026-01-08T12:39:00.013Z] [TaskRunner] Running Check at 14:39
+[2026-01-08T12:39:00.021Z] [TaskRunner] Found 3 TODO tasks
+[2026-01-08T12:39:00.022Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T12:39:00.023Z] Timeframe Check: Now=879, Start=0, End=1439
+[2026-01-08T12:39:00.024Z] Recurrence Match: false (ONCE)
+[2026-01-08T12:39:00.024Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T12:39:00.025Z] Timeframe Check: Now=879, Start=0, End=1439
+[2026-01-08T12:39:00.025Z] Recurrence Match: true (DAILY)
+[2026-01-08T12:39:00.026Z] Checking Cron: * * * * *
+[2026-01-08T12:39:00.026Z] Cron matched! Sending notification...
+[2026-01-08T12:39:00.032Z] No subscription found for user
+[2026-01-08T12:39:00.032Z] Checking Task: fdads (ID: 695d45523d6968bda34b3075)
+[2026-01-08T12:39:00.033Z] Timeframe Check: Now=879, Start=0, End=1439
+[2026-01-08T12:39:00.033Z] Recurrence Match: true (DAILY)
+[2026-01-08T12:39:00.034Z] Checking Cron: * * * * *
+[2026-01-08T12:39:00.035Z] Cron matched! Sending notification...
+[2026-01-08T12:39:00.038Z] No subscription found for user
+[2026-01-08T12:40:00.019Z] [TaskRunner] Running Check at 14:40
+[2026-01-08T12:40:00.032Z] [TaskRunner] Found 3 TODO tasks
+[2026-01-08T12:40:00.033Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T12:40:00.034Z] Timeframe Check: Now=880, Start=0, End=1439
+[2026-01-08T12:40:00.034Z] Recurrence Match: false (ONCE)
+[2026-01-08T12:40:00.035Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T12:40:00.036Z] Timeframe Check: Now=880, Start=0, End=1439
+[2026-01-08T12:40:00.036Z] Recurrence Match: true (DAILY)
+[2026-01-08T12:40:00.037Z] Checking Cron: * * * * *
+[2026-01-08T12:40:00.038Z] Cron matched! Sending notification...
+[2026-01-08T12:40:00.042Z] No subscription found for user
+[2026-01-08T12:40:00.043Z] Checking Task: fdads (ID: 695d45523d6968bda34b3075)
+[2026-01-08T12:40:00.044Z] Timeframe Check: Now=880, Start=0, End=1439
+[2026-01-08T12:40:00.044Z] Recurrence Match: true (DAILY)
+[2026-01-08T12:40:00.045Z] Checking Cron: * * * * *
+[2026-01-08T12:40:00.045Z] Cron matched! Sending notification...
+[2026-01-08T12:40:00.048Z] No subscription found for user
+[2026-01-08T12:41:00.030Z] [TaskRunner] Running Check at 14:41
+[2026-01-08T12:41:00.039Z] [TaskRunner] Found 3 TODO tasks
+[2026-01-08T12:41:00.040Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T12:41:00.041Z] Timeframe Check: Now=881, Start=0, End=1439
+[2026-01-08T12:41:00.041Z] Recurrence Match: false (ONCE)
+[2026-01-08T12:41:00.042Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T12:41:00.043Z] Timeframe Check: Now=881, Start=0, End=1439
+[2026-01-08T12:41:00.043Z] Recurrence Match: true (DAILY)
+[2026-01-08T12:41:00.044Z] Checking Cron: * * * * *
+[2026-01-08T12:41:00.044Z] Cron matched! Sending notification...
+[2026-01-08T12:41:00.048Z] No subscription found for user
+[2026-01-08T12:41:00.049Z] Checking Task: fdads (ID: 695d45523d6968bda34b3075)
+[2026-01-08T12:41:00.049Z] Timeframe Check: Now=881, Start=0, End=1439
+[2026-01-08T12:41:00.050Z] Recurrence Match: true (DAILY)
+[2026-01-08T12:41:00.050Z] Checking Cron: * * * * *
+[2026-01-08T12:41:00.051Z] Cron matched! Sending notification...
+[2026-01-08T12:41:00.054Z] No subscription found for user
+[2026-01-08T12:42:00.018Z] [TaskRunner] Running Check at 14:42
+[2026-01-08T12:42:00.029Z] [TaskRunner] Found 3 TODO tasks
+[2026-01-08T12:42:00.030Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T12:42:00.031Z] Timeframe Check: Now=882, Start=0, End=1439
+[2026-01-08T12:42:00.032Z] Recurrence Match: false (ONCE)
+[2026-01-08T12:42:00.033Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T12:42:00.034Z] Timeframe Check: Now=882, Start=0, End=1439
+[2026-01-08T12:42:00.034Z] Recurrence Match: true (DAILY)
+[2026-01-08T12:42:00.035Z] Checking Cron: * * * * *
+[2026-01-08T12:42:00.036Z] Cron matched! Sending notification...
+[2026-01-08T12:42:00.040Z] No subscription found for user
+[2026-01-08T12:42:00.041Z] Checking Task: fdads (ID: 695d45523d6968bda34b3075)
+[2026-01-08T12:42:00.042Z] Timeframe Check: Now=882, Start=0, End=1439
+[2026-01-08T12:42:00.043Z] Recurrence Match: true (DAILY)
+[2026-01-08T12:42:00.043Z] Checking Cron: * * * * *
+[2026-01-08T12:42:00.044Z] Cron matched! Sending notification...
+[2026-01-08T12:42:00.048Z] No subscription found for user
+[2026-01-08T12:43:00.018Z] [TaskRunner] Running Check at 14:43
+[2026-01-08T12:43:00.028Z] [TaskRunner] Found 3 TODO tasks
+[2026-01-08T12:43:00.029Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T12:43:00.030Z] Timeframe Check: Now=883, Start=0, End=1439
+[2026-01-08T12:43:00.030Z] Recurrence Match: false (ONCE)
+[2026-01-08T12:43:00.031Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T12:43:00.031Z] Timeframe Check: Now=883, Start=0, End=1439
+[2026-01-08T12:43:00.032Z] Recurrence Match: true (DAILY)
+[2026-01-08T12:43:00.032Z] Checking Cron: * * * * *
+[2026-01-08T12:43:00.033Z] Cron matched! Sending notification...
+[2026-01-08T12:43:00.036Z] No subscription found for user
+[2026-01-08T12:43:00.036Z] Checking Task: fdads (ID: 695d45523d6968bda34b3075)
+[2026-01-08T12:43:00.037Z] Timeframe Check: Now=883, Start=0, End=959
+[2026-01-08T12:43:00.038Z] Recurrence Match: true (DAILY)
+[2026-01-08T12:43:00.038Z] Checking Cron: * * * * *
+[2026-01-08T12:43:00.038Z] Cron matched! Sending notification...
+[2026-01-08T12:43:00.041Z] No subscription found for user
+[2026-01-08T12:44:00.020Z] [TaskRunner] Running Check at 14:44
+[2026-01-08T12:44:00.034Z] [TaskRunner] Found 3 TODO tasks
+[2026-01-08T12:44:00.036Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T12:44:00.037Z] Timeframe Check: Now=884, Start=0, End=1439
+[2026-01-08T12:44:00.037Z] Recurrence Match: false (ONCE)
+[2026-01-08T12:44:00.038Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T12:44:00.038Z] Timeframe Check: Now=884, Start=0, End=1439
+[2026-01-08T12:44:00.039Z] Recurrence Match: true (DAILY)
+[2026-01-08T12:44:00.039Z] Checking Cron: * * * * *
+[2026-01-08T12:44:00.040Z] Cron matched! Sending notification...
+[2026-01-08T12:44:00.044Z] No subscription found for user
+[2026-01-08T12:44:00.044Z] Checking Task: fdads (ID: 695d45523d6968bda34b3075)
+[2026-01-08T12:44:00.045Z] Timeframe Check: Now=884, Start=0, End=959
+[2026-01-08T12:44:00.046Z] Recurrence Match: true (DAILY)
+[2026-01-08T12:44:00.046Z] Checking Cron: * * * * *
+[2026-01-08T12:44:00.047Z] Cron matched! Sending notification...
+[2026-01-08T12:44:00.051Z] No subscription found for user
+[2026-01-08T12:45:00.030Z] [TaskRunner] Running Check at 14:45
+[2026-01-08T12:45:00.041Z] [TaskRunner] Found 3 TODO tasks
+[2026-01-08T12:45:00.042Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T12:45:00.042Z] Timeframe Check: Now=885, Start=0, End=1439
+[2026-01-08T12:45:00.043Z] Recurrence Match: false (ONCE)
+[2026-01-08T12:45:00.043Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T12:45:00.044Z] Timeframe Check: Now=885, Start=0, End=1439
+[2026-01-08T12:45:00.044Z] Recurrence Match: true (DAILY)
+[2026-01-08T12:45:00.045Z] Checking Cron: * * * * *
+[2026-01-08T12:45:00.045Z] Cron matched! Sending notification...
+[2026-01-08T12:45:00.049Z] No subscription found for user
+[2026-01-08T12:45:00.050Z] Checking Task: fdads (ID: 695d45523d6968bda34b3075)
+[2026-01-08T12:45:00.050Z] Timeframe Check: Now=885, Start=0, End=959
+[2026-01-08T12:45:00.051Z] Recurrence Match: true (DAILY)
+[2026-01-08T12:45:00.051Z] Checking Cron: * * * * *
+[2026-01-08T12:45:00.052Z] Cron matched! Sending notification...
+[2026-01-08T12:45:00.055Z] No subscription found for user
+[2026-01-08T12:46:00.019Z] [TaskRunner] Running Check at 14:46
+[2026-01-08T12:46:00.030Z] [TaskRunner] Found 3 TODO tasks
+[2026-01-08T12:46:00.030Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T12:46:00.031Z] Timeframe Check: Now=886, Start=0, End=1439
+[2026-01-08T12:46:00.032Z] Recurrence Match: false (ONCE)
+[2026-01-08T12:46:00.032Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T12:46:00.033Z] Timeframe Check: Now=886, Start=0, End=1439
+[2026-01-08T12:46:00.033Z] Recurrence Match: true (DAILY)
+[2026-01-08T12:46:00.034Z] Checking Cron: * * * * *
+[2026-01-08T12:46:00.034Z] Cron matched! Sending notification...
+[2026-01-08T12:46:00.038Z] No subscription found for user
+[2026-01-08T12:46:00.038Z] Checking Task: fdads (ID: 695d45523d6968bda34b3075)
+[2026-01-08T12:46:00.040Z] Timeframe Check: Now=886, Start=0, End=959
+[2026-01-08T12:46:00.041Z] Recurrence Match: true (DAILY)
+[2026-01-08T12:46:00.041Z] Checking Cron: * * * * *
+[2026-01-08T12:46:00.042Z] Cron matched! Sending notification...
+[2026-01-08T12:46:00.044Z] No subscription found for user
+[2026-01-08T12:47:00.030Z] [TaskRunner] Running Check at 14:47
+[2026-01-08T12:47:00.042Z] [TaskRunner] Found 3 TODO tasks
+[2026-01-08T12:47:00.043Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T12:47:00.044Z] Timeframe Check: Now=887, Start=0, End=1439
+[2026-01-08T12:47:00.045Z] Recurrence Match: false (ONCE)
+[2026-01-08T12:47:00.046Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T12:47:00.046Z] Timeframe Check: Now=887, Start=0, End=1439
+[2026-01-08T12:47:00.047Z] Recurrence Match: true (DAILY)
+[2026-01-08T12:47:00.048Z] Checking Cron: * * * * *
+[2026-01-08T12:47:00.048Z] Cron matched! Sending notification...
+[2026-01-08T12:47:00.055Z] No subscription found for user
+[2026-01-08T12:47:00.056Z] Checking Task: fdads (ID: 695d45523d6968bda34b3075)
+[2026-01-08T12:47:00.057Z] Timeframe Check: Now=887, Start=0, End=959
+[2026-01-08T12:47:00.058Z] Recurrence Match: true (DAILY)
+[2026-01-08T12:47:00.058Z] Checking Cron: * * * * *
+[2026-01-08T12:47:00.059Z] Cron matched! Sending notification...
+[2026-01-08T12:47:00.063Z] No subscription found for user
+[2026-01-08T12:48:00.013Z] [TaskRunner] Running Check at 14:48
+[2026-01-08T12:48:00.024Z] [TaskRunner] Found 3 TODO tasks
+[2026-01-08T12:48:00.025Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T12:48:00.026Z] Timeframe Check: Now=888, Start=0, End=1439
+[2026-01-08T12:48:00.027Z] Recurrence Match: false (ONCE)
+[2026-01-08T12:48:00.027Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T12:48:00.028Z] Timeframe Check: Now=888, Start=0, End=1439
+[2026-01-08T12:48:00.028Z] Recurrence Match: true (DAILY)
+[2026-01-08T12:48:00.029Z] Checking Cron: * * * * *
+[2026-01-08T12:48:00.030Z] Cron matched! Sending notification...
+[2026-01-08T12:48:00.034Z] No subscription found for user
+[2026-01-08T12:48:00.035Z] Checking Task: fdads (ID: 695d45523d6968bda34b3075)
+[2026-01-08T12:48:00.036Z] Timeframe Check: Now=888, Start=0, End=959
+[2026-01-08T12:48:00.037Z] Recurrence Match: true (DAILY)
+[2026-01-08T12:48:00.038Z] Checking Cron: * * * * *
+[2026-01-08T12:48:00.038Z] Cron matched! Sending notification...
+[2026-01-08T12:48:00.042Z] No subscription found for user
+[2026-01-08T12:49:00.028Z] [TaskRunner] Running Check at 14:49
+[2026-01-08T12:49:00.040Z] [TaskRunner] Found 3 TODO tasks
+[2026-01-08T12:49:00.041Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T12:49:00.041Z] Timeframe Check: Now=889, Start=0, End=1439
+[2026-01-08T12:49:00.042Z] Recurrence Match: false (ONCE)
+[2026-01-08T12:49:00.043Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T12:49:00.044Z] Timeframe Check: Now=889, Start=0, End=1439
+[2026-01-08T12:49:00.044Z] Recurrence Match: true (DAILY)
+[2026-01-08T12:49:00.045Z] Checking Cron: * * * * *
+[2026-01-08T12:49:00.045Z] Cron matched! Sending notification...
+[2026-01-08T12:49:00.049Z] No subscription found for user
+[2026-01-08T12:49:00.050Z] Checking Task: fdads (ID: 695d45523d6968bda34b3075)
+[2026-01-08T12:49:00.051Z] Timeframe Check: Now=889, Start=0, End=959
+[2026-01-08T12:49:00.051Z] Recurrence Match: true (DAILY)
+[2026-01-08T12:49:00.052Z] Checking Cron: * * * * *
+[2026-01-08T12:49:00.052Z] Cron matched! Sending notification...
+[2026-01-08T12:49:00.056Z] No subscription found for user
+[2026-01-08T12:50:00.028Z] [TaskRunner] Running Check at 14:50
+[2026-01-08T12:50:00.039Z] [TaskRunner] Found 2 TODO tasks
+[2026-01-08T12:50:00.040Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T12:50:00.040Z] Timeframe Check: Now=890, Start=0, End=1439
+[2026-01-08T12:50:00.041Z] Recurrence Match: false (ONCE)
+[2026-01-08T12:50:00.041Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T12:50:00.042Z] Timeframe Check: Now=890, Start=0, End=1439
+[2026-01-08T12:50:00.042Z] Recurrence Match: true (DAILY)
+[2026-01-08T12:50:00.042Z] Checking Cron: * * * * *
+[2026-01-08T12:50:00.043Z] Cron matched! Sending notification...
+[2026-01-08T12:50:00.046Z] No subscription found for user
+[2026-01-08T12:51:00.022Z] [TaskRunner] Running Check at 14:51
+[2026-01-08T12:51:00.033Z] [TaskRunner] Found 2 TODO tasks
+[2026-01-08T12:51:00.034Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T12:51:00.035Z] Timeframe Check: Now=891, Start=0, End=1439
+[2026-01-08T12:51:00.035Z] Recurrence Match: false (ONCE)
+[2026-01-08T12:51:00.036Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T12:51:00.037Z] Timeframe Check: Now=891, Start=0, End=1439
+[2026-01-08T12:51:00.037Z] Recurrence Match: true (DAILY)
+[2026-01-08T12:51:00.038Z] Checking Cron: * * * * *
+[2026-01-08T12:51:00.039Z] Cron matched! Sending notification...
+[2026-01-08T12:51:00.042Z] No subscription found for user
+[2026-01-08T12:52:00.010Z] [TaskRunner] Running Check at 14:52
+[2026-01-08T12:52:00.020Z] [TaskRunner] Found 2 TODO tasks
+[2026-01-08T12:52:00.021Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T12:52:00.022Z] Timeframe Check: Now=892, Start=0, End=1439
+[2026-01-08T12:52:00.022Z] Recurrence Match: false (ONCE)
+[2026-01-08T12:52:00.023Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T12:52:00.024Z] Timeframe Check: Now=892, Start=0, End=1439
+[2026-01-08T12:52:00.024Z] Recurrence Match: true (DAILY)
+[2026-01-08T12:52:00.025Z] Checking Cron: * * * * *
+[2026-01-08T12:52:00.025Z] Cron matched! Sending notification...
+[2026-01-08T12:52:00.029Z] No subscription found for user
+[2026-01-08T12:53:00.021Z] [TaskRunner] Running Check at 14:53
+[2026-01-08T12:53:00.029Z] [TaskRunner] Found 2 TODO tasks
+[2026-01-08T12:53:00.030Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T12:53:00.031Z] Timeframe Check: Now=893, Start=0, End=1439
+[2026-01-08T12:53:00.031Z] Recurrence Match: false (ONCE)
+[2026-01-08T12:53:00.031Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T12:53:00.032Z] Timeframe Check: Now=893, Start=0, End=1439
+[2026-01-08T12:53:00.032Z] Recurrence Match: true (DAILY)
+[2026-01-08T12:53:00.033Z] Checking Cron: * * * * *
+[2026-01-08T12:53:00.033Z] Cron matched! Sending notification...
+[2026-01-08T12:53:00.036Z] No subscription found for user
+[2026-01-08T12:54:00.022Z] [TaskRunner] Running Check at 14:54
+[2026-01-08T12:54:00.032Z] [TaskRunner] Found 2 TODO tasks
+[2026-01-08T12:54:00.033Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T12:54:00.034Z] Timeframe Check: Now=894, Start=0, End=1439
+[2026-01-08T12:54:00.034Z] Recurrence Match: false (ONCE)
+[2026-01-08T12:54:00.035Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T12:54:00.036Z] Timeframe Check: Now=894, Start=0, End=1439
+[2026-01-08T12:54:00.036Z] Recurrence Match: true (DAILY)
+[2026-01-08T12:54:00.037Z] Checking Cron: * * * * *
+[2026-01-08T12:54:00.038Z] Cron matched! Sending notification...
+[2026-01-08T12:54:00.041Z] No subscription found for user
+[2026-01-08T12:55:00.017Z] [TaskRunner] Running Check at 14:55
+[2026-01-08T12:55:00.027Z] [TaskRunner] Found 2 TODO tasks
+[2026-01-08T12:55:00.028Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T12:55:00.029Z] Timeframe Check: Now=895, Start=0, End=1439
+[2026-01-08T12:55:00.030Z] Recurrence Match: false (ONCE)
+[2026-01-08T12:55:00.030Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T12:55:00.031Z] Timeframe Check: Now=895, Start=0, End=1439
+[2026-01-08T12:55:00.031Z] Recurrence Match: true (DAILY)
+[2026-01-08T12:55:00.032Z] Checking Cron: * * * * *
+[2026-01-08T12:55:00.032Z] Cron matched! Sending notification...
+[2026-01-08T12:55:00.036Z] No subscription found for user
+[2026-01-08T12:56:00.022Z] [TaskRunner] Running Check at 14:56
+[2026-01-08T12:56:00.033Z] [TaskRunner] Found 2 TODO tasks
+[2026-01-08T12:56:00.034Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T12:56:00.035Z] Timeframe Check: Now=896, Start=0, End=1439
+[2026-01-08T12:56:00.036Z] Recurrence Match: false (ONCE)
+[2026-01-08T12:56:00.036Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T12:56:00.037Z] Timeframe Check: Now=896, Start=0, End=1439
+[2026-01-08T12:56:00.038Z] Recurrence Match: true (DAILY)
+[2026-01-08T12:56:00.038Z] Checking Cron: * * * * *
+[2026-01-08T12:56:00.039Z] Cron matched! Sending notification...
+[2026-01-08T12:56:00.043Z] No subscription found for user
+[2026-01-08T12:57:00.022Z] [TaskRunner] Running Check at 14:57
+[2026-01-08T12:57:00.032Z] [TaskRunner] Found 2 TODO tasks
+[2026-01-08T12:57:00.033Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T12:57:00.034Z] Timeframe Check: Now=897, Start=0, End=1439
+[2026-01-08T12:57:00.035Z] Recurrence Match: false (ONCE)
+[2026-01-08T12:57:00.036Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T12:57:00.036Z] Timeframe Check: Now=897, Start=0, End=1439
+[2026-01-08T12:57:00.037Z] Recurrence Match: true (DAILY)
+[2026-01-08T12:57:00.038Z] Checking Cron: * * * * *
+[2026-01-08T12:57:00.038Z] Cron matched! Sending notification...
+[2026-01-08T12:57:00.044Z] No subscription found for user
+[2026-01-08T12:58:00.018Z] [TaskRunner] Running Check at 14:58
+[2026-01-08T12:58:00.030Z] [TaskRunner] Found 2 TODO tasks
+[2026-01-08T12:58:00.031Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T12:58:00.031Z] Timeframe Check: Now=898, Start=0, End=1439
+[2026-01-08T12:58:00.032Z] Recurrence Match: false (ONCE)
+[2026-01-08T12:58:00.033Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T12:58:00.034Z] Timeframe Check: Now=898, Start=0, End=1439
+[2026-01-08T12:58:00.035Z] Recurrence Match: true (DAILY)
+[2026-01-08T12:58:00.035Z] Checking Cron: * * * * *
+[2026-01-08T12:58:00.036Z] Cron matched! Sending notification...
+[2026-01-08T12:58:00.040Z] No subscription found for user
+[2026-01-08T12:59:00.029Z] [TaskRunner] Running Check at 14:59
+[2026-01-08T12:59:00.038Z] [TaskRunner] Found 2 TODO tasks
+[2026-01-08T12:59:00.039Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T12:59:00.040Z] Timeframe Check: Now=899, Start=0, End=1439
+[2026-01-08T12:59:00.041Z] Recurrence Match: false (ONCE)
+[2026-01-08T12:59:00.041Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T12:59:00.042Z] Timeframe Check: Now=899, Start=0, End=1439
+[2026-01-08T12:59:00.042Z] Recurrence Match: true (DAILY)
+[2026-01-08T12:59:00.043Z] Checking Cron: * * * * *
+[2026-01-08T12:59:00.043Z] Cron matched! Sending notification...
+[2026-01-08T12:59:00.046Z] No subscription found for user
+[2026-01-08T13:00:00.027Z] [TaskRunner] Running Check at 15:0
+[2026-01-08T13:00:00.037Z] [TaskRunner] Found 2 TODO tasks
+[2026-01-08T13:00:00.038Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T13:00:00.039Z] Timeframe Check: Now=900, Start=0, End=1439
+[2026-01-08T13:00:00.039Z] Recurrence Match: false (ONCE)
+[2026-01-08T13:00:00.040Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T13:00:00.040Z] Timeframe Check: Now=900, Start=0, End=1439
+[2026-01-08T13:00:00.041Z] Recurrence Match: true (DAILY)
+[2026-01-08T13:00:00.042Z] Checking Cron: * * * * *
+[2026-01-08T13:00:00.042Z] Cron matched! Sending notification...
+[2026-01-08T13:00:00.046Z] No subscription found for user
+[2026-01-08T13:01:00.021Z] [TaskRunner] Running Check at 15:1
+[2026-01-08T13:01:00.034Z] [TaskRunner] Found 2 TODO tasks
+[2026-01-08T13:01:00.035Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T13:01:00.035Z] Timeframe Check: Now=901, Start=0, End=1439
+[2026-01-08T13:01:00.036Z] Recurrence Match: false (ONCE)
+[2026-01-08T13:01:00.037Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T13:01:00.037Z] Timeframe Check: Now=901, Start=0, End=1439
+[2026-01-08T13:01:00.038Z] Recurrence Match: true (DAILY)
+[2026-01-08T13:01:00.039Z] Checking Cron: * * * * *
+[2026-01-08T13:01:00.039Z] Cron matched! Sending notification...
+[2026-01-08T13:01:00.043Z] No subscription found for user
+[2026-01-08T13:02:00.024Z] [TaskRunner] Running Check at 15:2
+[2026-01-08T13:02:00.034Z] [TaskRunner] Found 2 TODO tasks
+[2026-01-08T13:02:00.035Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T13:02:00.036Z] Timeframe Check: Now=902, Start=0, End=1439
+[2026-01-08T13:02:00.036Z] Recurrence Match: false (ONCE)
+[2026-01-08T13:02:00.037Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T13:02:00.038Z] Timeframe Check: Now=902, Start=0, End=1439
+[2026-01-08T13:02:00.038Z] Recurrence Match: true (DAILY)
+[2026-01-08T13:02:00.039Z] Checking Cron: * * * * *
+[2026-01-08T13:02:00.039Z] Cron matched! Sending notification...
+[2026-01-08T13:02:00.044Z] No subscription found for user
+[2026-01-08T13:03:00.010Z] [TaskRunner] Running Check at 15:3
+[2026-01-08T13:03:00.020Z] [TaskRunner] Found 2 TODO tasks
+[2026-01-08T13:03:00.021Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T13:03:00.021Z] Timeframe Check: Now=903, Start=0, End=1439
+[2026-01-08T13:03:00.022Z] Recurrence Match: false (ONCE)
+[2026-01-08T13:03:00.023Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T13:03:00.023Z] Timeframe Check: Now=903, Start=0, End=1439
+[2026-01-08T13:03:00.024Z] Recurrence Match: true (DAILY)
+[2026-01-08T13:03:00.024Z] Checking Cron: * * * * *
+[2026-01-08T13:03:00.025Z] Cron matched! Sending notification...
+[2026-01-08T13:03:00.029Z] No subscription found for user
+[2026-01-08T13:04:00.009Z] [TaskRunner] Running Check at 15:4
+[2026-01-08T13:04:00.017Z] [TaskRunner] Found 2 TODO tasks
+[2026-01-08T13:04:00.018Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T13:04:00.019Z] Timeframe Check: Now=904, Start=0, End=1439
+[2026-01-08T13:04:00.019Z] Recurrence Match: false (ONCE)
+[2026-01-08T13:04:00.020Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T13:04:00.021Z] Timeframe Check: Now=904, Start=0, End=1439
+[2026-01-08T13:04:00.021Z] Recurrence Match: true (DAILY)
+[2026-01-08T13:04:00.022Z] Checking Cron: * * * * *
+[2026-01-08T13:04:00.022Z] Cron matched! Sending notification...
+[2026-01-08T13:04:00.027Z] No subscription found for user
+[2026-01-08T13:05:00.023Z] [TaskRunner] Running Check at 15:5
+[2026-01-08T13:05:00.034Z] [TaskRunner] Found 2 TODO tasks
+[2026-01-08T13:05:00.035Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T13:05:00.035Z] Timeframe Check: Now=905, Start=0, End=1439
+[2026-01-08T13:05:00.036Z] Recurrence Match: false (ONCE)
+[2026-01-08T13:05:00.036Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T13:05:00.037Z] Timeframe Check: Now=905, Start=0, End=1439
+[2026-01-08T13:05:00.038Z] Recurrence Match: true (DAILY)
+[2026-01-08T13:05:00.038Z] Checking Cron: * * * * *
+[2026-01-08T13:05:00.039Z] Cron matched! Sending notification...
+[2026-01-08T13:05:00.042Z] No subscription found for user
+[2026-01-08T13:06:00.032Z] [TaskRunner] Running Check at 15:6
+[2026-01-08T13:06:00.044Z] [TaskRunner] Found 2 TODO tasks
+[2026-01-08T13:06:00.045Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T13:06:00.045Z] Timeframe Check: Now=906, Start=0, End=1439
+[2026-01-08T13:06:00.046Z] Recurrence Match: false (ONCE)
+[2026-01-08T13:06:00.047Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T13:06:00.047Z] Timeframe Check: Now=906, Start=0, End=1439
+[2026-01-08T13:06:00.048Z] Recurrence Match: true (DAILY)
+[2026-01-08T13:06:00.049Z] Checking Cron: * * * * *
+[2026-01-08T13:06:00.049Z] Cron matched! Sending notification...
+[2026-01-08T13:06:00.053Z] No subscription found for user
+[2026-01-08T13:07:00.018Z] [TaskRunner] Running Check at 15:7
+[2026-01-08T13:07:00.029Z] [TaskRunner] Found 2 TODO tasks
+[2026-01-08T13:07:00.030Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T13:07:00.030Z] Timeframe Check: Now=907, Start=0, End=1439
+[2026-01-08T13:07:00.031Z] Recurrence Match: false (ONCE)
+[2026-01-08T13:07:00.031Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T13:07:00.032Z] Timeframe Check: Now=907, Start=0, End=1439
+[2026-01-08T13:07:00.032Z] Recurrence Match: true (DAILY)
+[2026-01-08T13:07:00.033Z] Checking Cron: * * * * *
+[2026-01-08T13:07:00.034Z] Cron matched! Sending notification...
+[2026-01-08T13:07:00.037Z] No subscription found for user
+[2026-01-08T13:08:00.023Z] [TaskRunner] Running Check at 15:8
+[2026-01-08T13:08:00.032Z] [TaskRunner] Found 2 TODO tasks
+[2026-01-08T13:08:00.033Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T13:08:00.033Z] Timeframe Check: Now=908, Start=0, End=1439
+[2026-01-08T13:08:00.034Z] Recurrence Match: false (ONCE)
+[2026-01-08T13:08:00.034Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T13:08:00.035Z] Timeframe Check: Now=908, Start=0, End=1439
+[2026-01-08T13:08:00.035Z] Recurrence Match: true (DAILY)
+[2026-01-08T13:08:00.036Z] Checking Cron: * * * * *
+[2026-01-08T13:08:00.036Z] Cron matched! Sending notification...
+[2026-01-08T13:08:00.041Z] No subscription found for user
+[2026-01-08T13:09:00.015Z] [TaskRunner] Running Check at 15:9
+[2026-01-08T13:09:00.025Z] [TaskRunner] Found 2 TODO tasks
+[2026-01-08T13:09:00.025Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T13:09:00.026Z] Timeframe Check: Now=909, Start=0, End=1439
+[2026-01-08T13:09:00.027Z] Recurrence Match: false (ONCE)
+[2026-01-08T13:09:00.027Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T13:09:00.028Z] Timeframe Check: Now=909, Start=0, End=1439
+[2026-01-08T13:09:00.029Z] Recurrence Match: true (DAILY)
+[2026-01-08T13:09:00.029Z] Checking Cron: * * * * *
+[2026-01-08T13:09:00.030Z] Cron matched! Sending notification...
+[2026-01-08T13:09:00.033Z] No subscription found for user
+[2026-01-08T13:10:00.020Z] [TaskRunner] Running Check at 15:10
+[2026-01-08T13:10:00.029Z] [TaskRunner] Found 2 TODO tasks
+[2026-01-08T13:10:00.029Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T13:10:00.030Z] Timeframe Check: Now=910, Start=0, End=1439
+[2026-01-08T13:10:00.031Z] Recurrence Match: false (ONCE)
+[2026-01-08T13:10:00.032Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T13:10:00.032Z] Timeframe Check: Now=910, Start=0, End=1439
+[2026-01-08T13:10:00.033Z] Recurrence Match: true (DAILY)
+[2026-01-08T13:10:00.033Z] Checking Cron: * * * * *
+[2026-01-08T13:10:00.034Z] Cron matched! Sending notification...
+[2026-01-08T13:10:00.038Z] No subscription found for user
+[2026-01-08T13:11:00.030Z] [TaskRunner] Running Check at 15:11
+[2026-01-08T13:11:00.039Z] [TaskRunner] Found 2 TODO tasks
+[2026-01-08T13:11:00.040Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T13:11:00.040Z] Timeframe Check: Now=911, Start=0, End=1439
+[2026-01-08T13:11:00.041Z] Recurrence Match: false (ONCE)
+[2026-01-08T13:11:00.042Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T13:11:00.042Z] Timeframe Check: Now=911, Start=0, End=1439
+[2026-01-08T13:11:00.043Z] Recurrence Match: true (DAILY)
+[2026-01-08T13:11:00.043Z] Checking Cron: * * * * *
+[2026-01-08T13:11:00.044Z] Cron matched! Sending notification...
+[2026-01-08T13:11:00.047Z] No subscription found for user
+[2026-01-08T13:12:00.025Z] [TaskRunner] Running Check at 15:12
+[2026-01-08T13:12:00.035Z] [TaskRunner] Found 2 TODO tasks
+[2026-01-08T13:12:00.036Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T13:12:00.036Z] Timeframe Check: Now=912, Start=0, End=1439
+[2026-01-08T13:12:00.037Z] Recurrence Match: false (ONCE)
+[2026-01-08T13:12:00.038Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T13:12:00.038Z] Timeframe Check: Now=912, Start=0, End=1439
+[2026-01-08T13:12:00.039Z] Recurrence Match: true (DAILY)
+[2026-01-08T13:12:00.039Z] Checking Cron: * * * * *
+[2026-01-08T13:12:00.040Z] Cron matched! Sending notification...
+[2026-01-08T13:12:00.043Z] No subscription found for user
+[2026-01-08T13:13:00.027Z] [TaskRunner] Running Check at 15:13
+[2026-01-08T13:13:00.036Z] [TaskRunner] Found 2 TODO tasks
+[2026-01-08T13:13:00.036Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T13:13:00.037Z] Timeframe Check: Now=913, Start=0, End=1439
+[2026-01-08T13:13:00.038Z] Recurrence Match: false (ONCE)
+[2026-01-08T13:13:00.038Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T13:13:00.039Z] Timeframe Check: Now=913, Start=0, End=1439
+[2026-01-08T13:13:00.039Z] Recurrence Match: true (DAILY)
+[2026-01-08T13:13:00.040Z] Checking Cron: * * * * *
+[2026-01-08T13:13:00.041Z] Cron matched! Sending notification...
+[2026-01-08T13:13:00.044Z] No subscription found for user
+[2026-01-08T13:14:00.019Z] [TaskRunner] Running Check at 15:14
+[2026-01-08T13:14:00.032Z] [TaskRunner] Found 2 TODO tasks
+[2026-01-08T13:14:00.033Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T13:14:00.034Z] Timeframe Check: Now=914, Start=0, End=1439
+[2026-01-08T13:14:00.035Z] Recurrence Match: false (ONCE)
+[2026-01-08T13:14:00.035Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T13:14:00.036Z] Timeframe Check: Now=914, Start=0, End=1439
+[2026-01-08T13:14:00.037Z] Recurrence Match: true (DAILY)
+[2026-01-08T13:14:00.037Z] Checking Cron: * * * * *
+[2026-01-08T13:14:00.038Z] Cron matched! Sending notification...
+[2026-01-08T13:14:00.041Z] No subscription found for user
+[2026-01-08T13:15:00.018Z] [TaskRunner] Running Check at 15:15
+[2026-01-08T13:15:00.027Z] [TaskRunner] Found 2 TODO tasks
+[2026-01-08T13:15:00.028Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T13:15:00.029Z] Timeframe Check: Now=915, Start=0, End=1439
+[2026-01-08T13:15:00.029Z] Recurrence Match: false (ONCE)
+[2026-01-08T13:15:00.030Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T13:15:00.030Z] Timeframe Check: Now=915, Start=0, End=1439
+[2026-01-08T13:15:00.031Z] Recurrence Match: true (DAILY)
+[2026-01-08T13:15:00.031Z] Checking Cron: * * * * *
+[2026-01-08T13:15:00.031Z] Cron matched! Sending notification...
+[2026-01-08T13:15:00.034Z] No subscription found for user
+[2026-01-08T13:16:00.029Z] [TaskRunner] Running Check at 15:16
+[2026-01-08T13:16:00.040Z] [TaskRunner] Found 2 TODO tasks
+[2026-01-08T13:16:00.041Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T13:16:00.041Z] Timeframe Check: Now=916, Start=0, End=1439
+[2026-01-08T13:16:00.042Z] Recurrence Match: false (ONCE)
+[2026-01-08T13:16:00.042Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T13:16:00.043Z] Timeframe Check: Now=916, Start=0, End=1439
+[2026-01-08T13:16:00.043Z] Recurrence Match: true (DAILY)
+[2026-01-08T13:16:00.043Z] Checking Cron: * * * * *
+[2026-01-08T13:16:00.044Z] Cron matched! Sending notification...
+[2026-01-08T13:16:00.048Z] No subscription found for user
+[2026-01-08T13:17:00.030Z] [TaskRunner] Running Check at 15:17
+[2026-01-08T13:17:00.041Z] [TaskRunner] Found 2 TODO tasks
+[2026-01-08T13:17:00.042Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T13:17:00.042Z] Timeframe Check: Now=917, Start=0, End=1439
+[2026-01-08T13:17:00.043Z] Recurrence Match: false (ONCE)
+[2026-01-08T13:17:00.043Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T13:17:00.044Z] Timeframe Check: Now=917, Start=0, End=1439
+[2026-01-08T13:17:00.044Z] Recurrence Match: true (DAILY)
+[2026-01-08T13:17:00.045Z] Checking Cron: * * * * *
+[2026-01-08T13:17:00.046Z] Cron matched! Sending notification...
+[2026-01-08T13:17:00.049Z] No subscription found for user
+[2026-01-08T13:18:00.025Z] [TaskRunner] Running Check at 15:18
+[2026-01-08T13:18:00.034Z] [TaskRunner] Found 2 TODO tasks
+[2026-01-08T13:18:00.035Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T13:18:00.036Z] Timeframe Check: Now=918, Start=0, End=1439
+[2026-01-08T13:18:00.036Z] Recurrence Match: false (ONCE)
+[2026-01-08T13:18:00.037Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T13:18:00.037Z] Timeframe Check: Now=918, Start=0, End=1439
+[2026-01-08T13:18:00.038Z] Recurrence Match: true (DAILY)
+[2026-01-08T13:18:00.039Z] Checking Cron: * * * * *
+[2026-01-08T13:18:00.039Z] Cron matched! Sending notification...
+[2026-01-08T13:18:00.042Z] No subscription found for user
+[2026-01-08T13:19:00.022Z] [TaskRunner] Running Check at 15:19
+[2026-01-08T13:19:00.030Z] [TaskRunner] Found 2 TODO tasks
+[2026-01-08T13:19:00.031Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T13:19:00.032Z] Timeframe Check: Now=919, Start=0, End=1439
+[2026-01-08T13:19:00.033Z] Recurrence Match: false (ONCE)
+[2026-01-08T13:19:00.034Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T13:19:00.034Z] Timeframe Check: Now=919, Start=0, End=1439
+[2026-01-08T13:19:00.035Z] Recurrence Match: true (DAILY)
+[2026-01-08T13:19:00.035Z] Checking Cron: * * * * *
+[2026-01-08T13:19:00.036Z] Cron matched! Sending notification...
+[2026-01-08T13:19:00.040Z] No subscription found for user
+[2026-01-08T13:20:00.021Z] [TaskRunner] Running Check at 15:20
+[2026-01-08T13:20:00.032Z] [TaskRunner] Found 2 TODO tasks
+[2026-01-08T13:20:00.032Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T13:20:00.033Z] Timeframe Check: Now=920, Start=0, End=1439
+[2026-01-08T13:20:00.034Z] Recurrence Match: false (ONCE)
+[2026-01-08T13:20:00.034Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T13:20:00.035Z] Timeframe Check: Now=920, Start=0, End=1439
+[2026-01-08T13:20:00.035Z] Recurrence Match: true (DAILY)
+[2026-01-08T13:20:00.036Z] Checking Cron: * * * * *
+[2026-01-08T13:20:00.037Z] Cron matched! Sending notification...
+[2026-01-08T13:20:00.039Z] No subscription found for user
+[2026-01-08T13:21:00.019Z] [TaskRunner] Running Check at 15:21
+[2026-01-08T13:21:00.029Z] [TaskRunner] Found 2 TODO tasks
+[2026-01-08T13:21:00.030Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T13:21:00.031Z] Timeframe Check: Now=921, Start=0, End=1439
+[2026-01-08T13:21:00.031Z] Recurrence Match: false (ONCE)
+[2026-01-08T13:21:00.032Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T13:21:00.033Z] Timeframe Check: Now=921, Start=0, End=1439
+[2026-01-08T13:21:00.034Z] Recurrence Match: true (DAILY)
+[2026-01-08T13:21:00.034Z] Checking Cron: * * * * *
+[2026-01-08T13:21:00.035Z] Cron matched! Sending notification...
+[2026-01-08T13:21:00.038Z] No subscription found for user
+[2026-01-08T13:22:00.020Z] [TaskRunner] Running Check at 15:22
+[2026-01-08T13:22:00.030Z] [TaskRunner] Found 2 TODO tasks
+[2026-01-08T13:22:00.031Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T13:22:00.032Z] Timeframe Check: Now=922, Start=0, End=1439
+[2026-01-08T13:22:00.033Z] Recurrence Match: false (ONCE)
+[2026-01-08T13:22:00.033Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T13:22:00.034Z] Timeframe Check: Now=922, Start=0, End=1439
+[2026-01-08T13:22:00.034Z] Recurrence Match: true (DAILY)
+[2026-01-08T13:22:00.035Z] Checking Cron: * * * * *
+[2026-01-08T13:22:00.035Z] Cron matched! Sending notification...
+[2026-01-08T13:22:00.039Z] No subscription found for user
+[2026-01-08T13:23:00.030Z] [TaskRunner] Running Check at 15:23
+[2026-01-08T13:23:00.039Z] [TaskRunner] Found 2 TODO tasks
+[2026-01-08T13:23:00.040Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T13:23:00.041Z] Timeframe Check: Now=923, Start=0, End=1439
+[2026-01-08T13:23:00.042Z] Recurrence Match: false (ONCE)
+[2026-01-08T13:23:00.043Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T13:23:00.043Z] Timeframe Check: Now=923, Start=0, End=1439
+[2026-01-08T13:23:00.044Z] Recurrence Match: true (DAILY)
+[2026-01-08T13:23:00.044Z] Checking Cron: * * * * *
+[2026-01-08T13:23:00.045Z] Cron matched! Sending notification...
+[2026-01-08T13:23:00.048Z] No subscription found for user
+[2026-01-08T13:24:00.027Z] [TaskRunner] Running Check at 15:24
+[2026-01-08T13:24:00.036Z] [TaskRunner] Found 2 TODO tasks
+[2026-01-08T13:24:00.037Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T13:24:00.038Z] Timeframe Check: Now=924, Start=0, End=1439
+[2026-01-08T13:24:00.039Z] Recurrence Match: false (ONCE)
+[2026-01-08T13:24:00.039Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T13:24:00.040Z] Timeframe Check: Now=924, Start=0, End=1439
+[2026-01-08T13:24:00.040Z] Recurrence Match: true (DAILY)
+[2026-01-08T13:24:00.041Z] Checking Cron: * * * * *
+[2026-01-08T13:24:00.042Z] Cron matched! Sending notification...
+[2026-01-08T13:24:00.047Z] No subscription found for user
+[2026-01-08T13:25:00.016Z] [TaskRunner] Running Check at 15:25
+[2026-01-08T13:25:00.024Z] [TaskRunner] Found 2 TODO tasks
+[2026-01-08T13:25:00.025Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T13:25:00.027Z] Timeframe Check: Now=925, Start=0, End=1439
+[2026-01-08T13:25:00.027Z] Recurrence Match: false (ONCE)
+[2026-01-08T13:25:00.028Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T13:25:00.029Z] Timeframe Check: Now=925, Start=0, End=1439
+[2026-01-08T13:25:00.029Z] Recurrence Match: true (DAILY)
+[2026-01-08T13:25:00.030Z] Checking Cron: * * * * *
+[2026-01-08T13:25:00.030Z] Cron matched! Sending notification...
+[2026-01-08T13:25:00.034Z] No subscription found for user
+[2026-01-08T13:26:00.016Z] [TaskRunner] Running Check at 15:26
+[2026-01-08T13:26:00.025Z] [TaskRunner] Found 2 TODO tasks
+[2026-01-08T13:26:00.026Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T13:26:00.027Z] Timeframe Check: Now=926, Start=0, End=1439
+[2026-01-08T13:26:00.027Z] Recurrence Match: false (ONCE)
+[2026-01-08T13:26:00.028Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T13:26:00.029Z] Timeframe Check: Now=926, Start=0, End=1439
+[2026-01-08T13:26:00.029Z] Recurrence Match: true (DAILY)
+[2026-01-08T13:26:00.030Z] Checking Cron: * * * * *
+[2026-01-08T13:26:00.031Z] Cron matched! Sending notification...
+[2026-01-08T13:26:00.036Z] No subscription found for user
+[2026-01-08T13:27:00.010Z] [TaskRunner] Running Check at 15:27
+[2026-01-08T13:27:00.018Z] [TaskRunner] Found 2 TODO tasks
+[2026-01-08T13:27:00.019Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T13:27:00.019Z] Timeframe Check: Now=927, Start=0, End=1439
+[2026-01-08T13:27:00.020Z] Recurrence Match: false (ONCE)
+[2026-01-08T13:27:00.020Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T13:27:00.021Z] Timeframe Check: Now=927, Start=0, End=1439
+[2026-01-08T13:27:00.021Z] Recurrence Match: true (DAILY)
+[2026-01-08T13:27:00.022Z] Checking Cron: * * * * *
+[2026-01-08T13:27:00.022Z] Cron matched! Sending notification...
+[2026-01-08T13:27:00.025Z] No subscription found for user
+[2026-01-08T13:28:00.028Z] [TaskRunner] Running Check at 15:28
+[2026-01-08T13:28:00.039Z] [TaskRunner] Found 2 TODO tasks
+[2026-01-08T13:28:00.040Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T13:28:00.041Z] Timeframe Check: Now=928, Start=0, End=1439
+[2026-01-08T13:28:00.041Z] Recurrence Match: false (ONCE)
+[2026-01-08T13:28:00.042Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T13:28:00.042Z] Timeframe Check: Now=928, Start=0, End=1439
+[2026-01-08T13:28:00.043Z] Recurrence Match: true (DAILY)
+[2026-01-08T13:28:00.044Z] Checking Cron: * * * * *
+[2026-01-08T13:28:00.044Z] Cron matched! Sending notification...
+[2026-01-08T13:28:00.049Z] No subscription found for user
+[2026-01-08T13:29:00.025Z] [TaskRunner] Running Check at 15:29
+[2026-01-08T13:29:00.035Z] [TaskRunner] Found 2 TODO tasks
+[2026-01-08T13:29:00.036Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T13:29:00.036Z] Timeframe Check: Now=929, Start=0, End=1439
+[2026-01-08T13:29:00.037Z] Recurrence Match: false (ONCE)
+[2026-01-08T13:29:00.037Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T13:29:00.038Z] Timeframe Check: Now=929, Start=0, End=1439
+[2026-01-08T13:29:00.038Z] Recurrence Match: true (DAILY)
+[2026-01-08T13:29:00.039Z] Checking Cron: * * * * *
+[2026-01-08T13:29:00.040Z] Cron matched! Sending notification...
+[2026-01-08T13:29:00.043Z] No subscription found for user
+[2026-01-08T13:30:00.021Z] [TaskRunner] Running Check at 15:30
+[2026-01-08T13:30:00.030Z] [TaskRunner] Found 2 TODO tasks
+[2026-01-08T13:30:00.031Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T13:30:00.031Z] Timeframe Check: Now=930, Start=0, End=1439
+[2026-01-08T13:30:00.032Z] Recurrence Match: false (ONCE)
+[2026-01-08T13:30:00.032Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T13:30:00.033Z] Timeframe Check: Now=930, Start=0, End=1439
+[2026-01-08T13:30:00.033Z] Recurrence Match: true (DAILY)
+[2026-01-08T13:30:00.034Z] Checking Cron: * * * * *
+[2026-01-08T13:30:00.034Z] Cron matched! Sending notification...
+[2026-01-08T13:30:00.039Z] No subscription found for user
+[2026-01-08T13:31:00.025Z] [TaskRunner] Running Check at 15:31
+[2026-01-08T13:31:00.035Z] [TaskRunner] Found 2 TODO tasks
+[2026-01-08T13:31:00.036Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T13:31:00.036Z] Timeframe Check: Now=931, Start=0, End=1439
+[2026-01-08T13:31:00.037Z] Recurrence Match: false (ONCE)
+[2026-01-08T13:31:00.038Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T13:31:00.039Z] Timeframe Check: Now=931, Start=0, End=1439
+[2026-01-08T13:31:00.039Z] Recurrence Match: true (DAILY)
+[2026-01-08T13:31:00.040Z] Checking Cron: * * * * *
+[2026-01-08T13:31:00.041Z] Cron matched! Sending notification...
+[2026-01-08T13:31:00.046Z] No subscription found for user
+[2026-01-08T13:32:00.025Z] [TaskRunner] Running Check at 15:32
+[2026-01-08T13:32:00.035Z] [TaskRunner] Found 2 TODO tasks
+[2026-01-08T13:32:00.036Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T13:32:00.037Z] Timeframe Check: Now=932, Start=0, End=1439
+[2026-01-08T13:32:00.038Z] Recurrence Match: false (ONCE)
+[2026-01-08T13:32:00.039Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T13:32:00.039Z] Timeframe Check: Now=932, Start=0, End=1439
+[2026-01-08T13:32:00.040Z] Recurrence Match: true (DAILY)
+[2026-01-08T13:32:00.041Z] Checking Cron: * * * * *
+[2026-01-08T13:32:00.041Z] Cron matched! Sending notification...
+[2026-01-08T13:32:00.045Z] No subscription found for user
+[2026-01-08T13:33:00.014Z] [TaskRunner] Running Check at 15:33
+[2026-01-08T13:33:00.024Z] [TaskRunner] Found 2 TODO tasks
+[2026-01-08T13:33:00.025Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T13:33:00.026Z] Timeframe Check: Now=933, Start=0, End=1439
+[2026-01-08T13:33:00.026Z] Recurrence Match: false (ONCE)
+[2026-01-08T13:33:00.027Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T13:33:00.027Z] Timeframe Check: Now=933, Start=0, End=1439
+[2026-01-08T13:33:00.028Z] Recurrence Match: true (DAILY)
+[2026-01-08T13:33:00.028Z] Checking Cron: * * * * *
+[2026-01-08T13:33:00.029Z] Cron matched! Sending notification...
+[2026-01-08T13:33:00.033Z] No subscription found for user
+[2026-01-08T13:34:00.028Z] [TaskRunner] Running Check at 15:34
+[2026-01-08T13:34:00.039Z] [TaskRunner] Found 2 TODO tasks
+[2026-01-08T13:34:00.040Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T13:34:00.041Z] Timeframe Check: Now=934, Start=0, End=1439
+[2026-01-08T13:34:00.042Z] Recurrence Match: false (ONCE)
+[2026-01-08T13:34:00.042Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T13:34:00.043Z] Timeframe Check: Now=934, Start=0, End=1439
+[2026-01-08T13:34:00.044Z] Recurrence Match: true (DAILY)
+[2026-01-08T13:34:00.044Z] Checking Cron: * * * * *
+[2026-01-08T13:34:00.045Z] Cron matched! Sending notification...
+[2026-01-08T13:34:00.049Z] No subscription found for user
+[2026-01-08T13:35:00.020Z] [TaskRunner] Running Check at 15:35
+[2026-01-08T13:35:00.030Z] [TaskRunner] Found 2 TODO tasks
+[2026-01-08T13:35:00.031Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T13:35:00.031Z] Timeframe Check: Now=935, Start=0, End=1439
+[2026-01-08T13:35:00.032Z] Recurrence Match: false (ONCE)
+[2026-01-08T13:35:00.033Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T13:35:00.034Z] Timeframe Check: Now=935, Start=0, End=1439
+[2026-01-08T13:35:00.034Z] Recurrence Match: true (DAILY)
+[2026-01-08T13:35:00.035Z] Checking Cron: * * * * *
+[2026-01-08T13:35:00.035Z] Cron matched! Sending notification...
+[2026-01-08T13:35:00.039Z] No subscription found for user
+[2026-01-08T13:36:00.027Z] [TaskRunner] Running Check at 15:36
+[2026-01-08T13:36:00.037Z] [TaskRunner] Found 2 TODO tasks
+[2026-01-08T13:36:00.038Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T13:36:00.039Z] Timeframe Check: Now=936, Start=0, End=1439
+[2026-01-08T13:36:00.039Z] Recurrence Match: false (ONCE)
+[2026-01-08T13:36:00.041Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T13:36:00.041Z] Timeframe Check: Now=936, Start=0, End=1439
+[2026-01-08T13:36:00.042Z] Recurrence Match: true (DAILY)
+[2026-01-08T13:36:00.042Z] Checking Cron: * * * * *
+[2026-01-08T13:36:00.043Z] Cron matched! Sending notification...
+[2026-01-08T13:36:00.046Z] No subscription found for user
+[2026-01-08T13:37:00.023Z] [TaskRunner] Running Check at 15:37
+[2026-01-08T13:37:00.034Z] [TaskRunner] Found 2 TODO tasks
+[2026-01-08T13:37:00.035Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T13:37:00.036Z] Timeframe Check: Now=937, Start=0, End=1439
+[2026-01-08T13:37:00.037Z] Recurrence Match: false (ONCE)
+[2026-01-08T13:37:00.038Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T13:37:00.039Z] Timeframe Check: Now=937, Start=0, End=1439
+[2026-01-08T13:37:00.040Z] Recurrence Match: true (DAILY)
+[2026-01-08T13:37:00.040Z] Checking Cron: * * * * *
+[2026-01-08T13:37:00.041Z] Cron matched! Sending notification...
+[2026-01-08T13:37:00.046Z] No subscription found for user
+[2026-01-08T13:38:00.018Z] [TaskRunner] Running Check at 15:38
+[2026-01-08T13:38:00.026Z] [TaskRunner] Found 2 TODO tasks
+[2026-01-08T13:38:00.027Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T13:38:00.028Z] Timeframe Check: Now=938, Start=0, End=1439
+[2026-01-08T13:38:00.029Z] Recurrence Match: false (ONCE)
+[2026-01-08T13:38:00.029Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T13:38:00.030Z] Timeframe Check: Now=938, Start=0, End=1439
+[2026-01-08T13:38:00.030Z] Recurrence Match: true (DAILY)
+[2026-01-08T13:38:00.031Z] Checking Cron: * * * * *
+[2026-01-08T13:38:00.031Z] Cron matched! Sending notification...
+[2026-01-08T13:38:00.035Z] No subscription found for user
+[2026-01-08T13:39:00.020Z] [TaskRunner] Running Check at 15:39
+[2026-01-08T13:39:00.028Z] [TaskRunner] Found 2 TODO tasks
+[2026-01-08T13:39:00.028Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T13:39:00.029Z] Timeframe Check: Now=939, Start=0, End=1439
+[2026-01-08T13:39:00.030Z] Recurrence Match: false (ONCE)
+[2026-01-08T13:39:00.031Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T13:39:00.031Z] Timeframe Check: Now=939, Start=0, End=1439
+[2026-01-08T13:39:00.032Z] Recurrence Match: true (DAILY)
+[2026-01-08T13:39:00.032Z] Checking Cron: * * * * *
+[2026-01-08T13:39:00.033Z] Cron matched! Sending notification...
+[2026-01-08T13:39:00.036Z] No subscription found for user
+[2026-01-08T13:40:00.018Z] [TaskRunner] Running Check at 15:40
+[2026-01-08T13:40:00.028Z] [TaskRunner] Found 2 TODO tasks
+[2026-01-08T13:40:00.029Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T13:40:00.030Z] Timeframe Check: Now=940, Start=0, End=1439
+[2026-01-08T13:40:00.031Z] Recurrence Match: false (ONCE)
+[2026-01-08T13:40:00.031Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T13:40:00.032Z] Timeframe Check: Now=940, Start=0, End=1439
+[2026-01-08T13:40:00.032Z] Recurrence Match: true (DAILY)
+[2026-01-08T13:40:00.033Z] Checking Cron: * * * * *
+[2026-01-08T13:40:00.033Z] Cron matched! Sending notification...
+[2026-01-08T13:40:00.037Z] No subscription found for user
+[2026-01-08T13:41:00.021Z] [TaskRunner] Running Check at 15:41
+[2026-01-08T13:41:00.032Z] [TaskRunner] Found 2 TODO tasks
+[2026-01-08T13:41:00.033Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T13:41:00.034Z] Timeframe Check: Now=941, Start=0, End=1439
+[2026-01-08T13:41:00.034Z] Recurrence Match: false (ONCE)
+[2026-01-08T13:41:00.034Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T13:41:00.035Z] Timeframe Check: Now=941, Start=0, End=1439
+[2026-01-08T13:41:00.036Z] Recurrence Match: true (DAILY)
+[2026-01-08T13:41:00.036Z] Checking Cron: * * * * *
+[2026-01-08T13:41:00.037Z] Cron matched! Sending notification...
+[2026-01-08T13:41:00.041Z] No subscription found for user
+[2026-01-08T13:42:00.020Z] [TaskRunner] Running Check at 15:42
+[2026-01-08T13:42:00.029Z] [TaskRunner] Found 2 TODO tasks
+[2026-01-08T13:42:00.030Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T13:42:00.031Z] Timeframe Check: Now=942, Start=0, End=1439
+[2026-01-08T13:42:00.031Z] Recurrence Match: false (ONCE)
+[2026-01-08T13:42:00.032Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T13:42:00.033Z] Timeframe Check: Now=942, Start=0, End=1439
+[2026-01-08T13:42:00.033Z] Recurrence Match: true (DAILY)
+[2026-01-08T13:42:00.034Z] Checking Cron: * * * * *
+[2026-01-08T13:42:00.034Z] Cron matched! Sending notification...
+[2026-01-08T13:42:00.038Z] No subscription found for user
+[2026-01-08T13:43:00.010Z] [TaskRunner] Running Check at 15:43
+[2026-01-08T13:43:00.018Z] [TaskRunner] Found 2 TODO tasks
+[2026-01-08T13:43:00.019Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T13:43:00.020Z] Timeframe Check: Now=943, Start=0, End=1439
+[2026-01-08T13:43:00.021Z] Recurrence Match: false (ONCE)
+[2026-01-08T13:43:00.021Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T13:43:00.022Z] Timeframe Check: Now=943, Start=0, End=1439
+[2026-01-08T13:43:00.023Z] Recurrence Match: true (DAILY)
+[2026-01-08T13:43:00.024Z] Checking Cron: * * * * *
+[2026-01-08T13:43:00.024Z] Cron matched! Sending notification...
+[2026-01-08T13:43:00.027Z] No subscription found for user
+[2026-01-08T13:44:00.032Z] [TaskRunner] Running Check at 15:44
+[2026-01-08T13:44:00.040Z] [TaskRunner] Found 2 TODO tasks
+[2026-01-08T13:44:00.041Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T13:44:00.041Z] Timeframe Check: Now=944, Start=0, End=1439
+[2026-01-08T13:44:00.042Z] Recurrence Match: false (ONCE)
+[2026-01-08T13:44:00.042Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T13:44:00.043Z] Timeframe Check: Now=944, Start=0, End=1439
+[2026-01-08T13:44:00.044Z] Recurrence Match: true (DAILY)
+[2026-01-08T13:44:00.044Z] Checking Cron: * * * * *
+[2026-01-08T13:44:00.045Z] Cron matched! Sending notification...
+[2026-01-08T13:44:00.048Z] No subscription found for user
+[2026-01-08T13:45:00.017Z] [TaskRunner] Running Check at 15:45
+[2026-01-08T13:45:00.026Z] [TaskRunner] Found 2 TODO tasks
+[2026-01-08T13:45:00.026Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T13:45:00.027Z] Timeframe Check: Now=945, Start=0, End=1439
+[2026-01-08T13:45:00.028Z] Recurrence Match: false (ONCE)
+[2026-01-08T13:45:00.028Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T13:45:00.029Z] Timeframe Check: Now=945, Start=0, End=1439
+[2026-01-08T13:45:00.029Z] Recurrence Match: true (DAILY)
+[2026-01-08T13:45:00.030Z] Checking Cron: * * * * *
+[2026-01-08T13:45:00.030Z] Cron matched! Sending notification...
+[2026-01-08T13:45:00.034Z] No subscription found for user
+[2026-01-08T13:46:00.018Z] [TaskRunner] Running Check at 15:46
+[2026-01-08T13:46:00.028Z] [TaskRunner] Found 2 TODO tasks
+[2026-01-08T13:46:00.029Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T13:46:00.030Z] Timeframe Check: Now=946, Start=0, End=1439
+[2026-01-08T13:46:00.030Z] Recurrence Match: false (ONCE)
+[2026-01-08T13:46:00.031Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T13:46:00.032Z] Timeframe Check: Now=946, Start=0, End=1439
+[2026-01-08T13:46:00.032Z] Recurrence Match: true (DAILY)
+[2026-01-08T13:46:00.033Z] Checking Cron: * * * * *
+[2026-01-08T13:46:00.033Z] Cron matched! Sending notification...
+[2026-01-08T13:46:00.037Z] No subscription found for user
+[2026-01-08T13:47:00.030Z] [TaskRunner] Running Check at 15:47
+[2026-01-08T13:47:00.041Z] [TaskRunner] Found 2 TODO tasks
+[2026-01-08T13:47:00.041Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T13:47:00.042Z] Timeframe Check: Now=947, Start=0, End=1439
+[2026-01-08T13:47:00.042Z] Recurrence Match: false (ONCE)
+[2026-01-08T13:47:00.043Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T13:47:00.043Z] Timeframe Check: Now=947, Start=0, End=1439
+[2026-01-08T13:47:00.044Z] Recurrence Match: true (DAILY)
+[2026-01-08T13:47:00.044Z] Checking Cron: * * * * *
+[2026-01-08T13:47:00.045Z] Cron matched! Sending notification...
+[2026-01-08T13:47:00.049Z] No subscription found for user
+[2026-01-08T13:48:00.023Z] [TaskRunner] Running Check at 15:48
+[2026-01-08T13:48:00.033Z] [TaskRunner] Found 2 TODO tasks
+[2026-01-08T13:48:00.034Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T13:48:00.035Z] Timeframe Check: Now=948, Start=0, End=1439
+[2026-01-08T13:48:00.035Z] Recurrence Match: false (ONCE)
+[2026-01-08T13:48:00.036Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T13:48:00.036Z] Timeframe Check: Now=948, Start=0, End=1439
+[2026-01-08T13:48:00.037Z] Recurrence Match: true (DAILY)
+[2026-01-08T13:48:00.037Z] Checking Cron: * * * * *
+[2026-01-08T13:48:00.038Z] Cron matched! Sending notification...
+[2026-01-08T13:48:00.041Z] No subscription found for user
+[2026-01-08T13:49:00.027Z] [TaskRunner] Running Check at 15:49
+[2026-01-08T13:49:00.037Z] [TaskRunner] Found 2 TODO tasks
+[2026-01-08T13:49:00.038Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T13:49:00.039Z] Timeframe Check: Now=949, Start=0, End=1439
+[2026-01-08T13:49:00.039Z] Recurrence Match: false (ONCE)
+[2026-01-08T13:49:00.040Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T13:49:00.040Z] Timeframe Check: Now=949, Start=0, End=1439
+[2026-01-08T13:49:00.041Z] Recurrence Match: true (DAILY)
+[2026-01-08T13:49:00.042Z] Checking Cron: * * * * *
+[2026-01-08T13:49:00.043Z] Cron matched! Sending notification...
+[2026-01-08T13:49:00.047Z] No subscription found for user
+[2026-01-08T13:50:00.016Z] [TaskRunner] Running Check at 15:50
+[2026-01-08T13:50:00.026Z] [TaskRunner] Found 2 TODO tasks
+[2026-01-08T13:50:00.027Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T13:50:00.028Z] Timeframe Check: Now=950, Start=0, End=1439
+[2026-01-08T13:50:00.028Z] Recurrence Match: false (ONCE)
+[2026-01-08T13:50:00.029Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T13:50:00.029Z] Timeframe Check: Now=950, Start=0, End=1439
+[2026-01-08T13:50:00.030Z] Recurrence Match: true (DAILY)
+[2026-01-08T13:50:00.030Z] Checking Cron: * * * * *
+[2026-01-08T13:50:00.031Z] Cron matched! Sending notification...
+[2026-01-08T13:50:00.034Z] No subscription found for user
+[2026-01-08T13:51:00.022Z] [TaskRunner] Running Check at 15:51
+[2026-01-08T13:51:00.033Z] [TaskRunner] Found 2 TODO tasks
+[2026-01-08T13:51:00.034Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T13:51:00.035Z] Timeframe Check: Now=951, Start=0, End=1439
+[2026-01-08T13:51:00.036Z] Recurrence Match: false (ONCE)
+[2026-01-08T13:51:00.036Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T13:51:00.038Z] Timeframe Check: Now=951, Start=0, End=1439
+[2026-01-08T13:51:00.038Z] Recurrence Match: true (DAILY)
+[2026-01-08T13:51:00.039Z] Checking Cron: * * * * *
+[2026-01-08T13:51:00.040Z] Cron matched! Sending notification...
+[2026-01-08T13:51:00.044Z] No subscription found for user
+[2026-01-08T13:52:00.015Z] [TaskRunner] Running Check at 15:52
+[2026-01-08T13:52:00.027Z] [TaskRunner] Found 2 TODO tasks
+[2026-01-08T13:52:00.028Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T13:52:00.029Z] Timeframe Check: Now=952, Start=0, End=1439
+[2026-01-08T13:52:00.030Z] Recurrence Match: false (ONCE)
+[2026-01-08T13:52:00.031Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T13:52:00.032Z] Timeframe Check: Now=952, Start=0, End=1439
+[2026-01-08T13:52:00.032Z] Recurrence Match: true (DAILY)
+[2026-01-08T13:52:00.033Z] Checking Cron: * * * * *
+[2026-01-08T13:52:00.034Z] Cron matched! Sending notification...
+[2026-01-08T13:52:00.039Z] No subscription found for user
+[2026-01-08T13:53:00.026Z] [TaskRunner] Running Check at 15:53
+[2026-01-08T13:53:00.037Z] [TaskRunner] Found 2 TODO tasks
+[2026-01-08T13:53:00.038Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T13:53:00.038Z] Timeframe Check: Now=953, Start=0, End=1439
+[2026-01-08T13:53:00.039Z] Recurrence Match: false (ONCE)
+[2026-01-08T13:53:00.039Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T13:53:00.040Z] Timeframe Check: Now=953, Start=0, End=1439
+[2026-01-08T13:53:00.041Z] Recurrence Match: true (DAILY)
+[2026-01-08T13:53:00.041Z] Checking Cron: * * * * *
+[2026-01-08T13:53:00.042Z] Cron matched! Sending notification...
+[2026-01-08T13:53:00.046Z] No subscription found for user
+[2026-01-08T13:54:00.021Z] [TaskRunner] Running Check at 15:54
+[2026-01-08T13:54:00.030Z] [TaskRunner] Found 2 TODO tasks
+[2026-01-08T13:54:00.031Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T13:54:00.032Z] Timeframe Check: Now=954, Start=0, End=1439
+[2026-01-08T13:54:00.033Z] Recurrence Match: false (ONCE)
+[2026-01-08T13:54:00.033Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T13:54:00.034Z] Timeframe Check: Now=954, Start=0, End=1439
+[2026-01-08T13:54:00.035Z] Recurrence Match: true (DAILY)
+[2026-01-08T13:54:00.035Z] Checking Cron: * * * * *
+[2026-01-08T13:54:00.036Z] Cron matched! Sending notification...
+[2026-01-08T13:54:00.039Z] No subscription found for user
+[2026-01-08T13:55:00.016Z] [TaskRunner] Running Check at 15:55
+[2026-01-08T13:55:00.026Z] [TaskRunner] Found 2 TODO tasks
+[2026-01-08T13:55:00.027Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T13:55:00.028Z] Timeframe Check: Now=955, Start=0, End=1439
+[2026-01-08T13:55:00.028Z] Recurrence Match: false (ONCE)
+[2026-01-08T13:55:00.029Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T13:55:00.030Z] Timeframe Check: Now=955, Start=0, End=1439
+[2026-01-08T13:55:00.031Z] Recurrence Match: true (DAILY)
+[2026-01-08T13:55:00.031Z] Checking Cron: * * * * *
+[2026-01-08T13:55:00.032Z] Cron matched! Sending notification...
+[2026-01-08T13:55:00.036Z] No subscription found for user
+[2026-01-08T13:56:00.029Z] [TaskRunner] Running Check at 15:56
+[2026-01-08T13:56:00.039Z] [TaskRunner] Found 2 TODO tasks
+[2026-01-08T13:56:00.040Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T13:56:00.040Z] Timeframe Check: Now=956, Start=0, End=1439
+[2026-01-08T13:56:00.041Z] Recurrence Match: false (ONCE)
+[2026-01-08T13:56:00.042Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T13:56:00.042Z] Timeframe Check: Now=956, Start=0, End=1439
+[2026-01-08T13:56:00.043Z] Recurrence Match: true (DAILY)
+[2026-01-08T13:56:00.043Z] Checking Cron: * * * * *
+[2026-01-08T13:56:00.044Z] Cron matched! Sending notification...
+[2026-01-08T13:56:00.048Z] No subscription found for user
+[2026-01-08T13:57:00.030Z] [TaskRunner] Running Check at 15:57
+[2026-01-08T13:57:00.040Z] [TaskRunner] Found 2 TODO tasks
+[2026-01-08T13:57:00.041Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T13:57:00.041Z] Timeframe Check: Now=957, Start=0, End=1439
+[2026-01-08T13:57:00.042Z] Recurrence Match: false (ONCE)
+[2026-01-08T13:57:00.042Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T13:57:00.043Z] Timeframe Check: Now=957, Start=0, End=1439
+[2026-01-08T13:57:00.043Z] Recurrence Match: true (DAILY)
+[2026-01-08T13:57:00.044Z] Checking Cron: * * * * *
+[2026-01-08T13:57:00.044Z] Cron matched! Sending notification...
+[2026-01-08T13:57:00.048Z] No subscription found for user
+[2026-01-08T13:58:00.017Z] [TaskRunner] Running Check at 15:58
+[2026-01-08T13:58:00.028Z] [TaskRunner] Found 2 TODO tasks
+[2026-01-08T13:58:00.029Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T13:58:00.030Z] Timeframe Check: Now=958, Start=0, End=1439
+[2026-01-08T13:58:00.031Z] Recurrence Match: false (ONCE)
+[2026-01-08T13:58:00.032Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T13:58:00.033Z] Timeframe Check: Now=958, Start=0, End=1439
+[2026-01-08T13:58:00.033Z] Recurrence Match: true (DAILY)
+[2026-01-08T13:58:00.034Z] Checking Cron: * * * * *
+[2026-01-08T13:58:00.035Z] Cron matched! Sending notification...
+[2026-01-08T13:58:00.038Z] No subscription found for user
+[2026-01-08T13:59:00.022Z] [TaskRunner] Running Check at 15:59
+[2026-01-08T13:59:00.033Z] [TaskRunner] Found 2 TODO tasks
+[2026-01-08T13:59:00.034Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T13:59:00.035Z] Timeframe Check: Now=959, Start=0, End=1439
+[2026-01-08T13:59:00.035Z] Recurrence Match: false (ONCE)
+[2026-01-08T13:59:00.035Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T13:59:00.036Z] Timeframe Check: Now=959, Start=0, End=1439
+[2026-01-08T13:59:00.037Z] Recurrence Match: true (DAILY)
+[2026-01-08T13:59:00.037Z] Checking Cron: * * * * *
+[2026-01-08T13:59:00.039Z] Cron matched! Sending notification...
+[2026-01-08T13:59:00.042Z] No subscription found for user
+[2026-01-08T14:00:00.026Z] [TaskRunner] Running Check at 16:0
+[2026-01-08T14:00:00.036Z] [TaskRunner] Found 2 TODO tasks
+[2026-01-08T14:00:00.037Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T14:00:00.038Z] Timeframe Check: Now=960, Start=0, End=1439
+[2026-01-08T14:00:00.038Z] Recurrence Match: false (ONCE)
+[2026-01-08T14:00:00.039Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T14:00:00.040Z] Timeframe Check: Now=960, Start=0, End=1439
+[2026-01-08T14:00:00.040Z] Recurrence Match: true (DAILY)
+[2026-01-08T14:00:00.041Z] Checking Cron: * * * * *
+[2026-01-08T14:00:00.041Z] Cron matched! Sending notification...
+[2026-01-08T14:00:00.044Z] No subscription found for user
+[2026-01-08T14:01:00.024Z] [TaskRunner] Running Check at 16:1
+[2026-01-08T14:01:00.032Z] [TaskRunner] Found 2 TODO tasks
+[2026-01-08T14:01:00.033Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T14:01:00.034Z] Timeframe Check: Now=961, Start=0, End=1439
+[2026-01-08T14:01:00.034Z] Recurrence Match: false (ONCE)
+[2026-01-08T14:01:00.035Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T14:01:00.036Z] Timeframe Check: Now=961, Start=0, End=1439
+[2026-01-08T14:01:00.037Z] Recurrence Match: true (DAILY)
+[2026-01-08T14:01:00.038Z] Checking Cron: * * * * *
+[2026-01-08T14:01:00.038Z] Cron matched! Sending notification...
+[2026-01-08T14:01:00.041Z] No subscription found for user
+[2026-01-08T14:02:00.020Z] [TaskRunner] Running Check at 16:2
+[2026-01-08T14:02:00.029Z] [TaskRunner] Found 2 TODO tasks
+[2026-01-08T14:02:00.030Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T14:02:00.031Z] Timeframe Check: Now=962, Start=0, End=1439
+[2026-01-08T14:02:00.031Z] Recurrence Match: false (ONCE)
+[2026-01-08T14:02:00.032Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T14:02:00.033Z] Timeframe Check: Now=962, Start=0, End=1439
+[2026-01-08T14:02:00.033Z] Recurrence Match: true (DAILY)
+[2026-01-08T14:02:00.034Z] Checking Cron: * * * * *
+[2026-01-08T14:02:00.034Z] Cron matched! Sending notification...
+[2026-01-08T14:02:00.037Z] No subscription found for user
+[2026-01-08T14:03:00.016Z] [TaskRunner] Running Check at 16:3
+[2026-01-08T14:03:00.026Z] [TaskRunner] Found 2 TODO tasks
+[2026-01-08T14:03:00.027Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T14:03:00.027Z] Timeframe Check: Now=963, Start=0, End=1439
+[2026-01-08T14:03:00.028Z] Recurrence Match: false (ONCE)
+[2026-01-08T14:03:00.028Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T14:03:00.029Z] Timeframe Check: Now=963, Start=0, End=1439
+[2026-01-08T14:03:00.029Z] Recurrence Match: true (DAILY)
+[2026-01-08T14:03:00.030Z] Checking Cron: * * * * *
+[2026-01-08T14:03:00.031Z] Cron matched! Sending notification...
+[2026-01-08T14:03:00.034Z] No subscription found for user
+[2026-01-08T14:04:00.023Z] [TaskRunner] Running Check at 16:4
+[2026-01-08T14:04:00.034Z] [TaskRunner] Found 2 TODO tasks
+[2026-01-08T14:04:00.035Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T14:04:00.036Z] Timeframe Check: Now=964, Start=0, End=1439
+[2026-01-08T14:04:00.036Z] Recurrence Match: false (ONCE)
+[2026-01-08T14:04:00.037Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T14:04:00.038Z] Timeframe Check: Now=964, Start=0, End=1439
+[2026-01-08T14:04:00.038Z] Recurrence Match: true (DAILY)
+[2026-01-08T14:04:00.039Z] Checking Cron: * * * * *
+[2026-01-08T14:04:00.039Z] Cron matched! Sending notification...
+[2026-01-08T14:04:00.042Z] No subscription found for user
+[2026-01-08T14:05:00.024Z] [TaskRunner] Running Check at 16:5
+[2026-01-08T14:05:00.033Z] [TaskRunner] Found 2 TODO tasks
+[2026-01-08T14:05:00.034Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T14:05:00.035Z] Timeframe Check: Now=965, Start=0, End=1439
+[2026-01-08T14:05:00.035Z] Recurrence Match: false (ONCE)
+[2026-01-08T14:05:00.035Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T14:05:00.036Z] Timeframe Check: Now=965, Start=0, End=1439
+[2026-01-08T14:05:00.036Z] Recurrence Match: true (DAILY)
+[2026-01-08T14:05:00.037Z] Checking Cron: * * * * *
+[2026-01-08T14:05:00.037Z] Cron matched! Sending notification...
+[2026-01-08T14:05:00.040Z] No subscription found for user
+[2026-01-08T14:06:00.017Z] [TaskRunner] Running Check at 16:6
+[2026-01-08T14:06:00.027Z] [TaskRunner] Found 2 TODO tasks
+[2026-01-08T14:06:00.027Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T14:06:00.028Z] Timeframe Check: Now=966, Start=0, End=1439
+[2026-01-08T14:06:00.029Z] Recurrence Match: false (ONCE)
+[2026-01-08T14:06:00.030Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T14:06:00.030Z] Timeframe Check: Now=966, Start=0, End=1439
+[2026-01-08T14:06:00.031Z] Recurrence Match: true (DAILY)
+[2026-01-08T14:06:00.031Z] Checking Cron: * * * * *
+[2026-01-08T14:06:00.032Z] Cron matched! Sending notification...
+[2026-01-08T14:06:00.037Z] No subscription found for user
+[2026-01-08T14:07:00.026Z] [TaskRunner] Running Check at 16:7
+[2026-01-08T14:07:00.036Z] [TaskRunner] Found 2 TODO tasks
+[2026-01-08T14:07:00.037Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T14:07:00.038Z] Timeframe Check: Now=967, Start=0, End=1439
+[2026-01-08T14:07:00.038Z] Recurrence Match: false (ONCE)
+[2026-01-08T14:07:00.039Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T14:07:00.040Z] Timeframe Check: Now=967, Start=0, End=1439
+[2026-01-08T14:07:00.040Z] Recurrence Match: true (DAILY)
+[2026-01-08T14:07:00.041Z] Checking Cron: * * * * *
+[2026-01-08T14:07:00.042Z] Cron matched! Sending notification...
+[2026-01-08T14:07:00.046Z] No subscription found for user
+[2026-01-08T14:08:00.019Z] [TaskRunner] Running Check at 16:8
+[2026-01-08T14:08:00.029Z] [TaskRunner] Found 2 TODO tasks
+[2026-01-08T14:08:00.030Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T14:08:00.031Z] Timeframe Check: Now=968, Start=0, End=1439
+[2026-01-08T14:08:00.031Z] Recurrence Match: false (ONCE)
+[2026-01-08T14:08:00.032Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T14:08:00.032Z] Timeframe Check: Now=968, Start=0, End=1439
+[2026-01-08T14:08:00.033Z] Recurrence Match: true (DAILY)
+[2026-01-08T14:08:00.033Z] Checking Cron: * * * * *
+[2026-01-08T14:08:00.034Z] Cron matched! Sending notification...
+[2026-01-08T14:08:00.037Z] No subscription found for user
+[2026-01-08T14:09:00.024Z] [TaskRunner] Running Check at 16:9
+[2026-01-08T14:09:00.036Z] [TaskRunner] Found 2 TODO tasks
+[2026-01-08T14:09:00.037Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T14:09:00.038Z] Timeframe Check: Now=969, Start=0, End=1439
+[2026-01-08T14:09:00.039Z] Recurrence Match: false (ONCE)
+[2026-01-08T14:09:00.039Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T14:09:00.040Z] Timeframe Check: Now=969, Start=0, End=1439
+[2026-01-08T14:09:00.041Z] Recurrence Match: true (DAILY)
+[2026-01-08T14:09:00.041Z] Checking Cron: * * * * *
+[2026-01-08T14:09:00.042Z] Cron matched! Sending notification...
+[2026-01-08T14:09:00.048Z] No subscription found for user
+[2026-01-08T14:10:00.023Z] [TaskRunner] Running Check at 16:10
+[2026-01-08T14:10:00.033Z] [TaskRunner] Found 2 TODO tasks
+[2026-01-08T14:10:00.034Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T14:10:00.035Z] Timeframe Check: Now=970, Start=0, End=1439
+[2026-01-08T14:10:00.035Z] Recurrence Match: false (ONCE)
+[2026-01-08T14:10:00.036Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T14:10:00.036Z] Timeframe Check: Now=970, Start=0, End=1439
+[2026-01-08T14:10:00.037Z] Recurrence Match: true (DAILY)
+[2026-01-08T14:10:00.038Z] Checking Cron: * * * * *
+[2026-01-08T14:10:00.038Z] Cron matched! Sending notification...
+[2026-01-08T14:10:00.043Z] No subscription found for user
+[2026-01-08T14:11:00.031Z] [TaskRunner] Running Check at 16:11
+[2026-01-08T14:11:00.043Z] [TaskRunner] Found 2 TODO tasks
+[2026-01-08T14:11:00.043Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T14:11:00.044Z] Timeframe Check: Now=971, Start=0, End=1439
+[2026-01-08T14:11:00.045Z] Recurrence Match: false (ONCE)
+[2026-01-08T14:11:00.045Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T14:11:00.046Z] Timeframe Check: Now=971, Start=0, End=1439
+[2026-01-08T14:11:00.046Z] Recurrence Match: true (DAILY)
+[2026-01-08T14:11:00.047Z] Checking Cron: * * * * *
+[2026-01-08T14:11:00.047Z] Cron matched! Sending notification...
+[2026-01-08T14:11:00.050Z] No subscription found for user
+[2026-01-08T14:12:00.029Z] [TaskRunner] Running Check at 16:12
+[2026-01-08T14:12:00.040Z] [TaskRunner] Found 2 TODO tasks
+[2026-01-08T14:12:00.040Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T14:12:00.041Z] Timeframe Check: Now=972, Start=0, End=1439
+[2026-01-08T14:12:00.041Z] Recurrence Match: false (ONCE)
+[2026-01-08T14:12:00.042Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T14:12:00.042Z] Timeframe Check: Now=972, Start=0, End=1439
+[2026-01-08T14:12:00.043Z] Recurrence Match: true (DAILY)
+[2026-01-08T14:12:00.043Z] Checking Cron: * * * * *
+[2026-01-08T14:12:00.043Z] Cron matched! Sending notification...
+[2026-01-08T14:12:00.047Z] No subscription found for user
+[2026-01-08T14:13:00.030Z] [TaskRunner] Running Check at 16:13
+[2026-01-08T14:13:00.040Z] [TaskRunner] Found 2 TODO tasks
+[2026-01-08T14:13:00.041Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T14:13:00.042Z] Timeframe Check: Now=973, Start=0, End=1439
+[2026-01-08T14:13:00.042Z] Recurrence Match: false (ONCE)
+[2026-01-08T14:13:00.043Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T14:13:00.043Z] Timeframe Check: Now=973, Start=0, End=1439
+[2026-01-08T14:13:00.044Z] Recurrence Match: true (DAILY)
+[2026-01-08T14:13:00.045Z] Checking Cron: * * * * *
+[2026-01-08T14:13:00.045Z] Cron matched! Sending notification...
+[2026-01-08T14:13:00.049Z] No subscription found for user
+[2026-01-08T14:14:00.022Z] [TaskRunner] Running Check at 16:14
+[2026-01-08T14:14:00.030Z] [TaskRunner] Found 2 TODO tasks
+[2026-01-08T14:14:00.030Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T14:14:00.031Z] Timeframe Check: Now=974, Start=0, End=1439
+[2026-01-08T14:14:00.031Z] Recurrence Match: false (ONCE)
+[2026-01-08T14:14:00.032Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T14:14:00.032Z] Timeframe Check: Now=974, Start=0, End=1439
+[2026-01-08T14:14:00.033Z] Recurrence Match: true (DAILY)
+[2026-01-08T14:14:00.034Z] Checking Cron: * * * * *
+[2026-01-08T14:14:00.034Z] Cron matched! Sending notification...
+[2026-01-08T14:14:00.037Z] No subscription found for user
+[2026-01-08T14:15:00.017Z] [TaskRunner] Running Check at 16:15
+[2026-01-08T14:15:00.028Z] [TaskRunner] Found 2 TODO tasks
+[2026-01-08T14:15:00.028Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T14:15:00.029Z] Timeframe Check: Now=975, Start=0, End=1439
+[2026-01-08T14:15:00.029Z] Recurrence Match: false (ONCE)
+[2026-01-08T14:15:00.030Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T14:15:00.030Z] Timeframe Check: Now=975, Start=0, End=1439
+[2026-01-08T14:15:00.031Z] Recurrence Match: true (DAILY)
+[2026-01-08T14:15:00.031Z] Checking Cron: * * * * *
+[2026-01-08T14:15:00.032Z] Cron matched! Sending notification...
+[2026-01-08T14:15:00.036Z] No subscription found for user
+[2026-01-08T14:16:00.025Z] [TaskRunner] Running Check at 16:16
+[2026-01-08T14:16:00.038Z] [TaskRunner] Found 2 TODO tasks
+[2026-01-08T14:16:00.038Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T14:16:00.039Z] Timeframe Check: Now=976, Start=0, End=1439
+[2026-01-08T14:16:00.040Z] Recurrence Match: false (ONCE)
+[2026-01-08T14:16:00.040Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T14:16:00.041Z] Timeframe Check: Now=976, Start=0, End=1439
+[2026-01-08T14:16:00.042Z] Recurrence Match: true (DAILY)
+[2026-01-08T14:16:00.042Z] Checking Cron: * * * * *
+[2026-01-08T14:16:00.043Z] Cron matched! Sending notification...
+[2026-01-08T14:16:00.046Z] No subscription found for user
+[2026-01-08T14:17:00.030Z] [TaskRunner] Running Check at 16:17
+[2026-01-08T14:17:00.052Z] [TaskRunner] Found 2 TODO tasks
+[2026-01-08T14:17:00.053Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T14:17:00.054Z] Timeframe Check: Now=977, Start=0, End=1439
+[2026-01-08T14:17:00.055Z] Recurrence Match: false (ONCE)
+[2026-01-08T14:17:00.056Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T14:17:00.056Z] Timeframe Check: Now=977, Start=0, End=1439
+[2026-01-08T14:17:00.057Z] Recurrence Match: true (DAILY)
+[2026-01-08T14:17:00.058Z] Checking Cron: * * * * *
+[2026-01-08T14:17:00.059Z] Cron matched! Sending notification...
+[2026-01-08T14:17:00.064Z] No subscription found for user
+[2026-01-08T14:18:00.029Z] [TaskRunner] Running Check at 16:18
+[2026-01-08T14:18:00.041Z] [TaskRunner] Found 2 TODO tasks
+[2026-01-08T14:18:00.042Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T14:18:00.043Z] Timeframe Check: Now=978, Start=0, End=1439
+[2026-01-08T14:18:00.044Z] Recurrence Match: false (ONCE)
+[2026-01-08T14:18:00.044Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T14:18:00.045Z] Timeframe Check: Now=978, Start=0, End=1439
+[2026-01-08T14:18:00.047Z] Recurrence Match: true (DAILY)
+[2026-01-08T14:18:00.047Z] Checking Cron: * * * * *
+[2026-01-08T14:18:00.048Z] Cron matched! Sending notification...
+[2026-01-08T14:18:00.052Z] No subscription found for user
+[2026-01-08T14:19:00.018Z] [TaskRunner] Running Check at 16:19
+[2026-01-08T14:19:00.029Z] [TaskRunner] Found 1 TODO tasks
+[2026-01-08T14:19:00.030Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T14:19:00.030Z] Timeframe Check: Now=979, Start=0, End=1439
+[2026-01-08T14:19:00.031Z] Recurrence Match: false (ONCE)
+[2026-01-08T14:20:00.021Z] [TaskRunner] Running Check at 16:20
+[2026-01-08T14:20:00.035Z] [TaskRunner] Found 1 TODO tasks
+[2026-01-08T14:20:00.038Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T14:20:00.038Z] Timeframe Check: Now=980, Start=0, End=1439
+[2026-01-08T14:20:00.039Z] Recurrence Match: false (ONCE)
+[2026-01-08T14:21:00.031Z] [TaskRunner] Running Check at 16:21
+[2026-01-08T14:21:00.040Z] [TaskRunner] Found 1 TODO tasks
+[2026-01-08T14:21:00.041Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T14:21:00.042Z] Timeframe Check: Now=981, Start=0, End=1439
+[2026-01-08T14:21:00.043Z] Recurrence Match: false (ONCE)
+[2026-01-08T14:22:00.021Z] [TaskRunner] Running Check at 16:22
+[2026-01-08T14:22:00.031Z] [TaskRunner] Found 1 TODO tasks
+[2026-01-08T14:22:00.032Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T14:22:00.033Z] Timeframe Check: Now=982, Start=0, End=1439
+[2026-01-08T14:22:00.033Z] Recurrence Match: false (ONCE)
+[2026-01-08T14:23:00.033Z] [TaskRunner] Running Check at 16:23
+[2026-01-08T14:23:00.042Z] [TaskRunner] Found 1 TODO tasks
+[2026-01-08T14:23:00.043Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T14:23:00.044Z] Timeframe Check: Now=983, Start=0, End=1439
+[2026-01-08T14:23:00.045Z] Recurrence Match: false (ONCE)
+[2026-01-08T14:24:00.018Z] [TaskRunner] Running Check at 16:24
+[2026-01-08T14:24:00.029Z] [TaskRunner] Found 1 TODO tasks
+[2026-01-08T14:24:00.030Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T14:24:00.031Z] Timeframe Check: Now=984, Start=0, End=1439
+[2026-01-08T14:24:00.032Z] Recurrence Match: false (ONCE)
+[2026-01-08T14:25:00.028Z] [TaskRunner] Running Check at 16:25
+[2026-01-08T14:25:00.054Z] [TaskRunner] Found 5 TODO tasks
+[2026-01-08T14:25:00.056Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T14:25:00.057Z] Timeframe Check: Now=985, Start=0, End=1439
+[2026-01-08T14:25:00.057Z] Recurrence Match: false (ONCE)
+[2026-01-08T14:25:00.058Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T14:25:00.058Z] Timeframe Check: Now=985, Start=0, End=1439
+[2026-01-08T14:25:00.059Z] Recurrence Match: true (DAILY)
+[2026-01-08T14:25:00.060Z] Checking Cron: * * * * *
+[2026-01-08T14:25:00.060Z] Cron matched! Sending notification...
+[2026-01-08T14:25:00.064Z] No subscription found for user
+[2026-01-08T14:25:00.065Z] Checking Task: fdads (ID: 695d45523d6968bda34b3075)
+[2026-01-08T14:25:00.065Z] Timeframe Check: Now=985, Start=0, End=959
+[2026-01-08T14:25:00.066Z] Skipping - Outside timeframe
+[2026-01-08T14:25:00.066Z] Checking Task: шеаяь (ID: 695fba131648ca4aca9bd415)
+[2026-01-08T14:25:00.067Z] Timeframe Check: Now=985, Start=0, End=1439
+[2026-01-08T14:25:00.067Z] Recurrence Match: true (ONCE)
+[2026-01-08T14:25:00.068Z] Checking Cron: * * * * *
+[2026-01-08T14:25:00.068Z] Cron matched! Sending notification...
+[2026-01-08T14:25:00.072Z] No subscription found for user
+[2026-01-08T14:25:00.072Z] Checking Task: test22 (ID: 695fbcb5ba2f8b60650ce1bb)
+[2026-01-08T14:25:00.073Z] Timeframe Check: Now=985, Start=0, End=1439
+[2026-01-08T14:25:00.073Z] Recurrence Match: true (ONCE)
+[2026-01-08T14:25:00.074Z] Checking Cron: * * * * *
+[2026-01-08T14:25:00.074Z] Cron matched! Sending notification...
+[2026-01-08T14:25:00.077Z] No subscription found for user
+[2026-01-08T14:26:00.021Z] [TaskRunner] Running Check at 16:26
+[2026-01-08T14:26:00.031Z] [TaskRunner] Found 5 TODO tasks
+[2026-01-08T14:26:00.032Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T14:26:00.033Z] Timeframe Check: Now=986, Start=0, End=1439
+[2026-01-08T14:26:00.033Z] Recurrence Match: false (ONCE)
+[2026-01-08T14:26:00.034Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T14:26:00.034Z] Timeframe Check: Now=986, Start=0, End=1439
+[2026-01-08T14:26:00.035Z] Recurrence Match: true (DAILY)
+[2026-01-08T14:26:00.035Z] Checking Cron: * * * * *
+[2026-01-08T14:26:00.036Z] Cron matched! Sending notification...
+[2026-01-08T14:26:00.038Z] No subscription found for user
+[2026-01-08T14:26:00.039Z] Checking Task: fdads (ID: 695d45523d6968bda34b3075)
+[2026-01-08T14:26:00.039Z] Timeframe Check: Now=986, Start=0, End=959
+[2026-01-08T14:26:00.040Z] Skipping - Outside timeframe
+[2026-01-08T14:26:00.040Z] Checking Task: шеаяь (ID: 695fba131648ca4aca9bd415)
+[2026-01-08T14:26:00.041Z] Timeframe Check: Now=986, Start=0, End=1439
+[2026-01-08T14:26:00.041Z] Recurrence Match: true (ONCE)
+[2026-01-08T14:26:00.042Z] Checking Cron: * * * * *
+[2026-01-08T14:26:00.042Z] Cron matched! Sending notification...
+[2026-01-08T14:26:00.046Z] No subscription found for user
+[2026-01-08T14:26:00.047Z] Checking Task: test22 (ID: 695fbcb5ba2f8b60650ce1bb)
+[2026-01-08T14:26:00.047Z] Timeframe Check: Now=986, Start=0, End=1439
+[2026-01-08T14:26:00.048Z] Recurrence Match: true (ONCE)
+[2026-01-08T14:26:00.048Z] Checking Cron: * * * * *
+[2026-01-08T14:26:00.049Z] Cron matched! Sending notification...
+[2026-01-08T14:26:00.051Z] No subscription found for user
+[2026-01-08T14:27:00.021Z] [TaskRunner] Running Check at 16:27
+[2026-01-08T14:27:00.052Z] [TaskRunner] Found 5 TODO tasks
+[2026-01-08T14:27:00.053Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T14:27:00.054Z] Timeframe Check: Now=987, Start=0, End=1439
+[2026-01-08T14:27:00.055Z] Recurrence Match: false (ONCE)
+[2026-01-08T14:27:00.055Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T14:27:00.056Z] Timeframe Check: Now=987, Start=0, End=1439
+[2026-01-08T14:27:00.056Z] Recurrence Match: true (DAILY)
+[2026-01-08T14:27:00.057Z] Checking Cron: * * * * *
+[2026-01-08T14:27:00.058Z] Cron matched but task is DONE. Skipping notification.
+[2026-01-08T14:27:00.058Z] Checking Task: fdads (ID: 695d45523d6968bda34b3075)
+[2026-01-08T14:27:00.059Z] Timeframe Check: Now=987, Start=0, End=959
+[2026-01-08T14:27:00.059Z] Skipping - Outside timeframe
+[2026-01-08T14:27:00.060Z] Checking Task: шеаяь (ID: 695fba131648ca4aca9bd415)
+[2026-01-08T14:27:00.060Z] Timeframe Check: Now=987, Start=0, End=1439
+[2026-01-08T14:27:00.061Z] Recurrence Match: true (ONCE)
+[2026-01-08T14:27:00.061Z] Checking Cron: * * * * *
+[2026-01-08T14:27:00.061Z] Cron matched but task is DONE. Skipping notification.
+[2026-01-08T14:27:00.062Z] Checking Task: test22 (ID: 695fbcb5ba2f8b60650ce1bb)
+[2026-01-08T14:27:00.062Z] Timeframe Check: Now=987, Start=0, End=1439
+[2026-01-08T14:27:00.063Z] Recurrence Match: true (ONCE)
+[2026-01-08T14:27:00.063Z] Checking Cron: * * * * *
+[2026-01-08T14:27:00.064Z] Cron matched but task is DONE. Skipping notification.
+[2026-01-08T14:28:00.018Z] [TaskRunner] Running Check at 16:28
+[2026-01-08T14:28:00.029Z] [TaskRunner] Found 5 TODO tasks
+[2026-01-08T14:28:00.030Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T14:28:00.031Z] Timeframe Check: Now=988, Start=0, End=1439
+[2026-01-08T14:28:00.031Z] Recurrence Match: false (ONCE)
+[2026-01-08T14:28:00.032Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T14:28:00.032Z] Timeframe Check: Now=988, Start=0, End=1439
+[2026-01-08T14:28:00.033Z] Recurrence Match: true (DAILY)
+[2026-01-08T14:28:00.033Z] Checking Cron: * * * * *
+[2026-01-08T14:28:00.033Z] Cron matched but task is DONE. Skipping notification.
+[2026-01-08T14:28:00.034Z] Checking Task: fdads (ID: 695d45523d6968bda34b3075)
+[2026-01-08T14:28:00.034Z] Timeframe Check: Now=988, Start=0, End=959
+[2026-01-08T14:28:00.035Z] Skipping - Outside timeframe
+[2026-01-08T14:28:00.035Z] Checking Task: шеаяь (ID: 695fba131648ca4aca9bd415)
+[2026-01-08T14:28:00.036Z] Timeframe Check: Now=988, Start=0, End=1439
+[2026-01-08T14:28:00.036Z] Recurrence Match: true (ONCE)
+[2026-01-08T14:28:00.037Z] Checking Cron: * * * * *
+[2026-01-08T14:28:00.037Z] Cron matched but task is DONE. Skipping notification.
+[2026-01-08T14:28:00.037Z] Checking Task: test22 (ID: 695fbcb5ba2f8b60650ce1bb)
+[2026-01-08T14:28:00.038Z] Timeframe Check: Now=988, Start=0, End=1439
+[2026-01-08T14:28:00.038Z] Recurrence Match: true (ONCE)
+[2026-01-08T14:28:00.039Z] Checking Cron: * * * * *
+[2026-01-08T14:28:00.039Z] Cron matched but task is DONE. Skipping notification.
+[2026-01-08T14:29:00.017Z] [TaskRunner] Running Check at 16:29
+[2026-01-08T14:29:00.028Z] [TaskRunner] Found 5 TODO tasks
+[2026-01-08T14:29:00.028Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T14:29:00.029Z] Timeframe Check: Now=989, Start=0, End=1439
+[2026-01-08T14:29:00.030Z] Recurrence Match: false (ONCE)
+[2026-01-08T14:29:00.030Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T14:29:00.030Z] Timeframe Check: Now=989, Start=0, End=1439
+[2026-01-08T14:29:00.031Z] Recurrence Match: true (DAILY)
+[2026-01-08T14:29:00.032Z] Checking Cron: * * * * *
+[2026-01-08T14:29:00.032Z] Cron matched but task is DONE. Skipping notification.
+[2026-01-08T14:29:00.032Z] Checking Task: fdads (ID: 695d45523d6968bda34b3075)
+[2026-01-08T14:29:00.033Z] Timeframe Check: Now=989, Start=0, End=959
+[2026-01-08T14:29:00.033Z] Skipping - Outside timeframe
+[2026-01-08T14:29:00.034Z] Checking Task: шеаяь (ID: 695fba131648ca4aca9bd415)
+[2026-01-08T14:29:00.034Z] Timeframe Check: Now=989, Start=0, End=1439
+[2026-01-08T14:29:00.035Z] Recurrence Match: true (ONCE)
+[2026-01-08T14:29:00.035Z] Checking Cron: * * * * *
+[2026-01-08T14:29:00.036Z] Cron matched but task is DONE. Skipping notification.
+[2026-01-08T14:29:00.036Z] Checking Task: test22 (ID: 695fbcb5ba2f8b60650ce1bb)
+[2026-01-08T14:29:00.037Z] Timeframe Check: Now=989, Start=0, End=1439
+[2026-01-08T14:29:00.037Z] Recurrence Match: true (ONCE)
+[2026-01-08T14:29:00.038Z] Checking Cron: * * * * *
+[2026-01-08T14:29:00.038Z] Cron matched but task is DONE. Skipping notification.
+[2026-01-08T14:30:00.019Z] [TaskRunner] Running Check at 16:30
+[2026-01-08T14:30:00.030Z] [TaskRunner] Found 5 TODO tasks
+[2026-01-08T14:30:00.031Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T14:30:00.031Z] Timeframe Check: Now=990, Start=0, End=1439
+[2026-01-08T14:30:00.032Z] Recurrence Match: false (ONCE)
+[2026-01-08T14:30:00.032Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T14:30:00.033Z] Timeframe Check: Now=990, Start=0, End=1439
+[2026-01-08T14:30:00.033Z] Recurrence Match: true (DAILY)
+[2026-01-08T14:30:00.034Z] Checking Cron: * * * * *
+[2026-01-08T14:30:00.034Z] Cron matched but task is DONE. Skipping notification.
+[2026-01-08T14:30:00.035Z] Checking Task: fdads (ID: 695d45523d6968bda34b3075)
+[2026-01-08T14:30:00.035Z] Timeframe Check: Now=990, Start=0, End=959
+[2026-01-08T14:30:00.036Z] Skipping - Outside timeframe
+[2026-01-08T14:30:00.036Z] Checking Task: шеаяь (ID: 695fba131648ca4aca9bd415)
+[2026-01-08T14:30:00.037Z] Timeframe Check: Now=990, Start=0, End=1439
+[2026-01-08T14:30:00.037Z] Recurrence Match: true (ONCE)
+[2026-01-08T14:30:00.037Z] Checking Cron: * * * * *
+[2026-01-08T14:30:00.038Z] Cron matched but task is DONE. Skipping notification.
+[2026-01-08T14:30:00.038Z] Checking Task: test22 (ID: 695fbcb5ba2f8b60650ce1bb)
+[2026-01-08T14:30:00.038Z] Timeframe Check: Now=990, Start=0, End=1439
+[2026-01-08T14:30:00.039Z] Recurrence Match: true (ONCE)
+[2026-01-08T14:30:00.039Z] Checking Cron: * * * * *
+[2026-01-08T14:30:00.040Z] Cron matched but task is DONE. Skipping notification.
+[2026-01-08T14:31:00.016Z] [TaskRunner] Running Check at 16:31
+[2026-01-08T14:31:00.029Z] [TaskRunner] Found 5 TODO tasks
+[2026-01-08T14:31:00.030Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T14:31:00.031Z] Timeframe Check: Now=991, Start=0, End=1439
+[2026-01-08T14:31:00.032Z] Recurrence Match: false (ONCE)
+[2026-01-08T14:31:00.032Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T14:31:00.033Z] Timeframe Check: Now=991, Start=0, End=1439
+[2026-01-08T14:31:00.034Z] Recurrence Match: true (DAILY)
+[2026-01-08T14:31:00.035Z] Checking Cron: * * * * *
+[2026-01-08T14:31:00.035Z] Cron matched but task is DONE. Skipping notification.
+[2026-01-08T14:31:00.036Z] Checking Task: fdads (ID: 695d45523d6968bda34b3075)
+[2026-01-08T14:31:00.036Z] Timeframe Check: Now=991, Start=0, End=959
+[2026-01-08T14:31:00.037Z] Skipping - Outside timeframe
+[2026-01-08T14:31:00.038Z] Checking Task: шеаяь (ID: 695fba131648ca4aca9bd415)
+[2026-01-08T14:31:00.038Z] Timeframe Check: Now=991, Start=0, End=1439
+[2026-01-08T14:31:00.039Z] Recurrence Match: true (ONCE)
+[2026-01-08T14:31:00.039Z] Checking Cron: * * * * *
+[2026-01-08T14:31:00.040Z] Cron matched but task is DONE. Skipping notification.
+[2026-01-08T14:31:00.041Z] Checking Task: test22 (ID: 695fbcb5ba2f8b60650ce1bb)
+[2026-01-08T14:31:00.041Z] Timeframe Check: Now=991, Start=0, End=1439
+[2026-01-08T14:31:00.042Z] Recurrence Match: true (ONCE)
+[2026-01-08T14:31:00.042Z] Checking Cron: * * * * *
+[2026-01-08T14:31:00.043Z] Cron matched but task is DONE. Skipping notification.
+[2026-01-08T14:32:00.015Z] [TaskRunner] Running Check at 16:32
+[2026-01-08T14:32:00.024Z] [TaskRunner] Found 5 TODO tasks
+[2026-01-08T14:32:00.025Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T14:32:00.026Z] Timeframe Check: Now=992, Start=0, End=1439
+[2026-01-08T14:32:00.026Z] Recurrence Match: false (ONCE)
+[2026-01-08T14:32:00.027Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T14:32:00.027Z] Timeframe Check: Now=992, Start=0, End=1439
+[2026-01-08T14:32:00.027Z] Recurrence Match: true (DAILY)
+[2026-01-08T14:32:00.028Z] Checking Cron: * * * * *
+[2026-01-08T14:32:00.028Z] Cron matched but task is DONE. Skipping notification.
+[2026-01-08T14:32:00.029Z] Checking Task: fdads (ID: 695d45523d6968bda34b3075)
+[2026-01-08T14:32:00.029Z] Timeframe Check: Now=992, Start=0, End=959
+[2026-01-08T14:32:00.030Z] Skipping - Outside timeframe
+[2026-01-08T14:32:00.030Z] Checking Task: шеаяь (ID: 695fba131648ca4aca9bd415)
+[2026-01-08T14:32:00.030Z] Timeframe Check: Now=992, Start=0, End=1439
+[2026-01-08T14:32:00.031Z] Recurrence Match: true (ONCE)
+[2026-01-08T14:32:00.031Z] Checking Cron: * * * * *
+[2026-01-08T14:32:00.032Z] Cron matched but task is DONE. Skipping notification.
+[2026-01-08T14:32:00.032Z] Checking Task: test22 (ID: 695fbcb5ba2f8b60650ce1bb)
+[2026-01-08T14:32:00.033Z] Timeframe Check: Now=992, Start=0, End=1439
+[2026-01-08T14:32:00.033Z] Recurrence Match: true (ONCE)
+[2026-01-08T14:32:00.033Z] Checking Cron: * * * * *
+[2026-01-08T14:32:00.034Z] Cron matched but task is DONE. Skipping notification.
+[2026-01-08T14:33:00.010Z] [TaskRunner] Running Check at 16:33
+[2026-01-08T14:33:00.019Z] [TaskRunner] Found 5 TODO tasks
+[2026-01-08T14:33:00.020Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T14:33:00.020Z] Timeframe Check: Now=993, Start=0, End=1439
+[2026-01-08T14:33:00.021Z] Recurrence Match: false (ONCE)
+[2026-01-08T14:33:00.021Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T14:33:00.022Z] Timeframe Check: Now=993, Start=0, End=1439
+[2026-01-08T14:33:00.023Z] Recurrence Match: true (DAILY)
+[2026-01-08T14:33:00.023Z] Checking Cron: * * * * *
+[2026-01-08T14:33:00.024Z] Cron matched but task is DONE. Skipping notification.
+[2026-01-08T14:33:00.024Z] Checking Task: fdads (ID: 695d45523d6968bda34b3075)
+[2026-01-08T14:33:00.025Z] Timeframe Check: Now=993, Start=0, End=959
+[2026-01-08T14:33:00.025Z] Skipping - Outside timeframe
+[2026-01-08T14:33:00.026Z] Checking Task: шеаяь (ID: 695fba131648ca4aca9bd415)
+[2026-01-08T14:33:00.026Z] Timeframe Check: Now=993, Start=0, End=1439
+[2026-01-08T14:33:00.027Z] Recurrence Match: true (ONCE)
+[2026-01-08T14:33:00.027Z] Checking Cron: * * * * *
+[2026-01-08T14:33:00.028Z] Cron matched but task is DONE. Skipping notification.
+[2026-01-08T14:33:00.029Z] Checking Task: test22 (ID: 695fbcb5ba2f8b60650ce1bb)
+[2026-01-08T14:33:00.029Z] Timeframe Check: Now=993, Start=0, End=1439
+[2026-01-08T14:33:00.029Z] Recurrence Match: true (ONCE)
+[2026-01-08T14:33:00.030Z] Checking Cron: * * * * *
+[2026-01-08T14:33:00.030Z] Cron matched but task is DONE. Skipping notification.
+[2026-01-08T14:34:00.020Z] [TaskRunner] Running Check at 16:34
+[2026-01-08T14:34:00.050Z] [TaskRunner] Found 5 TODO tasks
+[2026-01-08T14:34:00.052Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T14:34:00.053Z] Timeframe Check: Now=994, Start=0, End=1439
+[2026-01-08T14:34:00.054Z] Recurrence Match: false (ONCE)
+[2026-01-08T14:34:00.055Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T14:34:00.055Z] Timeframe Check: Now=994, Start=0, End=1439
+[2026-01-08T14:34:00.056Z] Recurrence Match: true (DAILY)
+[2026-01-08T14:34:00.057Z] Checking Cron: * * * * *
+[2026-01-08T14:34:00.057Z] Cron matched but task is DONE. Skipping notification.
+[2026-01-08T14:34:00.058Z] Checking Task: fdads (ID: 695d45523d6968bda34b3075)
+[2026-01-08T14:34:00.058Z] Timeframe Check: Now=994, Start=0, End=959
+[2026-01-08T14:34:00.059Z] Skipping - Outside timeframe
+[2026-01-08T14:34:00.059Z] Checking Task: шеаяь (ID: 695fba131648ca4aca9bd415)
+[2026-01-08T14:34:00.060Z] Timeframe Check: Now=994, Start=0, End=1439
+[2026-01-08T14:34:00.060Z] Recurrence Match: true (ONCE)
+[2026-01-08T14:34:00.061Z] Checking Cron: * * * * *
+[2026-01-08T14:34:00.061Z] Cron matched but task is DONE. Skipping notification.
+[2026-01-08T14:34:00.062Z] Checking Task: test22 (ID: 695fbcb5ba2f8b60650ce1bb)
+[2026-01-08T14:34:00.062Z] Timeframe Check: Now=994, Start=0, End=1439
+[2026-01-08T14:34:00.062Z] Recurrence Match: true (ONCE)
+[2026-01-08T14:34:00.063Z] Checking Cron: * * * * *
+[2026-01-08T14:34:00.063Z] Cron matched but task is DONE. Skipping notification.
+[2026-01-08T14:35:00.022Z] [TaskRunner] Running Check at 16:35
+[2026-01-08T14:35:00.035Z] [TaskRunner] Found 5 TODO tasks
+[2026-01-08T14:35:00.036Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T14:35:00.037Z] Timeframe Check: Now=995, Start=0, End=1439
+[2026-01-08T14:35:00.037Z] Recurrence Match: false (ONCE)
+[2026-01-08T14:35:00.038Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T14:35:00.039Z] Timeframe Check: Now=995, Start=0, End=1439
+[2026-01-08T14:35:00.039Z] Recurrence Match: true (DAILY)
+[2026-01-08T14:35:00.040Z] Checking Cron: * * * * *
+[2026-01-08T14:35:00.040Z] Cron matched but task is DONE. Skipping notification.
+[2026-01-08T14:35:00.041Z] Checking Task: fdads (ID: 695d45523d6968bda34b3075)
+[2026-01-08T14:35:00.041Z] Timeframe Check: Now=995, Start=0, End=959
+[2026-01-08T14:35:00.042Z] Skipping - Outside timeframe
+[2026-01-08T14:35:00.042Z] Checking Task: шеаяь (ID: 695fba131648ca4aca9bd415)
+[2026-01-08T14:35:00.043Z] Timeframe Check: Now=995, Start=0, End=1439
+[2026-01-08T14:35:00.044Z] Recurrence Match: true (ONCE)
+[2026-01-08T14:35:00.044Z] Checking Cron: * * * * *
+[2026-01-08T14:35:00.045Z] Cron matched but task is DONE. Skipping notification.
+[2026-01-08T14:35:00.045Z] Checking Task: test22 (ID: 695fbcb5ba2f8b60650ce1bb)
+[2026-01-08T14:35:00.046Z] Timeframe Check: Now=995, Start=0, End=1439
+[2026-01-08T14:35:00.046Z] Recurrence Match: true (ONCE)
+[2026-01-08T14:35:00.047Z] Checking Cron: * * * * *
+[2026-01-08T14:35:00.047Z] Cron matched but task is DONE. Skipping notification.
+[2026-01-08T14:36:00.028Z] [TaskRunner] Running Check at 16:36
+[2026-01-08T14:36:00.041Z] [TaskRunner] Found 5 TODO tasks
+[2026-01-08T14:36:00.042Z] Checking Task: te (ID: 695bb3461e06a6d6e0f60ef3)
+[2026-01-08T14:36:00.043Z] Timeframe Check: Now=996, Start=0, End=1439
+[2026-01-08T14:36:00.044Z] Recurrence Match: false (ONCE)
+[2026-01-08T14:36:00.044Z] Checking Task: test2 (ID: 695d17994ab3ff9326cc588e)
+[2026-01-08T14:36:00.045Z] Timeframe Check: Now=996, Start=0, End=1439
+[2026-01-08T14:36:00.045Z] Recurrence Match: true (DAILY)
+[2026-01-08T14:36:00.046Z] Checking Cron: * * * * *
+[2026-01-08T14:36:00.046Z] Cron matched but task is DONE. Skipping notification.
+[2026-01-08T14:36:00.047Z] Checking Task: fdads (ID: 695d45523d6968bda34b3075)
+[2026-01-08T14:36:00.048Z] Timeframe Check: Now=996, Start=0, End=959
+[2026-01-08T14:36:00.048Z] Skipping - Outside timeframe
+[2026-01-08T14:36:00.049Z] Checking Task: шеаяь (ID: 695fba131648ca4aca9bd415)
+[2026-01-08T14:36:00.049Z] Timeframe Check: Now=996, Start=0, End=1439
+[2026-01-08T14:36:00.050Z] Recurrence Match: true (ONCE)
+[2026-01-08T14:36:00.050Z] Checking Cron: * * * * *
+[2026-01-08T14:36:00.050Z] Cron matched but task is DONE. Skipping notification.
+[2026-01-08T14:36:00.051Z] Checking Task: test22 (ID: 695fbcb5ba2f8b60650ce1bb)
+[2026-01-08T14:36:00.052Z] Timeframe Check: Now=996, Start=0, End=1439
+[2026-01-08T14:36:00.052Z] Recurrence Match: true (ONCE)
+[2026-01-08T14:36:00.053Z] Checking Cron: * * * * *
+[2026-01-08T14:36:00.053Z] Cron matched but task is DONE. Skipping notification.
+[2026-01-08T14:37:00.019Z] [TaskRunner] Running Check at 16:37
+[2026-01-08T14:37:00.043Z] [TaskRunner] Found 5 active tasks to check.
+[2026-01-08T14:37:00.044Z] Recurrence Match: false (ONCE)
+[2026-01-08T14:37:00.045Z] Recurrence Match: true (DAILY)
+[2026-01-08T14:37:00.045Z] Checking Cron: * * * * *
+[2026-01-08T14:37:00.046Z] Cron matched but task is DONE. Skipping notification.
+[2026-01-08T14:37:00.046Z] Skipping - Outside timeframe
+[2026-01-08T14:37:00.047Z] Recurrence Match: true (ONCE)
+[2026-01-08T14:37:00.047Z] Checking Cron: * * * * *
+[2026-01-08T14:37:00.047Z] Cron matched but task is DONE. Skipping notification.
+[2026-01-08T14:37:00.048Z] Recurrence Match: true (ONCE)
+[2026-01-08T14:37:00.048Z] Checking Cron: * * * * *
+[2026-01-08T14:37:00.049Z] Cron matched but task is DONE. Skipping notification.
+[2026-01-08T14:38:00.030Z] [TaskRunner] Running Check at 16:38
+[2026-01-08T14:38:00.045Z] [TaskRunner] Found 5 active tasks to check.
+[2026-01-08T14:38:00.046Z] Recurrence Match: false (ONCE)
+[2026-01-08T14:38:00.047Z] Recurrence Match: true (DAILY)
+[2026-01-08T14:38:00.047Z] Checking Cron: * * * * *
+[2026-01-08T14:38:00.048Z] Cron matched but task is DONE. Skipping notification.
+[2026-01-08T14:38:00.049Z] Skipping - Outside timeframe
+[2026-01-08T14:38:00.049Z] Recurrence Match: true (ONCE)
+[2026-01-08T14:38:00.050Z] Checking Cron: * * * * *
+[2026-01-08T14:38:00.050Z] Cron matched but task is DONE. Skipping notification.
+[2026-01-08T14:38:00.051Z] Recurrence Match: true (ONCE)
+[2026-01-08T14:38:00.051Z] Checking Cron: * * * * *
+[2026-01-08T14:38:00.052Z] Cron matched but task is DONE. Skipping notification.
+[2026-01-08T14:39:00.025Z] [TaskRunner] Running Check at 16:39
+[2026-01-08T14:39:00.036Z] [TaskRunner] Found 5 active tasks to check.
+[2026-01-08T14:39:00.037Z] Recurrence Match: false (ONCE)
+[2026-01-08T14:39:00.038Z] Recurrence Match: true (DAILY)
+[2026-01-08T14:39:00.038Z] Checking Cron: * * * * *
+[2026-01-08T14:39:00.039Z] Cron matched but task is DONE. Skipping notification.
+[2026-01-08T14:39:00.039Z] Skipping - Outside timeframe
+[2026-01-08T14:39:00.040Z] Recurrence Match: true (ONCE)
+[2026-01-08T14:39:00.040Z] Checking Cron: * * * * *
+[2026-01-08T14:39:00.041Z] Cron matched but task is DONE. Skipping notification.
+[2026-01-08T14:39:00.041Z] Recurrence Match: true (ONCE)
+[2026-01-08T14:39:00.042Z] Checking Cron: * * * * *
+[2026-01-08T14:39:00.042Z] Cron matched but task is DONE. Skipping notification.
+[2026-01-08T14:40:00.029Z] [TaskRunner] Running Check at 16:40
+[2026-01-08T14:40:00.040Z] [TaskRunner] Found 5 active tasks to check.
+[2026-01-08T14:40:00.040Z] Recurrence Match: false (ONCE)
+[2026-01-08T14:40:00.041Z] Recurrence Match: true (DAILY)
+[2026-01-08T14:40:00.042Z] Checking Cron: * * * * *
+[2026-01-08T14:40:00.042Z] Cron matched but task is DONE. Skipping notification.
+[2026-01-08T14:40:00.043Z] Skipping - Outside timeframe
+[2026-01-08T14:40:00.044Z] Recurrence Match: true (ONCE)
+[2026-01-08T14:40:00.044Z] Checking Cron: * * * * *
+[2026-01-08T14:40:00.044Z] Cron matched but task is DONE. Skipping notification.
+[2026-01-08T14:40:00.045Z] Recurrence Match: true (ONCE)
+[2026-01-08T14:40:00.045Z] Checking Cron: * * * * *
+[2026-01-08T14:40:00.046Z] Cron matched but task is DONE. Skipping notification.
+[2026-01-08T14:41:00.022Z] [TaskRunner] Running Check at 16:41
+[2026-01-08T14:41:00.036Z] [TaskRunner] Found 5 active tasks to check.
+[2026-01-08T14:41:00.038Z] Recurrence Match: false (ONCE)
+[2026-01-08T14:41:00.039Z] Recurrence Match: true (DAILY)
+[2026-01-08T14:41:00.040Z] Checking Cron: * * * * *
+[2026-01-08T14:41:00.040Z] Cron matched but task is DONE. Skipping notification.
+[2026-01-08T14:41:00.041Z] Skipping - Outside timeframe
+[2026-01-08T14:41:00.042Z] Recurrence Match: true (ONCE)
+[2026-01-08T14:41:00.042Z] Checking Cron: * * * * *
+[2026-01-08T14:41:00.044Z] Cron matched but task is DONE. Skipping notification.
+[2026-01-08T14:41:00.045Z] Recurrence Match: true (ONCE)
+[2026-01-08T14:41:00.045Z] Checking Cron: * * * * *
+[2026-01-08T14:41:00.046Z] Cron matched but task is DONE. Skipping notification.
+[2026-01-08T14:42:00.017Z] [TaskRunner] Running Check at 16:42
+[2026-01-08T14:42:00.027Z] [TaskRunner] Found 5 active tasks to check.
+[2026-01-08T14:42:00.028Z] Recurrence Match: false (ONCE)
+[2026-01-08T14:42:00.029Z] Recurrence Match: true (DAILY)
+[2026-01-08T14:42:00.030Z] Checking Cron: * * * * *
+[2026-01-08T14:42:00.031Z] Cron matched but task is DONE. Skipping notification.
+[2026-01-08T14:42:00.032Z] Skipping - Outside timeframe
+[2026-01-08T14:42:00.033Z] Recurrence Match: true (ONCE)
+[2026-01-08T14:42:00.033Z] Checking Cron: * * * * *
+[2026-01-08T14:42:00.034Z] Cron matched but task is DONE. Skipping notification.
+[2026-01-08T14:42:00.035Z] Recurrence Match: true (ONCE)
+[2026-01-08T14:42:00.036Z] Checking Cron: * * * * *
+[2026-01-08T14:42:00.036Z] Cron matched but task is DONE. Skipping notification.
+[2026-01-08T14:43:00.029Z] [TaskRunner] Running Check at 16:43
+[2026-01-08T14:43:00.059Z] [TaskRunner] Found 5 active tasks to check.
+[2026-01-08T14:43:00.060Z] Recurrence Match: false (ONCE)
+[2026-01-08T14:43:00.061Z] Recurrence Match: true (DAILY)
+[2026-01-08T14:43:00.062Z] Checking Cron: * * * * *
+[2026-01-08T14:43:00.062Z] Cron matched but task is DONE. Skipping notification.
+[2026-01-08T14:43:00.063Z] Recurrence Match: true (DAILY)
+[2026-01-08T14:43:00.063Z] [Check Reset] Task "fdads" IS PAST END TIME. Now:1003 > End:959. Status: DONE
+[2026-01-08T14:43:00.064Z] [Timeframe Reset] Task fdads finished. Resetting to TODO.
+[2026-01-08T14:43:00.075Z] Recurrence Match: true (ONCE)
+[2026-01-08T14:43:00.076Z] Checking Cron: * * * * *
+[2026-01-08T14:43:00.077Z] Cron matched but task is DONE. Skipping notification.
+[2026-01-08T14:43:00.078Z] Recurrence Match: true (ONCE)
+[2026-01-08T14:43:00.078Z] Checking Cron: * * * * *
+[2026-01-08T14:43:00.079Z] Cron matched but task is DONE. Skipping notification.
+[2026-01-08T14:44:00.031Z] [TaskRunner] Running Check at 16:44
+[2026-01-08T14:44:00.045Z] [TaskRunner] Found 5 active tasks to check.
+[2026-01-08T14:44:00.046Z] Recurrence Match: false (ONCE)
+[2026-01-08T14:44:00.047Z] Recurrence Match: true (DAILY)
+[2026-01-08T14:44:00.048Z] Checking Cron: * * * * *
+[2026-01-08T14:44:00.048Z] Cron matched but task is DONE. Skipping notification.
+[2026-01-08T14:44:00.049Z] Recurrence Match: true (DAILY)
+[2026-01-08T14:44:00.049Z] [Check Reset] Task "fdads" IS PAST END TIME. Now:1004 > End:959. Status: TODO
+[2026-01-08T14:44:00.050Z] [Timeframe Reset] Task fdads MISSED. Streak lost (was 1). Resetting to TODO.
+[2026-01-08T14:44:00.055Z] Recurrence Match: true (ONCE)
+[2026-01-08T14:44:00.056Z] Checking Cron: * * * * *
+[2026-01-08T14:44:00.057Z] Cron matched but task is DONE. Skipping notification.
+[2026-01-08T14:44:00.057Z] Recurrence Match: true (ONCE)
+[2026-01-08T14:44:00.058Z] Checking Cron: * * * * *
+[2026-01-08T14:44:00.058Z] Cron matched but task is DONE. Skipping notification.
+[2026-01-08T14:45:00.028Z] [TaskRunner] Running Check at 16:45
+[2026-01-08T14:45:00.040Z] [TaskRunner] Found 5 active tasks to check.
+[2026-01-08T14:45:00.041Z] Recurrence Match: false (ONCE)
+[2026-01-08T14:45:00.042Z] Recurrence Match: true (DAILY)
+[2026-01-08T14:45:00.042Z] Checking Cron: * * * * *
+[2026-01-08T14:45:00.043Z] Cron matched but task is DONE. Skipping notification.
+[2026-01-08T14:45:00.043Z] Recurrence Match: true (DAILY)
+[2026-01-08T14:45:00.044Z] [Check Reset] Task "fdads" IS PAST END TIME. Now:1005 > End:959. Status: TODO
+[2026-01-08T14:45:00.044Z] [Timeframe Reset] Task fdads MISSED. Streak lost (was 0). Resetting to TODO.
+[2026-01-08T14:45:00.050Z] Recurrence Match: true (ONCE)
+[2026-01-08T14:45:00.050Z] Checking Cron: * * * * *
+[2026-01-08T14:45:00.051Z] Cron matched but task is DONE. Skipping notification.
+[2026-01-08T14:45:00.052Z] Recurrence Match: true (ONCE)
+[2026-01-08T14:45:00.052Z] Checking Cron: * * * * *
+[2026-01-08T14:45:00.053Z] Cron matched but task is DONE. Skipping notification.
+[2026-01-08T14:46:00.007Z] [TaskRunner] Running Check at 16:46
+[2026-01-08T14:46:00.020Z] [TaskRunner] Found 5 active tasks to check.
+[2026-01-08T14:46:00.021Z] Recurrence Match: false (ONCE)
+[2026-01-08T14:46:00.021Z] Recurrence Match: true (DAILY)
+[2026-01-08T14:46:00.022Z] Checking Cron: * * * * *
+[2026-01-08T14:46:00.023Z] Cron matched but task is DONE. Skipping notification.
+[2026-01-08T14:46:00.024Z] Recurrence Match: true (DAILY)
+[2026-01-08T14:46:00.024Z] [Check Reset] Task "fdads" IS PAST END TIME. Now:1006 > End:959. Status: TODO
+[2026-01-08T14:46:00.025Z] [Timeframe Reset] Task fdads MISSED. Streak lost (was 0). Resetting to TODO.
+[2026-01-08T14:46:00.033Z] Recurrence Match: true (ONCE)
+[2026-01-08T14:46:00.034Z] Checking Cron: * * * * *
+[2026-01-08T14:46:00.035Z] Cron matched but task is DONE. Skipping notification.
+[2026-01-08T14:46:00.035Z] Recurrence Match: true (ONCE)
+[2026-01-08T14:46:00.036Z] Checking Cron: * * * * *
+[2026-01-08T14:46:00.037Z] Cron matched but task is DONE. Skipping notification.
+[2026-01-08T14:47:00.017Z] [TaskRunner] Running Check at 16:47
+[2026-01-08T14:47:00.042Z] [TaskRunner] Found 5 active tasks to check.
+[2026-01-08T14:47:00.043Z] Recurrence Match: false (ONCE)
+[2026-01-08T14:47:00.044Z] Recurrence Match: true (DAILY)
+[2026-01-08T14:47:00.044Z] Checking Cron: * * * * *
+[2026-01-08T14:47:00.044Z] Cron matched but task is DONE. Skipping notification.
+[2026-01-08T14:47:00.045Z] Recurrence Match: true (DAILY)
+[2026-01-08T14:47:00.046Z] [Check Reset] Task "fdads" IS PAST END TIME. Now:1007 > End:959. Status: TODO
+[2026-01-08T14:47:00.046Z] [Timeframe Reset] Task fdads MISSED. Streak lost (was 0). Resetting to TODO.
+[2026-01-08T14:47:00.055Z] Recurrence Match: true (ONCE)
+[2026-01-08T14:47:00.055Z] Checking Cron: * * * * *
+[2026-01-08T14:47:00.056Z] Cron matched but task is DONE. Skipping notification.
+[2026-01-08T14:47:00.056Z] Recurrence Match: true (ONCE)
+[2026-01-08T14:47:00.057Z] Checking Cron: * * * * *
+[2026-01-08T14:47:00.057Z] Cron matched but task is DONE. Skipping notification.
+[2026-01-08T14:48:00.024Z] [TaskRunner] Running Check at 16:48
+[2026-01-08T14:48:00.036Z] [TaskRunner] Found 5 active tasks to check.
+[2026-01-08T14:48:00.037Z] Recurrence Match: false (ONCE)
+[2026-01-08T14:48:00.038Z] Recurrence Match: true (DAILY)
+[2026-01-08T14:48:00.038Z] Checking Cron: * * * * *
+[2026-01-08T14:48:00.038Z] Cron matched but task is DONE. Skipping notification.
+[2026-01-08T14:48:00.039Z] Recurrence Match: true (DAILY)
+[2026-01-08T14:48:00.039Z] [Check Reset] Task "fdads" IS PAST END TIME. Now:1008 > End:959. Status: TODO
+[2026-01-08T14:48:00.040Z] [Timeframe Reset] Task fdads MISSED. Streak lost (was 0). Resetting to TODO.
+[2026-01-08T14:48:00.044Z] Recurrence Match: true (ONCE)
+[2026-01-08T14:48:00.045Z] Checking Cron: * * * * *
+[2026-01-08T14:48:00.045Z] Cron matched but task is DONE. Skipping notification.
+[2026-01-08T14:48:00.046Z] Recurrence Match: true (ONCE)
+[2026-01-08T14:48:00.046Z] Checking Cron: * * * * *
+[2026-01-08T14:48:00.046Z] Cron matched but task is DONE. Skipping notification.
+[2026-01-08T14:49:00.018Z] [TaskRunner] Running Check at 16:49
+[2026-01-08T14:49:00.034Z] [TaskRunner] Found 5 active tasks to check.
+[2026-01-08T14:49:00.035Z] Recurrence Match: false (ONCE)
+[2026-01-08T14:49:00.036Z] Recurrence Match: true (DAILY)
+[2026-01-08T14:49:00.036Z] Checking Cron: * * * * *
+[2026-01-08T14:49:00.037Z] Cron matched but task is DONE. Skipping notification.
+[2026-01-08T14:49:00.037Z] Recurrence Match: true (DAILY)
+[2026-01-08T14:49:00.038Z] [Check Reset] Task "fdads" IS PAST END TIME. Now:1009 > End:959. Status: TODO
+[2026-01-08T14:49:00.038Z] [Timeframe Reset] Task fdads MISSED. Streak lost (was 0). Resetting to TODO.
+[2026-01-08T14:49:00.045Z] Recurrence Match: true (ONCE)
+[2026-01-08T14:49:00.045Z] Checking Cron: * * * * *
+[2026-01-08T14:49:00.046Z] Cron matched but task is DONE. Skipping notification.
+[2026-01-08T14:49:00.047Z] Recurrence Match: true (ONCE)
+[2026-01-08T14:49:00.047Z] Checking Cron: * * * * *
+[2026-01-08T14:49:00.048Z] Cron matched but task is DONE. Skipping notification.
+[2026-01-08T14:50:00.009Z] [TaskRunner] Running Check at 16:50
+[2026-01-08T14:50:00.020Z] [TaskRunner] Found 5 active tasks to check.
+[2026-01-08T14:50:00.021Z] Recurrence Match: false (ONCE)
+[2026-01-08T14:50:00.022Z] Recurrence Match: true (DAILY)
+[2026-01-08T14:50:00.022Z] Checking Cron: * * * * *
+[2026-01-08T14:50:00.023Z] Cron matched but task is DONE. Skipping notification.
+[2026-01-08T14:50:00.024Z] Recurrence Match: true (DAILY)
+[2026-01-08T14:50:00.025Z] [Check Reset] Task "fdads" IS PAST END TIME. Now:1010 > End:959. Status: TODO
+[2026-01-08T14:50:00.025Z] [Timeframe Reset] Task fdads MISSED. Streak lost (was 0). Resetting to TODO.
+[2026-01-08T14:50:00.030Z] Recurrence Match: true (ONCE)
+[2026-01-08T14:50:00.031Z] Checking Cron: * * * * *
+[2026-01-08T14:50:00.032Z] Cron matched but task is DONE. Skipping notification.
+[2026-01-08T14:50:00.032Z] Recurrence Match: true (ONCE)
+[2026-01-08T14:50:00.033Z] Checking Cron: * * * * *
+[2026-01-08T14:50:00.033Z] Cron matched but task is DONE. Skipping notification.
+[2026-01-08T14:51:00.027Z] [TaskRunner] Running Check at 16:51
+[2026-01-08T14:51:00.039Z] [TaskRunner] Found 5 active tasks to check.
+[2026-01-08T14:51:00.040Z] Recurrence Match: false (ONCE)
+[2026-01-08T14:51:00.041Z] Recurrence Match: true (DAILY)
+[2026-01-08T14:51:00.042Z] Checking Cron: * * * * *
+[2026-01-08T14:51:00.043Z] Cron matched but task is DONE. Skipping notification.
+[2026-01-08T14:51:00.043Z] Recurrence Match: true (DAILY)
+[2026-01-08T14:51:00.044Z] [Check Reset] Task "fdads" IS PAST END TIME. Now:1011 > End:959. Status: TODO
+[2026-01-08T14:51:00.044Z] [Timeframe Reset] Task fdads MISSED. Streak lost (was 0). Resetting to TODO.
+[2026-01-08T14:51:00.049Z] Recurrence Match: true (ONCE)
+[2026-01-08T14:51:00.049Z] Checking Cron: * * * * *
+[2026-01-08T14:51:00.050Z] Cron matched but task is DONE. Skipping notification.
+[2026-01-08T14:51:00.050Z] Recurrence Match: true (ONCE)
+[2026-01-08T14:51:00.051Z] Checking Cron: * * * * *
+[2026-01-08T14:51:00.051Z] Cron matched but task is DONE. Skipping notification.
+[2026-01-08T14:52:00.019Z] [TaskRunner] Running Check at 16:52
+[2026-01-08T14:52:00.031Z] [TaskRunner] Found 5 active tasks to check.
+[2026-01-08T14:52:00.032Z] Recurrence Match: false (ONCE)
+[2026-01-08T14:52:00.033Z] Recurrence Match: true (DAILY)
+[2026-01-08T14:52:00.034Z] Checking Cron: * * * * *
+[2026-01-08T14:52:00.034Z] Cron matched but task is DONE. Skipping notification.
+[2026-01-08T14:52:00.035Z] Recurrence Match: true (DAILY)
+[2026-01-08T14:52:00.035Z] [Check Reset] Task "fdads" IS PAST END TIME. Now:1012 > End:959. Status: TODO
+[2026-01-08T14:52:00.036Z] [Timeframe Reset] Task fdads MISSED. Streak lost (was 0). Resetting to TODO.
+[2026-01-08T14:52:00.041Z] Recurrence Match: true (ONCE)
+[2026-01-08T14:52:00.042Z] Checking Cron: * * * * *
+[2026-01-08T14:52:00.042Z] Cron matched but task is DONE. Skipping notification.
+[2026-01-08T14:52:00.043Z] Recurrence Match: true (ONCE)
+[2026-01-08T14:52:00.044Z] Checking Cron: * * * * *
+[2026-01-08T14:52:00.045Z] Cron matched but task is DONE. Skipping notification.
+[2026-01-08T14:53:00.024Z] [TaskRunner] Running Check at 16:53
+[2026-01-08T14:53:00.037Z] [TaskRunner] Found 5 active tasks to check.
+[2026-01-08T14:53:00.038Z] Recurrence Match: false (ONCE)
+[2026-01-08T14:53:00.039Z] Recurrence Match: true (DAILY)
+[2026-01-08T14:53:00.039Z] Checking Cron: * * * * *
+[2026-01-08T14:53:00.040Z] Cron matched but task is DONE. Skipping notification.
+[2026-01-08T14:53:00.041Z] Recurrence Match: true (DAILY)
+[2026-01-08T14:53:00.041Z] [Check Reset] Task "fdads" IS PAST END TIME. Now:1013 > End:959. Status: TODO
+[2026-01-08T14:53:00.042Z] [Timeframe Reset] Task fdads MISSED. Streak lost (was 0). Resetting to TODO.
+[2026-01-08T14:53:00.047Z] Recurrence Match: true (ONCE)
+[2026-01-08T14:53:00.048Z] Checking Cron: * * * * *
+[2026-01-08T14:53:00.048Z] Cron matched but task is DONE. Skipping notification.
+[2026-01-08T14:53:00.049Z] Recurrence Match: true (ONCE)
+[2026-01-08T14:53:00.049Z] Checking Cron: * * * * *
+[2026-01-08T14:53:00.050Z] Cron matched but task is DONE. Skipping notification.
+[2026-01-08T14:54:00.030Z] [TaskRunner] Running Check at 16:54
+[2026-01-08T14:54:00.040Z] [TaskRunner] Found 5 active tasks to check.
+[2026-01-08T14:54:00.041Z] Recurrence Match: false (ONCE)
+[2026-01-08T14:54:00.041Z] Recurrence Match: true (DAILY)
+[2026-01-08T14:54:00.042Z] Checking Cron: * * * * *
+[2026-01-08T14:54:00.042Z] Cron matched but task is DONE. Skipping notification.
+[2026-01-08T14:54:00.043Z] Recurrence Match: true (DAILY)
+[2026-01-08T14:54:00.043Z] [Check Reset] Task "fdads" IS PAST END TIME. Now:1014 > End:959. Status: TODO
+[2026-01-08T14:54:00.044Z] [Timeframe Reset] Task fdads MISSED. Streak lost (was 0). Resetting to TODO.
+[2026-01-08T14:54:00.047Z] Recurrence Match: true (ONCE)
+[2026-01-08T14:54:00.048Z] Checking Cron: * * * * *
+[2026-01-08T14:54:00.048Z] Cron matched but task is DONE. Skipping notification.
+[2026-01-08T14:54:00.049Z] Recurrence Match: true (ONCE)
+[2026-01-08T14:54:00.049Z] Checking Cron: * * * * *
+[2026-01-08T14:54:00.050Z] Cron matched but task is DONE. Skipping notification.
+[2026-01-08T14:55:00.747Z] [TaskRunner] Running Check at 16:55
+[2026-01-08T14:55:00.759Z] [TaskRunner] Found 5 active tasks to check.
+[2026-01-08T14:55:00.760Z] Recurrence Match: false (ONCE)
+[2026-01-08T14:55:00.761Z] Recurrence Match: true (DAILY)
+[2026-01-08T14:55:00.762Z] Checking Cron: * * * * *
+[2026-01-08T14:55:00.763Z] Cron matched but task is DONE. Skipping notification.
+[2026-01-08T14:55:00.763Z] Recurrence Match: true (DAILY)
+[2026-01-08T14:55:00.764Z] [Check Reset] Task "fdads" IS PAST END TIME. Now:1015 > End:959. Status: TODO
+[2026-01-08T14:55:00.765Z] [Timeframe Reset] Task fdads MISSED. Streak lost (was 0). Resetting to TODO.
+[2026-01-08T14:55:00.770Z] Recurrence Match: true (ONCE)
+[2026-01-08T14:55:00.771Z] Checking Cron: * * * * *
+[2026-01-08T14:55:00.772Z] Cron matched but task is DONE. Skipping notification.
+[2026-01-08T14:55:00.772Z] Recurrence Match: true (ONCE)
+[2026-01-08T14:55:00.773Z] Checking Cron: * * * * *
+[2026-01-08T14:55:00.774Z] Cron matched but task is DONE. Skipping notification.
+[2026-01-08T14:56:00.030Z] [TaskRunner] Running Check at 16:56
+[2026-01-08T14:56:00.042Z] [TaskRunner] Found 5 active tasks to check.
+[2026-01-08T14:56:00.043Z] Recurrence Match: false (ONCE)
+[2026-01-08T14:56:00.044Z] Recurrence Match: true (DAILY)
+[2026-01-08T14:56:00.044Z] Checking Cron: * * * * *
+[2026-01-08T14:56:00.045Z] Cron matched but task is DONE. Skipping notification.
+[2026-01-08T14:56:00.045Z] Recurrence Match: true (DAILY)
+[2026-01-08T14:56:00.046Z] [Check Reset] Task "fdads" IS PAST END TIME. Now:1016 > End:959. Status: TODO
+[2026-01-08T14:56:00.046Z] [Timeframe Reset] Task fdads MISSED. Streak lost (was 0). Resetting to TODO.
+[2026-01-08T14:56:00.050Z] Recurrence Match: true (ONCE)
+[2026-01-08T14:56:00.051Z] Checking Cron: * * * * *
+[2026-01-08T14:56:00.051Z] Cron matched but task is DONE. Skipping notification.
+[2026-01-08T14:56:00.052Z] Recurrence Match: true (ONCE)
+[2026-01-08T14:56:00.052Z] Checking Cron: * * * * *
+[2026-01-08T14:56:00.053Z] Cron matched but task is DONE. Skipping notification.
+[2026-01-08T14:57:00.023Z] [TaskRunner] Running Check at 16:57
+[2026-01-08T14:57:00.034Z] [TaskRunner] Found 0 active tasks to check.
+[2026-01-08T14:58:00.017Z] [TaskRunner] Running Check at 16:58
+[2026-01-08T14:58:00.023Z] [TaskRunner] Found 0 active tasks to check.
+[2026-01-08T14:59:00.022Z] [TaskRunner] Running Check at 16:59
+[2026-01-08T14:59:00.028Z] [TaskRunner] Found 0 active tasks to check.
+[2026-01-08T15:00:00.029Z] [TaskRunner] Running Check at 17:0
+[2026-01-08T15:00:00.035Z] [TaskRunner] Found 0 active tasks to check.
+[2026-01-08T15:01:00.019Z] [TaskRunner] Running Check at 17:1
+[2026-01-08T15:01:00.024Z] [TaskRunner] Found 0 active tasks to check.
+[2026-01-08T15:02:00.009Z] [TaskRunner] Running Check at 17:2
+[2026-01-08T15:02:00.015Z] [TaskRunner] Found 0 active tasks to check.
+[2026-01-08T15:03:00.027Z] [TaskRunner] Running Check at 17:3
+[2026-01-08T15:03:00.032Z] [TaskRunner] Found 0 active tasks to check.
+[2026-01-08T15:04:00.030Z] [TaskRunner] Running Check at 17:4
+[2026-01-08T15:04:00.036Z] [TaskRunner] Found 0 active tasks to check.
+[2026-01-08T15:05:00.020Z] [TaskRunner] Running Check at 17:5
+[2026-01-08T15:05:00.025Z] [TaskRunner] Found 0 active tasks to check.
+[2026-01-08T15:06:00.022Z] [TaskRunner] Running Check at 17:6
+[2026-01-08T15:06:00.030Z] [TaskRunner] Found 0 active tasks to check.
+[2026-01-08T15:07:00.027Z] [TaskRunner] Running Check at 17:7
+[2026-01-08T15:07:00.035Z] [TaskRunner] Found 0 active tasks to check.
+[2026-01-08T15:08:00.028Z] [TaskRunner] Running Check at 17:8
+[2026-01-08T15:08:00.035Z] [TaskRunner] Found 0 active tasks to check.
+[2026-01-08T15:09:00.022Z] [TaskRunner] Running Check at 17:9
+[2026-01-08T15:09:00.030Z] [TaskRunner] Found 0 active tasks to check.
+[2026-01-08T15:10:00.031Z] [TaskRunner] Running Check at 17:10
+[2026-01-08T15:10:00.038Z] [TaskRunner] Found 0 active tasks to check.
+[2026-01-08T15:11:00.029Z] [TaskRunner] Running Check at 17:11
+[2026-01-08T15:11:00.036Z] [TaskRunner] Found 0 active tasks to check.
+[2026-01-08T15:12:00.026Z] [TaskRunner] Running Check at 17:12
+[2026-01-08T15:12:00.035Z] [TaskRunner] Found 0 active tasks to check.
+[2026-01-08T15:13:00.022Z] [TaskRunner] Running Check at 17:13
+[2026-01-08T15:13:00.028Z] [TaskRunner] Found 0 active tasks to check.
+[2026-01-08T15:14:00.017Z] [TaskRunner] Running Check at 17:14
+[2026-01-08T15:14:00.022Z] [TaskRunner] Found 0 active tasks to check.
+[2026-01-08T15:15:00.012Z] [TaskRunner] Running Check at 17:15
+[2026-01-08T15:15:00.018Z] [TaskRunner] Found 0 active tasks to check.
+[2026-01-08T22:10:00.019Z] [TaskRunner] Running Check at 0:10
+[2026-01-08T22:10:00.037Z] [TaskRunner] Found 0 active tasks to check.
+[2026-01-08T22:11:00.031Z] [TaskRunner] Running Check at 0:11
+[2026-01-08T22:11:00.050Z] [TaskRunner] Found 1 active tasks to check.
+[2026-01-08T22:11:00.052Z] Recurrence Match: true (ONCE)
+[2026-01-08T22:11:00.052Z] Checking Cron: * * * * *
+[2026-01-08T22:11:00.053Z] Cron matched! Sending notification...
+[2026-01-08T22:11:00.065Z] No subscription found for user
+[2026-01-08T22:12:00.029Z] [TaskRunner] Running Check at 0:12
+[2026-01-08T22:12:00.040Z] [TaskRunner] Found 1 active tasks to check.
+[2026-01-08T22:12:00.041Z] Recurrence Match: true (ONCE)
+[2026-01-08T22:12:00.042Z] Checking Cron: * * * * *
+[2026-01-08T22:12:00.042Z] Cron matched! Sending notification...
+[2026-01-08T22:12:00.045Z] No subscription found for user
+[2026-01-08T22:13:00.026Z] [TaskRunner] Running Check at 0:13
+[2026-01-08T22:13:00.036Z] [TaskRunner] Found 1 active tasks to check.
+[2026-01-08T22:13:00.037Z] Recurrence Match: true (ONCE)
+[2026-01-08T22:13:00.038Z] Checking Cron: * * * * *
+[2026-01-08T22:13:00.038Z] Cron matched! Sending notification...
+[2026-01-08T22:13:00.042Z] Found 1 subscriptions, sending...
+[2026-01-08T22:13:00.575Z] Send result: true
+[2026-01-08T22:14:00.020Z] [TaskRunner] Running Check at 0:14
+[2026-01-08T22:14:00.031Z] [TaskRunner] Found 1 active tasks to check.
+[2026-01-08T22:14:00.032Z] Recurrence Match: true (ONCE)
+[2026-01-08T22:14:00.032Z] Checking Cron: * * * * *
+[2026-01-08T22:14:00.033Z] Cron matched! Sending notification...
+[2026-01-08T22:14:00.036Z] Found 1 subscriptions, sending...
+[2026-01-08T22:14:00.513Z] Send result: true
+[2026-01-08T22:15:00.023Z] [TaskRunner] Running Check at 0:15
+[2026-01-08T22:15:00.032Z] [TaskRunner] Found 1 active tasks to check.
+[2026-01-08T22:15:00.032Z] Recurrence Match: true (ONCE)
+[2026-01-08T22:15:00.033Z] Checking Cron: * * * * *
+[2026-01-08T22:15:00.033Z] Cron matched! Sending notification...
+[2026-01-08T22:15:00.037Z] Found 1 subscriptions, sending...
+[2026-01-08T22:15:00.238Z] Send result: true
+[2026-01-08T22:16:00.029Z] [TaskRunner] Running Check at 0:16
+[2026-01-08T22:16:00.038Z] [TaskRunner] Found 1 active tasks to check.
+[2026-01-08T22:16:00.039Z] Recurrence Match: true (ONCE)
+[2026-01-08T22:16:00.039Z] Checking Cron: * * * * *
+[2026-01-08T22:16:00.039Z] Cron matched! Sending notification...
+[2026-01-08T22:16:00.042Z] Found 1 subscriptions, sending...
+[2026-01-08T22:16:00.234Z] Send result: true
+[2026-01-08T22:17:00.029Z] [TaskRunner] Running Check at 0:17
+[2026-01-08T22:17:00.038Z] [TaskRunner] Found 1 active tasks to check.
+[2026-01-08T22:17:00.039Z] Recurrence Match: true (ONCE)
+[2026-01-08T22:17:00.039Z] Checking Cron: * * * * *
+[2026-01-08T22:17:00.040Z] Cron matched but task is DONE. Skipping notification.
+[2026-01-08T22:18:00.021Z] [TaskRunner] Running Check at 0:18
+[2026-01-08T22:18:00.032Z] [TaskRunner] Found 1 active tasks to check.
+[2026-01-08T22:18:00.032Z] Recurrence Match: true (ONCE)
+[2026-01-08T22:18:00.033Z] Checking Cron: * * * * *
+[2026-01-08T22:18:00.033Z] Cron matched but task is DONE. Skipping notification.
+[2026-01-08T22:19:00.019Z] [TaskRunner] Running Check at 0:19
+[2026-01-08T22:19:00.028Z] [TaskRunner] Found 1 active tasks to check.
+[2026-01-08T22:19:00.029Z] Recurrence Match: true (ONCE)
+[2026-01-08T22:19:00.029Z] Checking Cron: * * * * *
+[2026-01-08T22:19:00.030Z] Cron matched but task is DONE. Skipping notification.

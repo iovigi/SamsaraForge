@@ -1,7 +1,6 @@
-
 import { NextResponse } from 'next/server';
 import dbConnect from '@/lib/db';
-import Task from '@/lib/models/Task';
+import Habit from '@/lib/models/Habit';
 import jwt from 'jsonwebtoken';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
@@ -27,17 +26,17 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
         }
 
         // Token is valid, perform snooze (30 mins)
-        const task = await Task.findById(id);
-        if (!task) {
-            return NextResponse.json({ message: 'Task not found' }, { status: 404 });
+        const habit = await Habit.findById(id);
+        if (!habit) {
+            return NextResponse.json({ message: 'Habit not found' }, { status: 404 });
         }
 
         // Set snoozeUntil to 30 mins from now
         const snoozeTime = new Date(Date.now() + 30 * 60 * 1000);
-        task.snoozeUntil = snoozeTime;
-        await task.save();
+        habit.snoozeUntil = snoozeTime;
+        await habit.save();
 
-        console.log(`Task ${id} snoozed until ${snoozeTime.toISOString()}`);
+        console.log(`Habit ${id} snoozed until ${snoozeTime.toISOString()}`);
 
         return NextResponse.json({ message: 'Snoozed successfully', snoozeUntil: snoozeTime }, { status: 200 });
 

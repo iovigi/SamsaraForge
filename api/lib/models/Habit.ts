@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const TaskSchema = new mongoose.Schema({
+const HabitSchema = new mongoose.Schema({
     userId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
@@ -39,6 +39,10 @@ const TaskSchema = new mongoose.Schema({
         type: String,
         maxlength: [200, 'Intention is too long'],
     },
+    completionDates: {
+        type: [Date],
+        default: []
+    },
     // Recurrence Pattern
     recurrence: {
         type: String,
@@ -71,4 +75,4 @@ const TaskSchema = new mongoose.Schema({
     ],
 }, { timestamps: true });
 
-export default mongoose.models.Task || mongoose.model('Task', TaskSchema);
+export default mongoose.models.Habit || mongoose.model('Habit', HabitSchema);

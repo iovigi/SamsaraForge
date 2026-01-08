@@ -97,12 +97,12 @@ export default function SettingsPage() {
                             {/* Notification Settings */}
                             <div className="card card-info mt-3">
                                 <div className="card-header">
-                                    <h3 className="card-title">Notifications</h3>
+                                    <h3 className="card-title">{t('settings.notifications')}</h3>
                                 </div>
                                 <div className="card-body">
                                     {pushError && <div className="alert alert-danger">{pushError}</div>}
                                     <div className="form-group">
-                                        <label>Push Notifications</label>
+                                        <label>{t('settings.pushNotifications')}</label>
                                         <div className="custom-control custom-switch">
                                             <div className="form-check form-switch">
                                                 <input
@@ -114,14 +114,14 @@ export default function SettingsPage() {
                                                     disabled={loading}
                                                 />
                                                 <label className="form-check-label" htmlFor="pushSwitch">
-                                                    {loading ? 'Processing...' : (isSubscribed ? 'Enabled' : 'Disabled')}
+                                                    {loading ? t('auth.processing') : (isSubscribed ? t('settings.pushEnabled') : t('settings.pushDisabled'))}
                                                 </label>
                                             </div>
                                         </div>
                                         <small className="form-text text-muted">
                                             {isSubscribed
-                                                ? 'You will receive notifications for updates.'
-                                                : 'Enable to receive push notifications.'}
+                                                ? t('settings.pushEnabledDesc')
+                                                : t('settings.pushDisabledDesc')}
                                         </small>
                                     </div>
                                 </div>

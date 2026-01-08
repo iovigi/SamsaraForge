@@ -1,5 +1,5 @@
 import cron from 'node-cron';
-import Task from '../models/Task';
+import Habit from '../models/Habit';
 import { sendNotification } from '../services/notificationService';
 import jwt from 'jsonwebtoken';
 // We need a Subscription model to fetch subs. For now assuming we have a way to get subs.
@@ -45,23 +45,39 @@ const checkTasks = async () => {
         // If it's a "Daily" habit, we reset it at midnight (effectively now if lastCompleted < today).
         const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
 
-        const tasksToReset = await Task.find({
+        const tasksToReset = await Habit.find({
             status: 'DONE',
             recurrence: { $in: ['DAILY', 'WEEKLY', 'MONTHLY'] },
             lastCompletedAt: { $lt: startOfToday }
         });
 
         if (tasksToReset.length > 0) {
-            log(`[TaskRunner] Found ${tasksToReset.length} habits to reset.`);
+            log(`[TaskRunner] Found ${tasksToReset.length} habits to potentially reset.`);
             for (const task of tasksToReset) {
-                // For WEEKLY, we might only want to reset if today IS one of the weekdays? 
-                // OR we reset it immediately so it appears as TODO for the next occurrence?
-                // "Habit" usually means "Daily Streak".
-                // Let's assume Daily Reset for all for now to keep them appearing in "To Do" list.
-                // A "Weekly" task appearing in TODO on a Tuesday when it's due Friday is fine.
-                task.status = 'TODO';
-                await task.save();
-                log(`Reset Task ${task.title} to TODO`);
+                // Granular check: Only reset if TODAY is a scheduled day.
+                let shouldReset = false;
+
+                if (task.recurrence === 'DAILY') {
+                    shouldReset = true;
+                } else if (task.recurrence === 'WEEKLY') {
+                    // Check if today matches one of the weekDays
+                    if (task.weekDays && task.weekDays.includes(currentWeekDay)) {
+                        shouldReset = true;
+                    }
+                } else if (task.recurrence === 'MONTHLY') {
+                    // Check if today matches monthDay
+                    if (task.monthDay === currentDay) {
+                        shouldReset = true;
+                    }
+                }
+
+                if (shouldReset) {
+                    task.status = 'TODO';
+                    await task.save();
+                    log(`[Daily Reset] Reset Task "${task.title}" to TODO (New Cycle Started).`);
+                } else {
+                    log(`[Daily Reset] Task "${task.title}" skipped reset. Not due today.`);
+                }
             }
         }
         // -------------------------
@@ -69,12 +85,18 @@ const checkTasks = async () => {
         // Find all TODO tasks
         // This is inefficient for large DBs, but fine for MVP.
         // We also check notify: { $ne: false } to handle legacy docs where field might be missing (default true)
-        const tasks = await Task.find({ status: 'TODO', notify: { $ne: false } }).populate('userId');
+        // Find all active tasks (TODO or DONE) to perform timeframe checks
+        // We need to check DONE tasks so we can reset them when timeframe ends.
+        // Find all active tasks (TODO or DONE) to perform timeframe checks
+        // We REMOVED 'notify' filter because we must manage state (reset) even if notifications are off.
+        const tasks = await Habit.find({
+            $or: [{ status: 'TODO' }, { status: 'DONE' }]
+        }).populate('userId');
 
-        log(`[TaskRunner] Found ${tasks.length} TODO tasks`);
+        log(`[TaskRunner] Found ${tasks.length} active tasks to check.`);
 
         for (const task of tasks) {
-            log(`Checking Task: ${task.title} (ID: ${task._id})`);
+            // log(`Checking Task: ${task.title} (ID: ${task._id})`);
 
             // Check TimeFrame
             if (task.timeFrame) {
@@ -84,12 +106,16 @@ const checkTasks = async () => {
                 const startMinutes = startH * 60 + startM;
                 const endMinutes = endH * 60 + endM;
 
-                log(`Timeframe Check: Now=${nowMinutes}, Start=${startMinutes}, End=${endMinutes}`);
+                // Debug log for timeframe
+                // log(`[${task.title}] Timeframe: ${startH}:${startM}-${endH}:${endM} (Now: ${currentHeight}:${currentMinute})`);
 
-                if (nowMinutes < startMinutes || nowMinutes > endMinutes) {
-                    log(`Skipping - Outside timeframe`);
-                    continue; // Outside timeframe
+                if (nowMinutes < startMinutes) {
+                    log(`Skipping - Before start time`);
+                    continue; // Wait for start
                 }
+
+                // We REMOVED (nowMinutes > endMinutes) check here. 
+                // We need to allow processing even if past end time, so we can trigger the RESET logic below.
             } else {
                 log(`No timeframe, proceeding.`);
             }
@@ -120,6 +146,71 @@ const checkTasks = async () => {
 
             if (!recurrenceMatch) continue;
 
+            const [endH, endM] = task.timeFrame && task.timeFrame.end ? task.timeFrame.end.split(':').map(Number) : [23, 59];
+            const endMinutes = endH * 60 + endM;
+            const nowMinutes = currentHeight * 60 + currentMinute;
+
+            // --- TIMEFRAME FINISH RESET ---
+            // User Request: "Reset recurring task when timeframe is finish, reset it to predetermined"
+
+            // Allow 10 minute buffer after end time before forcing reset to avoid race conditions with notifications
+            // or if the user is just finishing it at the last second.
+
+            if (nowMinutes > endMinutes && task.recurrence !== 'ONCE') {
+                log(`[Check Reset] Task "${task.title}" IS PAST END TIME. Now:${nowMinutes} > End:${endMinutes}. Status: ${task.status}`);
+
+                // Only reset if it's NOT DONE (i.e., Failure to complete in time)
+                // If it IS DONE, we leave it alone (it stays DONE until the next daily reset cycle above).
+
+                if (task.status !== 'DONE') {
+                    // Failure! Missed the window.
+                    // Reset to TODO AND Reset Streak to 0
+                    log(`[Timeframe Reset] Task ${task.title} MISSED. Streak lost (was ${task.streak}). Resetting to TODO.`);
+                    task.status = 'TODO';
+                    task.streak = 0; // STRICT RESET
+                    await task.save();
+                } else {
+                    // Task is DONE. Do nothing.
+                    // log(`[Timeframe Check] Task ${task.title} is DONE and past time. Keeping as DONE.`);
+                }
+                continue; // stop processing this task
+            }
+            // ------------------------------
+
+            // --- STREAK RESCUE CHECK ---
+            // Detect if the task is expiring soon and has a streak to save.
+            if (task.streak > 0 && task.status !== 'DONE' && task.timeFrame && task.timeFrame.end) {
+
+                // Alert 2 hours before deadline
+                const minutesUntilDeadline = endMinutes - nowMinutes;
+
+                // We check for Exact match to avoid spamming (assuming runner runs every minute reliably)
+                // Or we can use a small range logic if we are worried about skipped cron ticks, 
+                // but exact match '120' is safest for 'once per day' notification without extra DB flags.
+                if (minutesUntilDeadline === 120) {
+                    log(`[Streak Rescue] Task ${task.title} is expiring in 2 hours! Sending Alert.`);
+
+                    const subs = await Subscription.find({ userId: task.userId._id });
+                    if (subs.length > 0) {
+                        const payload = {
+                            title: '🔥 Streak Emergency!',
+                            body: `Don't lose your ${task.streak} day streak on "${task.title}"! 2 hours left!`,
+                            data: {
+                                taskId: task._id,
+                                url: `/habits?openTask=${task._id}`
+                            },
+                            actions: [
+                                { action: 'open', title: 'Complete Now' }
+                            ]
+                        };
+                        for (const sub of subs) {
+                            await sendNotification(sub, payload);
+                        }
+                    }
+                }
+            }
+            // ---------------------------
+
             // Check Cron
             // We can use cron parser to check if current minute matches expression.
             // But we already have logic or use node-cron validate?
@@ -143,7 +234,21 @@ const checkTasks = async () => {
                 continue;
             }
 
-            if (cronMatches(task.reminderCron, now)) {
+            // Verify we are actually INSIDE the timeframe for notifications
+            // (Since we now allow falling through for resets)
+            let isWithinTimeframe = true;
+            if (task.timeFrame) {
+                const [endH, endM] = task.timeFrame.end.split(':').map(Number);
+                const endMinutes = endH * 60 + endM;
+                const nowMinutes = currentHeight * 60 + currentMinute;
+                if (nowMinutes > endMinutes) isWithinTimeframe = false;
+            }
+
+            // Only send REMINDERS if:
+            // 1. Task is NOT DONE
+            // 2. We are WITHIN the timeframe
+            // 3. Cron matches
+            if (task.status !== 'DONE' && isWithinTimeframe && cronMatches(task.reminderCron, now)) {
                 // SEND NOTIFICATION
                 log(`Cron matched! Sending notification...`);
                 // Fetch subscriptions for user
@@ -163,7 +268,7 @@ const checkTasks = async () => {
                         body: task.title,
                         data: {
                             taskId: task._id,
-                            url: `/kanban?openTask=${task._id}`, // Deep link to specific task
+                            url: `/habits?openTask=${task._id}`, // Deep link to specific task
                             snoozeToken
                         },
                         actions: [
@@ -179,7 +284,11 @@ const checkTasks = async () => {
                     log('No subscription found for user');
                 }
             } else {
-                log(`Cron did not match.`);
+                if (task.status === 'DONE') {
+                    log(`Cron matched but task is DONE. Skipping notification.`);
+                } else {
+                    log(`Cron did not match.`);
+                }
             }
         }
     } catch (err) {
