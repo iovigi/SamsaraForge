@@ -10,6 +10,10 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: [true, 'Please provide a password for this user.'],
     },
+    nickname: {
+        type: String,
+        required: false,
+    },
 });
 
 export default mongoose.models.User || mongoose.model('User', UserSchema);

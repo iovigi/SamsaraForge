@@ -1,9 +1,11 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useLanguage } from '../../context/LanguageContext';
 
 import { usePushSubscription } from '../../hooks/usePushSubscription';
+import { authenticatedFetch } from '../../utils/api';
+
 
 export default function SettingsPage() {
     const { language, setLanguage, t } = useLanguage();
@@ -13,6 +15,52 @@ export default function SettingsPage() {
     const [currentPassword, setCurrentPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+
+    // Profile state
+    const [nickname, setNickname] = useState('');
+
+    const [showSuccessModal, setShowSuccessModal] = useState(false);
+
+    useEffect(() => {
+        // Fetch current user data
+        const fetchUser = async () => {
+            try {
+                const res = await authenticatedFetch('/api/auth/me');
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data.user?.nickname) {
+                        setNickname(data.user.nickname);
+                    }
+                }
+            } catch (e) {
+                console.error(e);
+            }
+        };
+        fetchUser();
+    }, []);
+
+    const handleUpdateProfile = async () => {
+        try {
+            const res = await authenticatedFetch('/api/auth/me', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ nickname })
+            });
+
+            const data = await res.json();
+            if (res.ok) {
+                // alert(t('settings.profileUpdated') || 'Profile updated successfully');
+                setShowSuccessModal(true);
+            } else {
+                alert(data.message || 'Failed to update');
+            }
+        } catch (error) {
+            console.error(error);
+            alert(t('settings.error'));
+        }
+    };
 
     const handlePasswordChange = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -68,8 +116,38 @@ export default function SettingsPage() {
                 <div className="container-fluid">
                     <div className="row">
                         <div className="col-md-6">
+                            {/* Profile Settings */}
+                            <div className="card card-success">
+                                <div className="card-header">
+                                    <h3 className="card-title">{t('settings.profile')}</h3>
+                                </div>
+                                <div className="card-body">
+                                    <div className="form-group">
+                                        <label>{t('auth.nickname')}</label>
+                                        <div className="input-group">
+                                            <input
+                                                type="text"
+                                                className="form-control"
+                                                value={nickname}
+                                                onChange={(e) => setNickname(e.target.value)}
+                                                placeholder={t('auth.nickname')}
+                                            />
+                                            <span className="input-group-append">
+                                                <button
+                                                    type="button"
+                                                    className="btn btn-success"
+                                                    onClick={handleUpdateProfile}
+                                                >
+                                                    {t('settings.updateProfile')}
+                                                </button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                             {/* Language Settings */}
-                            <div className="card card-primary">
+                            <div className="card card-primary mt-3">
                                 <div className="card-header">
                                     <h3 className="card-title">{t('settings.language')}</h3>
                                 </div>
@@ -173,6 +251,35 @@ export default function SettingsPage() {
                     </div>
                 </div>
             </section>
+
+            {/* Bootstrap Modal for Success */}
+            {showSuccessModal && (
+                <>
+                    <div className="modal fade show d-block" tabIndex={-1} role="dialog" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
+                        <div className="modal-dialog modal-dialog-centered" role="document">
+                            <div className="modal-content">
+                                <div className="modal-header bg-success text-white">
+                                    <h5 className="modal-title">Success</h5>
+                                    <button type="button" className="close text-white" onClick={() => setShowSuccessModal(false)}>
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div className="modal-body">
+                                    <p className="text-center">
+                                        <i className="fas fa-check-circle fa-3x text-success mb-3"></i><br />
+                                        {t('settings.profileUpdated')}
+                                    </p>
+                                </div>
+                                <div className="modal-footer justify-content-center">
+                                    <button type="button" className="btn btn-success px-4" onClick={() => setShowSuccessModal(false)}>
+                                        OK
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </>
+            )}
         </div>
     );
 }

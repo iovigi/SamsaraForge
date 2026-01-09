@@ -2,9 +2,11 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { ActivityCalendar } from 'react-activity-calendar';
 import { authenticatedFetch } from '../../utils/api';
 import { useLanguage } from '../../context/LanguageContext';
+import DailyProgress from '../../components/DailyProgress';
+import DailyHabitCard from '../../components/DailyHabitCard';
+import confetti from 'canvas-confetti';
 
 interface Habit {
     _id: string;
@@ -14,91 +16,170 @@ interface Habit {
     recurrence: 'ONCE' | 'DAILY' | 'WEEKLY' | 'MONTHLY'; // Added to interface
     streak: number;
     completionDates: string[]; // ISO Date strings
+    scheduledDate?: string;
+    weekDays?: number[];
+    monthDay?: number;
+    timeFrame?: { start: string; end: string };
 }
 
+import { quotes } from '../../utils/quotes';
+
 export default function DashboardPage() {
-    const { t } = useLanguage();
+    const { t, language } = useLanguage();
     const router = useRouter();
-    const [habits, setHabits] = useState<Habit[]>([]);
+    const [todayHabits, setTodayHabits] = useState<Habit[]>([]);
     const [loading, setLoading] = useState(true);
-    const [stats, setStats] = useState({
-        totalHabits: 0,
-        activeStreaks: 0,
-        totalCompletions: 0,
-    });
-    const [calendarData, setCalendarData] = useState<any[]>([]);
+    const [completionStats, setCompletionStats] = useState({ total: 0, completed: 0 });
+    const [userName, setUserName] = useState('');
+    const [currentQuote, setCurrentQuote] = useState({ text: '', author: '' });
 
     useEffect(() => {
-        const fetchHabits = async () => {
-            try {
-                const res = await authenticatedFetch('/api/habits');
-                if (res.ok) {
-                    const data = await res.json();
-                    setHabits(data.habits);
-                    calculateStats(data.habits);
-                } else {
-                    // If auth fails, redirect to login
-                    if (res.status === 401) router.push('/auth/login');
-                }
-            } catch (error) {
-                console.error('Error fetching dashboard data:', error);
-            } finally {
-                setLoading(false);
-            }
-        };
+        // Random quote based on language
+        const langCode = language === 'bg' ? 'bg' : 'en';
+        const currentQuotes = quotes[langCode] || quotes['en'];
+        const randomQuote = currentQuotes[Math.floor(Math.random() * currentQuotes.length)];
+        setCurrentQuote(randomQuote);
+    }, [language]); // Re-run when language changes
 
+    const fetchHabits = async () => {
+        try {
+            const res = await authenticatedFetch('/api/habits');
+            if (res.ok) {
+                const data = await res.json();
+                filterTodayHabits(data.habits);
+            } else {
+                if (res.status === 401) router.push('/auth/login');
+            }
+        } catch (error) {
+            console.error('Error fetching dashboard data:', error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const fetchUser = async () => {
+        try {
+            // Basic fetch of /api/auth/me to get name
+            // Assuming this endpoint exists based on TaskModal
+            const res = await authenticatedFetch('/api/auth/me');
+            if (res.ok) {
+                const data = await res.json();
+                console.log('Dashboard fetchUser data:', data);
+                // Assuming data.user.name or data.user.email
+                // We'll use email as fallback if name is not there
+                const name = data.user?.nickname || data.user?.name || data.user?.email?.split('@')[0] || 'Friend';
+                setUserName(name);
+            }
+        } catch (e) {
+            console.error("Failed to fetch user", e);
+        }
+    };
+
+    useEffect(() => {
         fetchHabits();
+        fetchUser();
     }, []);
 
-    const calculateStats = (habitList: Habit[]) => {
-        let totalH = habitList.length;
-        let activeS = 0;
-        let totalC = 0;
-        const dateMap: Record<string, number> = {};
+    const filterTodayHabits = (allHabits: Habit[]) => {
+        const today = new Date();
+        const dayOfWeek = today.getDay(); // 0 = Sun
+        const dayOfMonth = today.getDate();
+        const dateString = today.toISOString().split('T')[0];
 
-        console.log('Calculating Stats for Habits:', habitList);
+        const todays = allHabits.filter(habit => {
+            // 1. Check if explicitly completed today already (show it as done)
+            const isCompletedToday = habit.completionDates?.some(d => d.startsWith(dateString));
+            if (isCompletedToday) return true;
 
-        habitList.forEach(habit => {
-            // Only count streak if it's > 0 AND not a one-time task
-            if (habit.streak > 0 && habit.recurrence !== 'ONCE') activeS++;
+            // 2. Check scheduling rules
+            if (habit.recurrence === 'DAILY') return true;
+            if (habit.recurrence === 'WEEKLY' && habit.weekDays?.includes(dayOfWeek)) return true;
+            if (habit.recurrence === 'MONTHLY' && habit.monthDay === dayOfMonth) return true;
+            if (habit.recurrence === 'ONCE' && habit.scheduledDate && habit.scheduledDate.startsWith(dateString)) return true;
 
-            const dates = habit.completionDates || [];
-            if (dates.length > 0) {
-                totalC += dates.length;
-                dates.forEach(dateStr => {
-                    // Extract YYYY-MM-DD
-                    const date = new Date(dateStr).toISOString().split('T')[0];
-                    dateMap[date] = (dateMap[date] || 0) + 1;
-                });
-            }
+            return false;
         });
 
-        // Format for ActivityCalendar
-        // Needs last 365 days mostly, or dynamic. 
-        // We'll just map the dateMap to array.
-        const calendar = Object.entries(dateMap).map(([date, count]) => ({
-            date,
-            count,
-            level: Math.min(count, 4) as 0 | 1 | 2 | 3 | 4, // Simple scaling
-        })).sort((a, b) => a.date.localeCompare(b.date));
+        // Sort: Pending first, then Done. Then by time.
+        todays.sort((a, b) => {
+            const aDone = isCompletedToday(a);
+            const bDone = isCompletedToday(b);
+            if (aDone === bDone) return 0;
+            return aDone ? 1 : -1;
+        });
 
-        // Ensure we have at least one entry to avoid calendar crashes if empty
-        if (calendar.length === 0) {
-            const today = new Date().toISOString().split('T')[0];
-            calendar.push({ date: today, count: 0, level: 0 });
+        setTodayHabits(todays);
+        updateStats(todays);
+    };
+
+    const isCompletedToday = (habit: Habit) => {
+        const todayStr = new Date().toISOString().split('T')[0];
+        return habit.completionDates?.some(d => d.startsWith(todayStr));
+    };
+
+    const updateStats = (habits: Habit[]) => {
+        const total = habits.length;
+        const completed = habits.filter(h => isCompletedToday(h)).length;
+        setCompletionStats({ total, completed });
+    };
+
+    const toggleComplete = async (habit: Habit) => {
+        const wasCompleted = isCompletedToday(habit);
+        const newStatus = wasCompleted ? 'TODO' : 'DONE'; // Simplified toggle logic for now
+
+        // Optimistic Update
+        const updatedHabits = todayHabits.map(h => {
+            if (h._id === habit._id) {
+                const todayStr = new Date().toISOString().split('T')[0];
+                let newDates = h.completionDates || [];
+                if (!wasCompleted) {
+                    newDates = [...newDates, new Date().toISOString()];
+                } else {
+                    newDates = newDates.filter(d => !d.startsWith(todayStr));
+                }
+                return { ...h, completionDates: newDates };
+            }
+            return h;
+        });
+
+        setTodayHabits(updatedHabits);
+        updateStats(updatedHabits);
+
+        if (!wasCompleted) {
+            triggerConfetti();
         }
 
-        setStats({
-            totalHabits: totalH,
-            activeStreaks: activeS,
-            totalCompletions: totalC
+        // Actual API Call (We use the status update endpoint or a new completion toggle endpoint)
+        // Ideally we should have a specific 'check-in' endpoint, but for now we'll use PUT with status or just rely on the manual update provided by existing codebase logic?
+        // Current API might settle status to DONE which is permanent. 
+        // We will simulate a "toggle" by updating the habit status logic if needed.
+        // Actually, for "Daily" habits, status shouldn't stick to DONE forever. 
+        // For now, let's just push the status update.
+
+        await authenticatedFetch(`/api/habits/${habit._id}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                status: newStatus
+                // We might need to handle completionDates manually on backend if status doesn't handle it
+            }),
         });
-        setCalendarData(calendar);
+
+        // Re-fetch to ensure consistency with backend logic (streaks etc)
+        fetchHabits();
+    };
+
+    const triggerConfetti = () => {
+        confetti({
+            particleCount: 100,
+            spread: 70,
+            origin: { y: 0.6 }
+        });
     };
 
     if (loading) {
         return (
-            <div className="content-wrapper d-flex justify-content-center align-items-center">
+            <div className="content-wrapper d-flex justify-content-center align-items-center" style={{ minHeight: '100vh', backgroundColor: '#f4f6f9' }}>
                 <div className="spinner-border text-primary" role="status">
                     <span className="sr-only">Loading...</span>
                 </div>
@@ -107,115 +188,54 @@ export default function DashboardPage() {
     }
 
     return (
-        <div className="content-wrapper">
-            {/* Content Header */}
-            <div className="content-header">
+        <div className="content-wrapper" style={{ backgroundColor: '#f4f6f9' }}> {/* Light gray background */}
+            <section className="content pt-4">
                 <div className="container-fluid">
-                    <div className="row mb-2">
-                        <div className="col-sm-6">
-                            <h1 className="m-0">{t('nav.dashboard')}</h1>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                    <div className="row justify-content-center">
+                        <div className="col-12 col-md-8 col-lg-6">
 
-            {/* Main Content */}
-            <section className="content">
-                <div className="container-fluid">
-                    {/* Stats Boxes */}
-                    <div className="row">
-                        <div className="col-lg-4 col-6">
-                            <div className="small-box bg-info">
-                                <div className="inner">
-                                    <h3>{stats.totalHabits}</h3>
-                                    <p>{t('dashboard.totalHabits')}</p>
+                            {/* 1. Header & Progress */}
+                            <DailyProgress
+                                completed={completionStats.completed}
+                                total={completionStats.total}
+                                userName={userName}
+                            />
+
+                            {/* 2. Today's List */}
+                            <h5 className="mb-3 pl-1 font-weight-bold text-dark">{t('dashboard.today')}</h5>
+
+                            {todayHabits.length > 0 ? (
+                                todayHabits.map(habit => (
+                                    <DailyHabitCard
+                                        key={habit._id}
+                                        title={habit.title}
+                                        description={habit.description}
+                                        status={isCompletedToday(habit) ? 'DONE' : 'TODO'}
+                                        onComplete={() => toggleComplete(habit)}
+                                        // Simple heuristic for type
+                                        type={habit.description?.toLowerCase().includes('timer') ? 'TIMED' : 'SIMPLE'}
+                                        streak={habit.streak}
+                                    />
+                                ))
+                            ) : (
+                                <div className="text-center py-5 text-muted">
+                                    <i className="fas fa-mug-hot fa-3x mb-3 text-secondary" style={{ opacity: 0.5 }}></i>
+                                    <p>{t('dashboard.noHabits')}</p>
+                                    <a href="/habits" className="btn btn-sm btn-outline-primary mt-2">{t('dashboard.manageHabits')}</a>
                                 </div>
-                                <div className="icon">
-                                    <i className="fas fa-tasks"></i>
-                                </div>
-                                <a href="/habits" className="small-box-footer">
-                                    {t('dashboard.goToBoard')} <i className="fas fa-arrow-circle-right"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <div className="col-lg-4 col-6">
-                            <div className="small-box bg-success">
-                                <div className="inner">
-                                    <h3>{stats.activeStreaks}</h3>
-                                    <p>{t('dashboard.activeStreaks')}</p>
-                                </div>
-                                <div className="icon">
-                                    <i className="fas fa-fire"></i>
-                                </div>
-                                <a href="/habits" className="small-box-footer">
-                                    {t('dashboard.viewHabits')} <i className="fas fa-arrow-circle-right"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <div className="col-lg-4 col-6">
-                            <div className="small-box bg-warning">
-                                <div className="inner">
-                                    <h3>{stats.totalCompletions}</h3>
-                                    <p>{t('dashboard.totalVictories')}</p>
-                                </div>
-                                <div className="icon">
-                                    <i className="fas fa-trophy"></i>
+                            )}
+
+                            {/* 3. Motivation / Footer */}
+                            <div className="card bg-white mt-5 border-0 shadow-sm" style={{ borderRadius: '15px' }}>
+                                <div className="card-body">
+                                    <h6 className="font-weight-bold mb-2">{t('dashboard.motivationTitle')}</h6>
+                                    <p className="font-italic text-muted mb-0">"{currentQuote.text || t('dashboard.motivationText')}"</p>
+                                    <footer className="blockquote-footer mt-1">{currentQuote.author}</footer>
                                 </div>
                             </div>
+
                         </div>
                     </div>
-
-                    {/* Activity Calendar Card */}
-                    <div className="row mt-4">
-                        <div className="col-12">
-                            <div className="card">
-                                <div className="card-header border-0">
-                                    <h3 className="card-title">
-                                        <i className="far fa-calendar-alt mr-1"></i>
-                                        {t('dashboard.globalHistory')}
-                                    </h3>
-                                </div>
-                                <div className="card-body pt-0 d-flex justify-content-center">
-                                    <div style={{ width: '100%', overflowX: 'auto' }}>
-                                        <ActivityCalendar
-                                            data={calendarData}
-                                            theme={{
-                                                light: ['#ebedf0', '#9be9a8', '#40c463', '#30a14e', '#216e39'],
-                                                dark: ['#161b22', '#0e4429', '#006d32', '#26a641', '#39d353'],
-                                            }}
-                                            labels={{
-                                                legend: {
-                                                    less: t('dashboard.less'),
-                                                    more: t('dashboard.more'),
-                                                },
-                                                months: [
-                                                    'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-                                                    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
-                                                ],
-                                                totalCount: t('dashboard.victoriesInYear'),
-                                                weekdays: [
-                                                    'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'
-                                                ]
-                                            }}
-                                            colorScheme="light"
-                                            blockSize={12}
-                                            blockMargin={5}
-                                            fontSize={14}
-                                        />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Motivation Quote / Clean layout */}
-                    <div className="row">
-                        <div className="col-12 text-center mt-5 text-muted">
-                            <p className="font-italic">{t('dashboard.quote')}</p>
-                            <small>{t('dashboard.quoteAuthor')}</small>
-                        </div>
-                    </div>
-
                 </div>
             </section>
         </div>

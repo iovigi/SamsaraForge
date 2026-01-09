@@ -8,6 +8,7 @@ import { API_BASE_URL } from '../utils/config';
 
 export default function AuthForm({ mode }: { mode: 'login' | 'register' }) {
     const { t } = useLanguage();
+    const [nickname, setNickname] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
@@ -51,7 +52,7 @@ export default function AuthForm({ mode }: { mode: 'login' | 'register' }) {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ email, password }),
+                body: JSON.stringify({ email, password, nickname }),
             });
 
             const data = await res.json();
@@ -72,11 +73,11 @@ export default function AuthForm({ mode }: { mode: 'login' | 'register' }) {
                     localStorage.setItem('token', data.accessToken);
                     localStorage.setItem('refreshToken', data.refreshToken);
                     localStorage.setItem('userEmail', email); // Store email
-                    alert('Registration Successful! Logging you in...');
+                    // alert('Registration Successful! Logging you in...');
                     router.push('/dashboard');
                 } else {
                     // Fallback if no token (shouldn't happen with new API)
-                    alert('Registration Successful! Please login.');
+                    // alert('Registration Successful! Please login.');
                     router.push('/auth/login');
                 }
             }
@@ -95,6 +96,22 @@ export default function AuthForm({ mode }: { mode: 'login' | 'register' }) {
                 {error && <div className="alert alert-danger">{error}</div>}
 
                 <form onSubmit={handleSubmit}>
+                    {mode === 'register' && (
+                        <div className="input-group mb-3">
+                            <input
+                                type="text"
+                                className="form-control"
+                                placeholder={t('auth.nickname')}
+                                value={nickname}
+                                onChange={(e) => setNickname(e.target.value)}
+                            />
+                            <div className="input-group-append">
+                                <div className="input-group-text">
+                                    <span className="fas fa-user"></span>
+                                </div>
+                            </div>
+                        </div>
+                    )}
                     <div className="input-group mb-3">
                         <input
                             type="email"

@@ -33,8 +33,54 @@ export async function GET(req: Request) {
             return NextResponse.json({ message: 'User not found' }, { status: 404 });
         }
 
-        console.log('User found:', user.email);
+        console.log('User found:', user.email, 'Nickname:', user.nickname);
         return NextResponse.json({ user });
+    } catch (error: any) {
+        return NextResponse.json({ message: error.message }, { status: 500 });
+    }
+}
+
+export async function PUT(req: Request) {
+    try {
+        await dbConnect();
+
+        const authHeader = req.headers.get('Authorization');
+        if (!authHeader || !authHeader.startsWith('Bearer ')) {
+            return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
+        }
+
+        const token = authHeader.split(' ')[1];
+        let decoded: any;
+
+        try {
+            decoded = jwt.verify(token, JWT_SECRET);
+        } catch (err) {
+            return NextResponse.json({ message: 'Invalid token' }, { status: 401 });
+        }
+
+        const body = await req.json();
+        const { nickname } = body;
+        console.log('PUT /me received nickname:', nickname);
+
+        const user = await User.findById(decoded.userId);
+        if (!user) {
+            return NextResponse.json({ message: 'User not found' }, { status: 404 });
+        }
+
+        if (nickname !== undefined) {
+            user.nickname = nickname;
+        }
+
+        await user.save();
+        console.log('User saved with nickname:', user.nickname);
+
+        return NextResponse.json({
+            message: 'Profile updated successfully',
+            user: {
+                ...user.toObject(),
+                password: undefined
+            }
+        });
     } catch (error: any) {
         return NextResponse.json({ message: error.message }, { status: 500 });
     }

@@ -9,7 +9,7 @@ export async function POST(req: Request) {
         await dbConnect();
 
         const body = await req.json();
-        const { email, password } = body;
+        const { email, password, nickname } = body;
 
         if (!email || !password) {
             return NextResponse.json(
@@ -37,6 +37,7 @@ export async function POST(req: Request) {
         const user = await User.create({
             email,
             password: hashedPassword,
+            nickname,
         });
 
         // Generate JWT token for auto-login
