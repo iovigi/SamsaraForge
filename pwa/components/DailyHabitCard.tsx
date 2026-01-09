@@ -9,9 +9,10 @@ interface DailyHabitCardProps {
     onComplete: () => void;
     completed?: boolean;
     streak?: number;
+    onAddNote?: () => void;
 }
 
-export default function DailyHabitCard({ title, description, status, type = 'SIMPLE', onComplete, streak }: DailyHabitCardProps) {
+export default function DailyHabitCard({ title, description, status, type = 'SIMPLE', onComplete, streak, onAddNote }: DailyHabitCardProps) {
     const { t } = useLanguage();
     const isDone = status === 'DONE';
 
@@ -24,7 +25,7 @@ export default function DailyHabitCard({ title, description, status, type = 'SIM
                             <h6 className={`font-weight-bold mb-0 ${isDone ? 'text-muted' : ''}`} style={{ textDecoration: isDone ? 'line-through' : 'none' }}>
                                 {title}
                             </h6>
-                            {streak && streak > 0 && (
+                            {(streak || 0) > 0 && (
                                 <span className="badge badge-warning ml-2 text-white" style={{ fontSize: '0.7rem' }}>
                                     <i className="fas fa-fire mr-1"></i> {streak}
                                 </span>
@@ -38,8 +39,7 @@ export default function DailyHabitCard({ title, description, status, type = 'SIM
                 <div className="mt-2 d-flex justify-content-end">
                     {!isDone ? (
                         <>
-                            {/* Placeholder for Note feature */}
-                            <button className="btn btn-light btn-sm mr-2 text-muted" style={{ borderRadius: '8px' }}>
+                            <button onClick={onAddNote} className="btn btn-light btn-sm mr-2 text-muted" style={{ borderRadius: '8px' }}>
                                 <i className="fas fa-sticky-note mr-1"></i> {t('dashboard.note')}
                             </button>
 

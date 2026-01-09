@@ -144,27 +144,20 @@ export default function TaskModal({ isOpen, onClose, task, onSave, onUpdate }: T
     };
 
     useEffect(() => {
-        // Fetch User Email if missing
-        const initEmail = async () => {
-            const stored = localStorage.getItem('userEmail');
-            if (stored && stored !== 'User') {
-                setCurrentUserEmail(stored);
-            } else {
-                try {
-                    const res = await authenticatedFetch('/api/auth/me');
-                    if (res.ok) {
-                        const data = await res.json();
-                        if (data.user?.email) {
-                            setCurrentUserEmail(data.user.email);
-                            localStorage.setItem('userEmail', data.user.email);
-                        }
-                    }
-                } catch (e) {
-                    console.error('Failed to fetch user info', e);
+        // Fetch User Info (Nickname or Email)
+        const initUser = async () => {
+            try {
+                const res = await authenticatedFetch('/api/auth/me');
+                if (res.ok) {
+                    const data = await res.json();
+                    const label = data.user?.nickname || data.user?.email || 'User';
+                    setCurrentUserEmail(label); // Keeping state name for minimal refactor, but it holds the display label
                 }
+            } catch (e) {
+                console.error('Failed to fetch user info', e);
             }
         };
-        initEmail();
+        initUser();
     }, []);
 
     const handleAddComment = async () => {

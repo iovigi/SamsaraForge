@@ -185,4 +185,10 @@ export const bg: Dictionary = {
     'dashboard.manageHabits': 'Управление',
     'dashboard.motivationTitle': 'Защо това има значение',
     'dashboard.motivationText': 'Бъди във форма и пълен с енергия. Ако усещаш съпротива: Просто си обуй обувките!',
+
+    'dashboard.addNote': 'Добави Бележка',
+    'dashboard.noteContent': 'Съдържание',
+    'dashboard.notePlaceholder': 'Въведи своите мисли...',
+    'common.save': 'Запази',
+    'common.cancel': 'Отказ',
 };

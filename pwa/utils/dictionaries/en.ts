@@ -182,6 +182,12 @@ export const en = {
     'dashboard.manageHabits': 'Manage Habits',
     'dashboard.motivationTitle': 'Why this matters',
     'dashboard.motivationText': 'Get fit and feel energized. If you feel resistance: Just put on your shoes!',
+
+    'dashboard.addNote': 'Add Note',
+    'dashboard.noteContent': 'Content',
+    'dashboard.notePlaceholder': 'Enter your thoughts...',
+    'common.save': 'Save',
+    'common.cancel': 'Cancel',
 };
 
 export type Dictionary = typeof en;

@@ -24,6 +24,8 @@ interface Habit {
 
 import { quotes } from '../../utils/quotes';
 
+import NoteModal from '../../components/NoteModal';
+
 export default function DashboardPage() {
     const { t, language } = useLanguage();
     const router = useRouter();
@@ -32,6 +34,10 @@ export default function DashboardPage() {
     const [completionStats, setCompletionStats] = useState({ total: 0, completed: 0 });
     const [userName, setUserName] = useState('');
     const [currentQuote, setCurrentQuote] = useState({ text: '', author: '' });
+
+    // Note Modal State
+    const [isNoteModalOpen, setIsNoteModalOpen] = useState(false);
+    const [activeNoteHabitId, setActiveNoteHabitId] = useState<string | null>(null);
 
     useEffect(() => {
         // Random quote based on language
@@ -149,19 +155,11 @@ export default function DashboardPage() {
             triggerConfetti();
         }
 
-        // Actual API Call (We use the status update endpoint or a new completion toggle endpoint)
-        // Ideally we should have a specific 'check-in' endpoint, but for now we'll use PUT with status or just rely on the manual update provided by existing codebase logic?
-        // Current API might settle status to DONE which is permanent. 
-        // We will simulate a "toggle" by updating the habit status logic if needed.
-        // Actually, for "Daily" habits, status shouldn't stick to DONE forever. 
-        // For now, let's just push the status update.
-
         await authenticatedFetch(`/api/habits/${habit._id}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 status: newStatus
-                // We might need to handle completionDates manually on backend if status doesn't handle it
             }),
         });
 
@@ -175,6 +173,26 @@ export default function DashboardPage() {
             spread: 70,
             origin: { y: 0.6 }
         });
+    };
+
+    const handleOpenNote = (habitId: string) => {
+        setActiveNoteHabitId(habitId);
+        setIsNoteModalOpen(true);
+    };
+
+    const handleSaveNote = async (text: string) => {
+        if (!activeNoteHabitId) return;
+
+        try {
+            await authenticatedFetch(`/api/habits/${activeNoteHabitId}/comments`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ text }),
+            });
+            // Optional: Show success toast
+        } catch (error) {
+            console.error('Failed to save note', error);
+        }
     };
 
     if (loading) {
@@ -215,6 +233,7 @@ export default function DashboardPage() {
                                         // Simple heuristic for type
                                         type={habit.description?.toLowerCase().includes('timer') ? 'TIMED' : 'SIMPLE'}
                                         streak={habit.streak}
+                                        onAddNote={() => handleOpenNote(habit._id)}
                                     />
                                 ))
                             ) : (
@@ -238,6 +257,13 @@ export default function DashboardPage() {
                     </div>
                 </div>
             </section>
+
+            <NoteModal
+                isOpen={isNoteModalOpen}
+                onClose={() => setIsNoteModalOpen(false)}
+                onSave={handleSaveNote}
+                title={todayHabits.find(h => h._id === activeNoteHabitId)?.title}
+            />
         </div>
     );
 }
