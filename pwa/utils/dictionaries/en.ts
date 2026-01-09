@@ -96,6 +96,7 @@ export const en = {
     'kanban.frequency.monthly': 'Month',
     'kanban.frequency.yearly': 'Year',
     'kanban.generatedCron': 'Generated Cron',
+    'kanban.expiresSoon': 'Expires soon!',
 
     // Landing
     'landing.title': 'Exit the loop. Forge the path.',

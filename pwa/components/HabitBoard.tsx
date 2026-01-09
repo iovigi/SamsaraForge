@@ -391,7 +391,7 @@ function DraggableTaskCard({ task, onEdit, onDelete, onMove }: any) {
                     {/* Expiration Text */}
                     {isExpiring && (
                         <span className="text-danger font-weight-bold ml-2" style={{ fontSize: '0.75rem' }}>
-                            <i className="fas fa-exclamation-triangle mr-1"></i> Expires soon!
+                            <i className="fas fa-exclamation-triangle mr-1"></i> {t('kanban.expiresSoon')}
                         </span>
                     )}
                 </div>

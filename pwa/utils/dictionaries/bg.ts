@@ -99,6 +99,7 @@ export const bg: Dictionary = {
     'kanban.frequency.monthly': 'Месец',
     'kanban.frequency.yearly': 'Година',
     'kanban.generatedCron': 'Генериран Cron',
+    'kanban.expiresSoon': 'Изтича скоро!',
 
     // Landing
     'landing.title': 'Излез от Самсара. Изкови своя Път.',

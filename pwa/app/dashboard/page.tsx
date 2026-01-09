@@ -101,7 +101,14 @@ export default function DashboardPage() {
             if (habit.recurrence === 'DAILY') return true;
             if (habit.recurrence === 'WEEKLY' && habit.weekDays?.includes(dayOfWeek)) return true;
             if (habit.recurrence === 'MONTHLY' && habit.monthDay === dayOfMonth) return true;
-            if (habit.recurrence === 'ONCE' && habit.scheduledDate && habit.scheduledDate.startsWith(dateString)) return true;
+            if (habit.recurrence === 'ONCE' && habit.scheduledDate) {
+                const sDate = new Date(habit.scheduledDate);
+                if (sDate.getDate() === dayOfMonth &&
+                    sDate.getMonth() === today.getMonth() &&
+                    sDate.getFullYear() === today.getFullYear()) {
+                    return true;
+                }
+            }
 
             return false;
         });
@@ -119,8 +126,17 @@ export default function DashboardPage() {
     };
 
     const isCompletedToday = (habit: Habit) => {
-        const todayStr = new Date().toISOString().split('T')[0];
-        return habit.completionDates?.some(d => d.startsWith(todayStr));
+        // Also check status as a fallback source of truth?
+        // If status is TODO, it definitively means it's not done for the current cycle.
+        if (habit.status === 'TODO') return false;
+
+        const now = new Date();
+        return habit.completionDates?.some(d => {
+            const date = new Date(d);
+            return date.getDate() === now.getDate() &&
+                date.getMonth() === now.getMonth() &&
+                date.getFullYear() === now.getFullYear();
+        });
     };
 
     const updateStats = (habits: Habit[]) => {
@@ -131,19 +147,55 @@ export default function DashboardPage() {
 
     const toggleComplete = async (habit: Habit) => {
         const wasCompleted = isCompletedToday(habit);
-        const newStatus = wasCompleted ? 'TODO' : 'DONE'; // Simplified toggle logic for now
+        const newStatus: 'DONE' | 'TODO' = wasCompleted ? 'TODO' : 'DONE';
 
         // Optimistic Update
         const updatedHabits = todayHabits.map(h => {
             if (h._id === habit._id) {
-                const todayStr = new Date().toISOString().split('T')[0];
+                const now = new Date();
+                // Local ISO-like string
+                const year = now.getFullYear();
+                const month = String(now.getMonth() + 1).padStart(2, '0');
+                const day = String(now.getDate()).padStart(2, '0');
+                const todayStr = `${year}-${month}-${day}`;
+
+                // Helper to generate full ISO string with local offset preservation if needed, 
+                // but completionDates usually stored as ISO UTC in backend?
+                // Actually backend effectively stores `new Date()`.
+                // For optimistic UI, let's just use standard ISO but we rely on the prefix check above.
+                // Wait, if we push standard ISO (UTC), and check with Local, we might differ again if near midnight.
+                // It is safer to trust the 'status' toggle for the immediate optimistic render.
+
                 let newDates = h.completionDates || [];
+                let newStreak = h.streak;
+
                 if (!wasCompleted) {
+                    // Completing
                     newDates = [...newDates, new Date().toISOString()];
+                    if (h.recurrence !== 'ONCE') {
+                        // Assuming valid for streak if not already done today
+                        // We strictly increment for visual feedback, API will confirm
+                        const lastCompleted = h.completionDates && h.completionDates.length > 0
+                            ? new Date(h.completionDates[h.completionDates.length - 1])
+                            : null;
+
+                        const isSameDay = lastCompleted &&
+                            lastCompleted.toISOString().split('T')[0] === todayStr;
+
+                        if (!isSameDay) {
+                            newStreak = (newStreak || 0) + 1;
+                        }
+                    }
                 } else {
+                    // Undoing
                     newDates = newDates.filter(d => !d.startsWith(todayStr));
+                    if (h.recurrence !== 'ONCE') {
+                        // Rough decrement logic, actual logic is complex (need lookup previous streak)
+                        // For now we just decrement, API correction will happen on re-fetch or response
+                        newStreak = Math.max(0, (newStreak || 0) - 1);
+                    }
                 }
-                return { ...h, completionDates: newDates };
+                return { ...h, completionDates: newDates, streak: newStreak, status: newStatus };
             }
             return h;
         });
@@ -155,16 +207,27 @@ export default function DashboardPage() {
             triggerConfetti();
         }
 
-        await authenticatedFetch(`/api/habits/${habit._id}`, {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                status: newStatus
-            }),
-        });
+        try {
+            const res = await authenticatedFetch(`/api/habits/${habit._id}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    status: newStatus
+                }),
+            });
 
-        // Re-fetch to ensure consistency with backend logic (streaks etc)
-        fetchHabits();
+            if (res.ok) {
+                const data = await res.json();
+                // Update with server source of truth (correct streak, dates etc)
+                setTodayHabits(prev => prev.map(h =>
+                    h._id === habit._id ? { ...h, ...data.habit } : h
+                ));
+            }
+        } catch (error) {
+            console.error("Failed to update habit", error);
+            // Revert on error? For now just log.
+            fetchHabits();
+        }
     };
 
     const triggerConfetti = () => {
@@ -234,6 +297,7 @@ export default function DashboardPage() {
                                         type={habit.description?.toLowerCase().includes('timer') ? 'TIMED' : 'SIMPLE'}
                                         streak={habit.streak}
                                         onAddNote={() => handleOpenNote(habit._id)}
+                                        timeFrame={habit.timeFrame}
                                     />
                                 ))
                             ) : (

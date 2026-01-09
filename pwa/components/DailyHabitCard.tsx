@@ -10,11 +10,26 @@ interface DailyHabitCardProps {
     completed?: boolean;
     streak?: number;
     onAddNote?: () => void;
+    timeFrame?: { start: string; end: string };
 }
 
-export default function DailyHabitCard({ title, description, status, type = 'SIMPLE', onComplete, streak, onAddNote }: DailyHabitCardProps) {
+export default function DailyHabitCard({ title, description, status, type = 'SIMPLE', onComplete, streak, onAddNote, timeFrame }: DailyHabitCardProps) {
     const { t } = useLanguage();
     const isDone = status === 'DONE';
+
+    // Expiration Logic (Duplicate from HabitBoard, ideally shared utility but fine for now)
+    const isExpiring = (() => {
+        if (isDone || !timeFrame?.end) return false;
+        const now = new Date();
+        const [endH, endM] = timeFrame.end.split(':').map(Number);
+        const deadline = new Date();
+        deadline.setHours(endH, endM, 0, 0);
+
+        const diffMs = deadline.getTime() - now.getTime();
+        const diffHours = diffMs / (1000 * 60 * 60);
+
+        return diffHours > 0 && diffHours < 3;
+    })();
 
     return (
         <div className={`card shadow-sm border-0 mb-3 daily-habit-card ${isDone ? 'bg-light' : 'bg-white'}`} style={{ borderRadius: '15px', transition: 'all 0.2s', opacity: isDone ? 0.8 : 1 }}>
@@ -25,6 +40,11 @@ export default function DailyHabitCard({ title, description, status, type = 'SIM
                             <h6 className={`font-weight-bold mb-0 ${isDone ? 'text-muted' : ''}`} style={{ textDecoration: isDone ? 'line-through' : 'none' }}>
                                 {title}
                             </h6>
+                            {isExpiring && (
+                                <span className="badge badge-danger ml-2" style={{ fontSize: '0.65rem' }}>
+                                    <i className="fas fa-exclamation-triangle mr-1"></i> {t('kanban.expiresSoon')}
+                                </span>
+                            )}
                             {(streak || 0) > 0 && (
                                 <span className="badge badge-warning ml-2 text-white" style={{ fontSize: '0.7rem' }}>
                                     <i className="fas fa-fire mr-1"></i> {streak}
