@@ -113,6 +113,20 @@ export default function SettingsPage() {
         }
     };
 
+
+    const handleLanguageChange = async (lang: 'en' | 'bg') => {
+        setLanguage(lang);
+        try {
+            await authenticatedFetch('/api/auth/me', {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ language: lang }),
+            });
+        } catch (error) {
+            console.error('Failed to persist language preference', error);
+        }
+    };
+
     return (
         <div className="content-wrapper">
             <section className="content-header">
@@ -189,14 +203,14 @@ export default function SettingsPage() {
                                         <button
                                             type="button"
                                             className={`btn ${language === 'en' ? 'btn-primary' : 'btn-default'}`}
-                                            onClick={() => setLanguage('en')}
+                                            onClick={() => handleLanguageChange('en')}
                                         >
                                             🇬🇧 English
                                         </button>
                                         <button
                                             type="button"
                                             className={`btn ${language === 'bg' ? 'btn-primary' : 'btn-default'}`}
-                                            onClick={() => setLanguage('bg')}
+                                            onClick={() => handleLanguageChange('bg')}
                                         >
                                             🇧🇬 Български
                                         </button>
