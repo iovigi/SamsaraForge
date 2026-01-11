@@ -1,11 +1,10 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { useLanguage } from '../../context/LanguageContext';
-
 import { usePushSubscription } from '../../hooks/usePushSubscription';
 import { authenticatedFetch } from '../../utils/api';
-
 
 export default function SettingsPage() {
     const { language, setLanguage, t } = useLanguage();
@@ -18,47 +17,61 @@ export default function SettingsPage() {
 
     // Profile state
     const [nickname, setNickname] = useState('');
-
-    const [showSuccessModal, setShowSuccessModal] = useState(false);
+    const [quoteNotifications, setQuoteNotifications] = useState(false);
+    const [quoteNotificationIntervalMin, setQuoteNotificationIntervalMin] = useState(1440);
+    const [isLoading, setIsLoading] = useState(false);
+    const [message, setMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null);
 
     useEffect(() => {
-        // Fetch current user data
-        const fetchUser = async () => {
+        const fetchProfile = async () => {
             try {
                 const res = await authenticatedFetch('/api/auth/me');
                 if (res.ok) {
                     const data = await res.json();
-                    if (data.user?.nickname) {
-                        setNickname(data.user.nickname);
-                    }
+                    const user = data.user;
+                    setNickname(user.nickname || '');
+                    setQuoteNotifications(user.quoteNotifications || false);
+                    setQuoteNotificationIntervalMin(user.quoteNotificationIntervalMin || 1440);
+                    if (user.language) setLanguage(user.language);
                 }
-            } catch (e) {
-                console.error(e);
+            } catch (error) {
+                console.error('Failed to fetch profile', error);
             }
         };
-        fetchUser();
-    }, []);
+        fetchProfile();
+    }, [setLanguage]);
 
-    const handleUpdateProfile = async () => {
+    const handleUpdateProfile = async (e: React.FormEvent) => {
+        e.preventDefault(); // Just in case, though usually called by button type="button" in previous logic. 
+        // In this form, we make it a proper onSubmit or button click.
+        setIsLoading(true);
+        setMessage(null);
+
         try {
             const res = await authenticatedFetch('/api/auth/me', {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ nickname })
+                body: JSON.stringify({
+                    nickname,
+                    quoteNotifications,
+                    quoteNotificationIntervalMin: Number(quoteNotificationIntervalMin),
+                    language
+                }),
             });
 
-            const data = await res.json();
             if (res.ok) {
-                // alert(t('settings.profileUpdated') || 'Profile updated successfully');
-                setShowSuccessModal(true);
+                setMessage({ type: 'success', text: t('settings.profileUpdated') });
             } else {
-                alert(data.message || 'Failed to update');
+                const data = await res.json();
+                setMessage({ type: 'error', text: data.message || t('settings.error') });
             }
         } catch (error) {
             console.error(error);
-            alert(t('settings.error'));
+            setMessage({ type: 'error', text: t('settings.error') });
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -106,7 +119,12 @@ export default function SettingsPage() {
                 <div className="container-fluid">
                     <div className="row mb-2">
                         <div className="col-sm-6">
-                            <h1>{t('settings.title')}</h1>
+                            <h1>
+                                <Link href="/" className="text-dark mr-2">
+                                    <i className="fas fa-arrow-left"></i>
+                                </Link>
+                                {t('settings.title')}
+                            </h1>
                         </div>
                     </div>
                 </div>
@@ -114,103 +132,167 @@ export default function SettingsPage() {
 
             <section className="content">
                 <div className="container-fluid">
+                    {message && (
+                        <div className={`alert ${message.type === 'success' ? 'alert-success' : 'alert-danger'} alert-dismissible fade show`} role="alert">
+                            {message.text}
+                            <button type="button" className="close" onClick={() => setMessage(null)}>
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    )}
+
                     <div className="row">
                         <div className="col-md-6">
                             {/* Profile Settings */}
                             <div className="card card-success">
                                 <div className="card-header">
-                                    <h3 className="card-title">{t('settings.profile')}</h3>
+                                    <h3 className="card-title">
+                                        <i className="fas fa-user mr-2"></i>
+                                        {t('settings.profile')}
+                                    </h3>
                                 </div>
-                                <div className="card-body">
-                                    <div className="form-group">
-                                        <label>{t('auth.nickname')}</label>
-                                        <div className="input-group">
+                                <form onSubmit={handleUpdateProfile}>
+                                    <div className="card-body">
+                                        <div className="form-group">
+                                            <label>{t('auth.nickname')}</label>
                                             <input
                                                 type="text"
                                                 className="form-control"
                                                 value={nickname}
                                                 onChange={(e) => setNickname(e.target.value)}
-                                                placeholder={t('auth.nickname')}
+                                                placeholder={t('settings.nicknamePlaceholder')}
                                             />
-                                            <span className="input-group-append">
-                                                <button
-                                                    type="button"
-                                                    className="btn btn-success"
-                                                    onClick={handleUpdateProfile}
-                                                >
-                                                    {t('settings.updateProfile')}
-                                                </button>
-                                            </span>
                                         </div>
                                     </div>
-                                </div>
+                                    <div className="card-footer">
+                                        <button
+                                            type="submit"
+                                            disabled={isLoading}
+                                            className="btn btn-success"
+                                        >
+                                            {isLoading ? t('settings.saving') : t('settings.save')}
+                                        </button>
+                                    </div>
+                                </form>
                             </div>
 
                             {/* Language Settings */}
-                            <div className="card card-primary mt-3">
+                            <div className="card card-primary">
                                 <div className="card-header">
-                                    <h3 className="card-title">{t('settings.language')}</h3>
+                                    <h3 className="card-title">
+                                        <i className="fas fa-language mr-2"></i>
+                                        {t('settings.language')}
+                                    </h3>
                                 </div>
                                 <div className="card-body">
-                                    <div className="form-group">
-                                        <label>{t('settings.language')}</label>
-                                        <div className="d-flex gap-3">
-                                            <button
-                                                className={`btn ${language === 'en' ? 'btn-primary' : 'btn-outline-primary'}`}
-                                                onClick={() => setLanguage('en')}
-                                            >
-                                                🇬🇧 English
-                                            </button>
-                                            <button
-                                                className={`btn ${language === 'bg' ? 'btn-primary' : 'btn-outline-primary'}`}
-                                                onClick={() => setLanguage('bg')}
-                                            >
-                                                🇧🇬 Български
-                                            </button>
-                                        </div>
+                                    <div className="btn-group w-100">
+                                        <button
+                                            type="button"
+                                            className={`btn ${language === 'en' ? 'btn-primary' : 'btn-default'}`}
+                                            onClick={() => setLanguage('en')}
+                                        >
+                                            🇬🇧 English
+                                        </button>
+                                        <button
+                                            type="button"
+                                            className={`btn ${language === 'bg' ? 'btn-primary' : 'btn-default'}`}
+                                            onClick={() => setLanguage('bg')}
+                                        >
+                                            🇧🇬 Български
+                                        </button>
                                     </div>
                                 </div>
                             </div>
 
                             {/* Notification Settings */}
-                            <div className="card card-info mt-3">
+                            <div className="card card-info">
                                 <div className="card-header">
-                                    <h3 className="card-title">{t('settings.notifications')}</h3>
+                                    <h3 className="card-title">
+                                        <i className="fas fa-bell mr-2"></i>
+                                        {t('settings.notifications')}
+                                    </h3>
                                 </div>
                                 <div className="card-body">
                                     {pushError && <div className="alert alert-danger">{pushError}</div>}
-                                    <div className="form-group">
+
+                                    {/* Push System */}
+                                    <div className="form-group border-bottom pb-3">
                                         <label>{t('settings.pushNotifications')}</label>
                                         <div className="custom-control custom-switch">
-                                            <div className="form-check form-switch">
-                                                <input
-                                                    className="form-check-input"
-                                                    type="checkbox"
-                                                    id="pushSwitch"
-                                                    checked={isSubscribed}
-                                                    onChange={(e) => e.target.checked ? subscribe() : unsubscribe()}
-                                                    disabled={loading}
-                                                />
-                                                <label className="form-check-label" htmlFor="pushSwitch">
-                                                    {loading ? t('auth.processing') : (isSubscribed ? t('settings.pushEnabled') : t('settings.pushDisabled'))}
-                                                </label>
-                                            </div>
+                                            <input
+                                                type="checkbox"
+                                                className="custom-control-input"
+                                                id="pushSwitch"
+                                                checked={isSubscribed}
+                                                onChange={(e) => e.target.checked ? subscribe() : unsubscribe()}
+                                                disabled={loading}
+                                            />
+                                            <label className="custom-control-label" htmlFor="pushSwitch">
+                                                {isSubscribed ? t('settings.pushEnabled') : t('settings.pushDisabled')}
+                                            </label>
                                         </div>
                                         <small className="form-text text-muted">
-                                            {isSubscribed
-                                                ? t('settings.pushEnabledDesc')
-                                                : t('settings.pushDisabledDesc')}
+                                            {isSubscribed ? t('settings.pushEnabledDesc') : t('settings.pushDisabledDesc')}
                                         </small>
                                     </div>
+
+                                    {/* Quote Notifications */}
+                                    <div className="form-group mt-3">
+                                        <label>{t('settings.quoteNotifications')}</label>
+                                        <div className="custom-control custom-switch">
+                                            <input
+                                                type="checkbox"
+                                                className="custom-control-input"
+                                                id="quoteSwitch"
+                                                checked={quoteNotifications}
+                                                onChange={(e) => setQuoteNotifications(e.target.checked)}
+                                            />
+                                            <label className="custom-control-label" htmlFor="quoteSwitch">
+                                                {quoteNotifications ? t('settings.pushEnabled') : t('settings.pushDisabled')}
+                                            </label>
+                                        </div>
+                                        <small className="form-text text-muted mb-2">
+                                            {t('settings.quoteEnabledDesc')}
+                                        </small>
+
+                                        {quoteNotifications && (
+                                            <div className="mt-2">
+                                                <label>{t('settings.quoteInterval')}</label>
+                                                <select
+                                                    className="form-control"
+                                                    value={quoteNotificationIntervalMin}
+                                                    onChange={(e) => setQuoteNotificationIntervalMin(Number(e.target.value))}
+                                                >
+                                                    <option value={30}>{t('settings.interval.30m')}</option>
+                                                    <option value={60}>{t('settings.interval.1h')}</option>
+                                                    <option value={180}>{t('settings.interval.3h')}</option>
+                                                    <option value={360}>{t('settings.interval.6h')}</option>
+                                                    <option value={720}>{t('settings.interval.12h')}</option>
+                                                    <option value={1440}>{t('settings.interval.24h')}</option>
+                                                </select>
+                                            </div>
+                                        )}
+                                    </div>
+                                    <button
+                                        type="button"
+                                        className="btn btn-info mt-3"
+                                        onClick={handleUpdateProfile} // Re-using user update for quote prefs
+                                    >
+                                        {t('settings.save')} {t('settings.notifications')}
+                                    </button>
                                 </div>
                             </div>
+
                         </div>
 
                         <div className="col-md-6">
                             {/* Security Settings */}
                             <div className="card card-danger">
                                 <div className="card-header">
-                                    <h3 className="card-title">{t('settings.security')}</h3>
+                                    <h3 className="card-title">
+                                        <i className="fas fa-shield-alt mr-2"></i>
+                                        {t('settings.security')}
+                                    </h3>
                                 </div>
                                 <form onSubmit={handlePasswordChange}>
                                     <div className="card-body">
@@ -251,35 +333,6 @@ export default function SettingsPage() {
                     </div>
                 </div>
             </section>
-
-            {/* Bootstrap Modal for Success */}
-            {showSuccessModal && (
-                <>
-                    <div className="modal fade show d-block" tabIndex={-1} role="dialog" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
-                        <div className="modal-dialog modal-dialog-centered" role="document">
-                            <div className="modal-content">
-                                <div className="modal-header bg-success text-white">
-                                    <h5 className="modal-title">Success</h5>
-                                    <button type="button" className="close text-white" onClick={() => setShowSuccessModal(false)}>
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div className="modal-body">
-                                    <p className="text-center">
-                                        <i className="fas fa-check-circle fa-3x text-success mb-3"></i><br />
-                                        {t('settings.profileUpdated')}
-                                    </p>
-                                </div>
-                                <div className="modal-footer justify-content-center">
-                                    <button type="button" className="btn btn-success px-4" onClick={() => setShowSuccessModal(false)}>
-                                        OK
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </>
-            )}
         </div>
     );
 }

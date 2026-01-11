@@ -28,6 +28,8 @@ if (!User) {
     // log(`User model loaded: ${User.modelName}`);
 }
 
+import { quotes } from '../data/quotes';
+
 const checkTasks = async () => {
     try {
         const now = new Date();
@@ -36,7 +38,59 @@ const checkTasks = async () => {
         const currentDay = now.getDate();
         const currentWeekDay = now.getDay(); // 0-6
 
-        log(`[TaskRunner] Running Check at ${currentHeight}:${currentMinute}`);
+        const timeString = `${String(currentHeight).padStart(2, '0')}:${String(currentMinute).padStart(2, '0')}`;
+        log(`[TaskRunner] Running Check at ${timeString}`);
+
+        // --- QUOTE NOTIFICATIONS ---
+        // Find users who want quotes NOW
+        const usersForQuotes = await User.find({
+            quoteNotifications: true,
+            quoteNotificationTime: timeString
+        });
+
+        // Check for quote notifications (Interval based)
+        const quoteUsers = await User.find({ quoteNotifications: true });
+
+        for (const user of quoteUsers) {
+            const lastSent = user.lastQuoteNotificationSentAt ? new Date(user.lastQuoteNotificationSentAt).getTime() : 0;
+            const intervalMs = (user.quoteNotificationIntervalMin || 1440) * 60 * 1000;
+            const timeSinceLast = now.getTime() - lastSent;
+
+            if (timeSinceLast >= intervalMs) {
+                // Send quote notification
+                const sendQuote = async () => {
+                    const subscriptions = await Subscription.find({ userId: user._id });
+                    if (subscriptions.length > 0) {
+                        const lang = (user.language || 'en') as keyof typeof quotes;
+                        const userQuotes = quotes[lang];
+                        const randomQuote = userQuotes[Math.floor(Math.random() * userQuotes.length)];
+
+                        const payload = {
+                            title: lang === 'bg' ? 'Дневна Мотивация' : 'Daily Motivation',
+                            body: `"${randomQuote.text}" - ${randomQuote.author}`,
+                            icon: '/icon.png',
+                            data: {
+                                url: '/'
+                            }
+                        };
+
+                        for (const sub of subscriptions) {
+                            try {
+                                await sendNotification(sub, payload);
+                            } catch (error) {
+                                console.error(`Failed to send quote to user ${user._id}:`, error);
+                            }
+                        }
+
+                        // Update last sent time
+                        user.lastQuoteNotificationSentAt = now;
+                        await user.save();
+                    }
+                };
+                await sendQuote();
+            }
+        }
+        // ---------------------------
 
         // --- HABIT RESET LOGIC ---
         // Find recurring tasks that are DONE but shouldn't be anymore (new day/period)
@@ -109,10 +163,9 @@ const checkTasks = async () => {
                 // Debug log for timeframe
                 // log(`[${task.title}] Timeframe: ${startH}:${startM}-${endH}:${endM} (Now: ${currentHeight}:${currentMinute})`);
 
-                if (nowMinutes < startMinutes) {
-                    log(`Skipping - Before start time`);
-                    continue; // Wait for start
-                }
+                // Removed check for nowMinutes < startMinutes to allow reminders to be sent BEFORE the start time.
+                // e.g. Start at 9:00, Reminder at 8:00 -> Should fire.
+                // if (nowMinutes < startMinutes) { ... }
 
                 // We REMOVED (nowMinutes > endMinutes) check here. 
                 // We need to allow processing even if past end time, so we can trigger the RESET logic below.
@@ -248,7 +301,7 @@ const checkTasks = async () => {
             // 1. Task is NOT DONE
             // 2. We are WITHIN the timeframe
             // 3. Cron matches
-            if (task.status !== 'DONE' && isWithinTimeframe && cronMatches(task.reminderCron, now)) {
+            if (task.status !== 'DONE' && isWithinTimeframe && cronMatches(task.reminderCron, now) && task.notify !== false) {
                 // SEND NOTIFICATION
                 log(`Cron matched! Sending notification...`);
                 // Fetch subscriptions for user

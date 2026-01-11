@@ -14,6 +14,23 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: false,
     },
+    quoteNotifications: {
+        type: Boolean,
+        default: false
+    },
+    quoteNotificationIntervalMin: {
+        type: Number,
+        default: 1440 // Default to 24 hours
+    },
+    lastQuoteNotificationSentAt: {
+        type: Date,
+        default: null
+    },
+    language: {
+        type: String,
+        enum: ['en', 'bg'],
+        default: 'en'
+    }
 });
 
 export default mongoose.models.User || mongoose.model('User', UserSchema);

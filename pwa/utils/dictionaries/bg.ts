@@ -128,6 +128,18 @@ export const bg: Dictionary = {
     'settings.pushDisabled': 'Изключени',
     'settings.pushEnabledDesc': 'Ще получавате известия за актуализации.',
     'settings.pushDisabledDesc': 'Включете за да получавате известия.',
+    "settings.quoteNotifications": "Дневна мотивация",
+    "settings.quoteInterval": "Интервал на известията",
+    "settings.interval.30m": "На всеки 30 минути",
+    "settings.interval.1h": "На всеки час",
+    "settings.interval.3h": "На всеки 3 часа",
+    "settings.interval.6h": "На всеки 6 часа",
+    "settings.interval.12h": "На всеки 12 часа",
+    "settings.interval.24h": "Веднъж на ден",
+    "settings.quoteEnabledDesc": "Получавай мотивиращи цитати спрямо избрания от вас интервал.",
+    "settings.nicknamePlaceholder": "Въведете вашия псевдоним",
+    "settings.save": "Запази промените",
+    "settings.saving": "Запазване...",
 
     // Common
     'common.close': 'Затвори',

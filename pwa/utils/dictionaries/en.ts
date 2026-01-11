@@ -125,6 +125,18 @@ export const en = {
     'settings.pushDisabled': 'Disabled',
     'settings.pushEnabledDesc': 'You will receive notifications for updates.',
     'settings.pushDisabledDesc': 'Enable to receive push notifications.',
+    "settings.quoteNotifications": "Daily Motivation",
+    "settings.quoteInterval": "Notification Interval",
+    "settings.interval.30m": "Every 30 minutes",
+    "settings.interval.1h": "Every hour",
+    "settings.interval.3h": "Every 3 hours",
+    "settings.interval.6h": "Every 6 hours",
+    "settings.interval.12h": "Every 12 hours",
+    "settings.interval.24h": "Once a day",
+    "settings.quoteEnabledDesc": "Receive motivational quotes based on your preferred interval.",
+    "settings.nicknamePlaceholder": "Enter your nickname",
+    "settings.save": "Save Changes",
+    "settings.saving": "Saving...",
 
     // Common
     'common.close': 'Close',
