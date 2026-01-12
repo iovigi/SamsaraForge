@@ -30,7 +30,7 @@ if (!User) {
 
 import { quotes } from '../data/quotes';
 
-const checkTasks = async () => {
+export const checkTasks = async () => {
     try {
         const now = new Date();
         const currentHeight = now.getHours();
