@@ -5,10 +5,12 @@ import { useState, useEffect } from 'react';
 import TaskModal from './TaskModal';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { authenticatedFetch } from '../utils/api';
-import { DndContext, useDraggable, useDroppable, DragEndEvent, DragStartEvent, DragOverlay, useSensor, useSensors, PointerSensor } from '@dnd-kit/core';
+import { DndContext, useDraggable, useDroppable, DragEndEvent, DragStartEvent, DragOverlay, useSensor, useSensors, PointerSensor, TouchSensor } from '@dnd-kit/core';
+import { arrayMove, SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { useLanguage } from '../context/LanguageContext';
 import confetti from 'canvas-confetti';
+import { SortableHabitWrapper } from './SortableHabitWrapper';
 
 interface Habit {
     _id: string;
@@ -22,6 +24,7 @@ interface Habit {
     };
     reminderCron: string;
     streak: number;
+    order?: number;
 }
 
 export default function HabitBoard() {
@@ -39,11 +42,8 @@ export default function HabitBoard() {
     const searchParams = useSearchParams();
 
     const sensors = useSensors(
-        useSensor(PointerSensor, {
-            activationConstraint: {
-                distance: 5,
-            },
-        })
+        useSensor(PointerSensor),
+        useSensor(TouchSensor) // Default works with handle
     );
 
     const fetchHabits = async () => {
@@ -51,8 +51,10 @@ export default function HabitBoard() {
             const res = await authenticatedFetch('/api/habits');
             if (res.ok) {
                 const data = await res.json();
-                setHabits(data.habits);
-                return data.habits; // Return for chaining
+                // Ensure sorted by order
+                const sorted = data.habits.sort((a: any, b: any) => (a.order || 0) - (b.order || 0));
+                setHabits(sorted);
+                return sorted; // Return for chaining
             }
         } catch (error) {
             console.error('Error fetching habits:', error);
@@ -148,20 +150,55 @@ export default function HabitBoard() {
         setActiveId(event.active.id as string);
     };
 
-    const handleDragEnd = (event: DragEndEvent) => {
+    const handleDragEnd = async (event: DragEndEvent) => {
         const { active, over } = event;
+        if (!over) return;
 
-        if (over && active.id !== over.id) {
-            const habitId = active.id as string;
-            // The droppable ID is the status string directly
-            const newStatus = over.id as 'TODO' | 'IN_PROGRESS' | 'DONE';
+        const activeId = active.id as string;
+        const overId = over.id as string;
 
-            const habit = habits.find(h => h._id === habitId);
-            // Ensure we are dragging to a valid different status column
-            if (habit && (['TODO', 'IN_PROGRESS', 'DONE'].includes(newStatus))) {
-                moveHabit(habit, newStatus);
+        if (activeId === overId) return;
+
+        const activeHabit = habits.find(h => h._id === activeId);
+        const overHabit = habits.find(h => h._id === overId);
+
+        if (!activeHabit) return;
+
+        let newStatus: 'TODO' | 'IN_PROGRESS' | 'DONE' | null = null;
+
+        // Check if dropped on a Column (container)
+        if (['TODO', 'IN_PROGRESS', 'DONE'].includes(overId)) {
+            newStatus = overId as any;
+        }
+        // Check if dropped on another Habit in a DIFFERENT column
+        else if (overHabit && overHabit.status !== activeHabit.status) {
+            newStatus = overHabit.status;
+        }
+
+        // --- Move between Columns ---
+        if (newStatus && newStatus !== activeHabit.status) {
+            moveHabit(activeHabit, newStatus);
+        }
+        // --- Reorder within SAME Column ---
+        else {
+            // We are reordering
+            const oldIndex = habits.findIndex(h => h._id === activeId);
+            const newIndex = habits.findIndex(h => h._id === overId);
+
+            if (oldIndex !== -1 && newIndex !== -1) {
+                const newHabits = arrayMove(habits, oldIndex, newIndex);
+                setHabits(newHabits);
+
+                // Persist Order: Send all IDs in new order to API
+                const orderedIds = newHabits.map(h => h._id);
+                authenticatedFetch('/api/habits/reorder', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ orderedIds })
+                }).catch(err => console.error('Failed to save order', err));
             }
         }
+
         setActiveId(null);
     };
 
@@ -199,57 +236,75 @@ export default function HabitBoard() {
                     <div className="row flex-grow-1">
                         {/* TODO Column */}
                         <div className={`col-12 col-md-4 ${activeTab === 'TODO' ? 'd-block' : 'd-none d-md-block'}`}>
-                            <DroppableColumn id="TODO" title={t('kanban.todo')} icon="fas fa-list-ul" color="#6366f1">
-                                {filterHabits('TODO').map(habit => (
-                                    <DraggableTaskCard
-                                        key={habit._id}
-                                        task={habit}
-                                        onEdit={() => openModal(habit)}
-                                        onDelete={() => handleDelete(habit._id)}
-                                        onMove={(newStatus: any) => {
-                                            moveHabit(habit, newStatus);
-                                            setActiveTab(newStatus);
-                                        }}
-                                    />
-                                ))}
+                            <DroppableColumn id="TODO" title={t('kanban.todo')} icon="fas fa-list-ul" color="#6366f1" itemCount={filterHabits('TODO').length}>
+                                <SortableContext items={filterHabits('TODO').map(h => h._id)} strategy={verticalListSortingStrategy}>
+                                    {filterHabits('TODO').map(habit => (
+                                        <SortableHabitWrapper key={habit._id} id={habit._id}>
+                                            {(listeners: any) => (
+                                                <DraggableTaskCard
+                                                    task={habit}
+                                                    onEdit={() => openModal(habit)}
+                                                    onDelete={() => handleDelete(habit._id)}
+                                                    onMove={(newStatus: any) => {
+                                                        moveHabit(habit, newStatus);
+                                                        setActiveTab(newStatus);
+                                                    }}
+                                                    dragListeners={listeners}
+                                                />
+                                            )}
+                                        </SortableHabitWrapper>
+                                    ))}
+                                </SortableContext>
                             </DroppableColumn>
                         </div>
 
                         {/* IN_PROGRESS Column (Focus Mode) */}
                         <div className={`col-12 col-md-4 ${activeTab === 'IN_PROGRESS' ? 'd-block' : 'd-none d-md-block'}`}>
                             <div className="h-100 column-focus-mode">
-                                <DroppableColumn id="IN_PROGRESS" title={t('kanban.inProgress')} icon="fas fa-bullseye" color="#ec4899">
-                                    {filterHabits('IN_PROGRESS').map(habit => (
-                                        <DraggableTaskCard
-                                            key={habit._id}
-                                            task={habit}
-                                            onEdit={() => openModal(habit)}
-                                            onDelete={() => handleDelete(habit._id)}
-                                            onMove={(newStatus: any) => {
-                                                moveHabit(habit, newStatus);
-                                                setActiveTab(newStatus);
-                                            }}
-                                        />
-                                    ))}
+                                <DroppableColumn id="IN_PROGRESS" title={t('kanban.inProgress')} icon="fas fa-bullseye" color="#ec4899" itemCount={filterHabits('IN_PROGRESS').length}>
+                                    <SortableContext items={filterHabits('IN_PROGRESS').map(h => h._id)} strategy={verticalListSortingStrategy}>
+                                        {filterHabits('IN_PROGRESS').map(habit => (
+                                            <SortableHabitWrapper key={habit._id} id={habit._id}>
+                                                {(listeners: any) => (
+                                                    <DraggableTaskCard
+                                                        task={habit}
+                                                        onEdit={() => openModal(habit)}
+                                                        onDelete={() => handleDelete(habit._id)}
+                                                        onMove={(newStatus: any) => {
+                                                            moveHabit(habit, newStatus);
+                                                            setActiveTab(newStatus);
+                                                        }}
+                                                        dragListeners={listeners}
+                                                    />
+                                                )}
+                                            </SortableHabitWrapper>
+                                        ))}
+                                    </SortableContext>
                                 </DroppableColumn>
                             </div>
                         </div>
 
                         {/* DONE Column */}
                         <div className={`col-12 col-md-4 ${activeTab === 'DONE' ? 'd-block' : 'd-none d-md-block'}`}>
-                            <DroppableColumn id="DONE" title={t('kanban.done')} icon="fas fa-check-circle" color="#22c55e">
-                                {filterHabits('DONE').map(habit => (
-                                    <DraggableTaskCard
-                                        key={habit._id}
-                                        task={habit}
-                                        onEdit={() => openModal(habit)}
-                                        onDelete={() => handleDelete(habit._id)}
-                                        onMove={(newStatus: any) => {
-                                            moveHabit(habit, newStatus);
-                                            setActiveTab(newStatus);
-                                        }}
-                                    />
-                                ))}
+                            <DroppableColumn id="DONE" title={t('kanban.done')} icon="fas fa-check-circle" color="#22c55e" itemCount={filterHabits('DONE').length}>
+                                <SortableContext items={filterHabits('DONE').map(h => h._id)} strategy={verticalListSortingStrategy}>
+                                    {filterHabits('DONE').map(habit => (
+                                        <SortableHabitWrapper key={habit._id} id={habit._id}>
+                                            {(listeners: any) => (
+                                                <DraggableTaskCard
+                                                    task={habit}
+                                                    onEdit={() => openModal(habit)}
+                                                    onDelete={() => handleDelete(habit._id)}
+                                                    onMove={(newStatus: any) => {
+                                                        moveHabit(habit, newStatus);
+                                                        setActiveTab(newStatus);
+                                                    }}
+                                                    dragListeners={listeners}
+                                                />
+                                            )}
+                                        </SortableHabitWrapper>
+                                    ))}
+                                </SortableContext>
                             </DroppableColumn>
                         </div>
                     </div>
@@ -302,7 +357,7 @@ export default function HabitBoard() {
     );
 }
 
-function DroppableColumn({ id, title, children, icon, color }: any) {
+function DroppableColumn({ id, title, children, icon, color, itemCount }: any) {
     const { setNodeRef } = useDroppable({ id });
     return (
         <div className="kanban-column h-100 d-flex flex-column">
@@ -310,11 +365,11 @@ function DroppableColumn({ id, title, children, icon, color }: any) {
                 <i className={icon} style={{ color: color }}></i>
                 {title}
                 <span className="badge badge-light ml-auto" style={{ fontSize: '0.8rem', opacity: 0.7 }}>
-                    {children.length}
+                    {itemCount}
                 </span>
             </div>
             <div ref={setNodeRef} className="flex-grow-1" style={{ minHeight: '200px' }}>
-                {children.length > 0 ? children : (
+                {itemCount > 0 ? children : (
                     <div className="empty-placeholder">
                         <i className={`${icon} fa-2x mb-3`}></i>
                         <p className="mb-0">No habits here yet</p>
@@ -325,14 +380,8 @@ function DroppableColumn({ id, title, children, icon, color }: any) {
     );
 }
 
-function DraggableTaskCard({ task, onEdit, onDelete, onMove }: any) {
+function DraggableTaskCard({ task, onEdit, onDelete, onMove, dragListeners }: any) {
     const { t } = useLanguage();
-    const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({
-        id: task._id,
-    });
-    const style = {
-        transform: transform ? CSS.Translate.toString(transform) : undefined,
-    } as React.CSSProperties;
 
     // Helper to translate recurrence key safely
     const recurrenceLabel = task.recurrence
@@ -347,38 +396,40 @@ function DraggableTaskCard({ task, onEdit, onDelete, onMove }: any) {
         const deadline = new Date();
         deadline.setHours(endH, endM, 0, 0);
 
-        // If deadline is earlier today, it's overdue (or just past due). 
-        // If deadline is later today, calc diff.
         const diffMs = deadline.getTime() - now.getTime();
         const diffHours = diffMs / (1000 * 60 * 60);
 
-        // Warning if within 3 hours and positive
         return diffHours > 0 && diffHours < 3;
     })();
 
     return (
         <div
-            ref={setNodeRef}
-            style={style}
-            {...listeners}
-            {...attributes}
-            className={`habit-card ${isDragging ? 'dragging' : ''} ${isExpiring ? 'streak-risk' : ''}`}
+            className={`habit-card ${isExpiring ? 'streak-risk' : ''}`}
             onClick={onEdit}
         >
             <div className="d-flex justify-content-between align-items-start mb-2">
-                <h5 className="habit-title mb-0">{task.title}</h5>
+                <div className="d-flex align-items-center flex-grow-1" style={{ minWidth: 0 }}>
+                    {/* Drag Handle */}
+                    {dragListeners && (
+                        <div className="mr-2 text-muted drag-handle" {...dragListeners} style={{ cursor: 'grab', touchAction: 'none', flexShrink: 0 }} onClick={(e) => e.stopPropagation()}>
+                            <i className="fas fa-grip-vertical"></i>
+                        </div>
+                    )}
+                    <h5 className="habit-title mb-0 text-truncate">{task.title}</h5>
+                </div>
+
                 {task.streak > 0 && task.recurrence !== 'ONCE' && (
-                    <div className={`streak-badge ${task.streak > 7 ? 'high-streak' : ''}`}>
+                    <div className={`streak-badge ${task.streak > 7 ? 'high-streak' : ''} ml-2 flex-shrink-0`}>
                         <i className="fas fa-fire"></i>
                         <span>{task.streak}</span>
                     </div>
                 )}
             </div>
 
-            <p className="habit-desc text-truncate">{task.description}</p>
+            <p className="habit-desc text-truncate mb-2">{task.description}</p>
 
-            <div className="d-flex align-items-center justify-content-between mt-3">
-                <div className="d-flex align-items-center flex-wrap">
+            <div className="d-flex align-items-center justify-content-between mt-auto">
+                <div className="d-flex align-items-center flex-wrap" style={{ gap: '0.5rem' }}>
                     <span className="meta-tag">
                         <i className="far fa-clock mr-1"></i> {recurrenceLabel}
                     </span>
@@ -390,13 +441,13 @@ function DraggableTaskCard({ task, onEdit, onDelete, onMove }: any) {
 
                     {/* Expiration Text */}
                     {isExpiring && (
-                        <span className="text-danger font-weight-bold ml-2" style={{ fontSize: '0.75rem' }}>
+                        <span className="text-danger font-weight-bold" style={{ fontSize: '0.75rem' }}>
                             <i className="fas fa-exclamation-triangle mr-1"></i> {t('kanban.expiresSoon')}
                         </span>
                     )}
                 </div>
 
-                <div className="card-tools">
+                <div className="card-tools ml-2">
                     {/* Move Dropdown (Mobile Friendly) */}
                     <div className="btn-group">
                         <button type="button" className="btn btn-tool dropdown-toggle" data-toggle="dropdown" onPointerDown={(e) => e.stopPropagation()} onClick={(e) => { e.stopPropagation(); }}>

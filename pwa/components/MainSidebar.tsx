@@ -1,14 +1,18 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 
 import { useLanguage } from '../context/LanguageContext';
+import { authenticatedFetch } from '../utils/api';
 
 export default function MainSidebar() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const pathname = usePathname();
+    const router = useRouter();
     const { t } = useLanguage();
+
+    // ... rest of checking logs ...
 
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -52,6 +56,18 @@ export default function MainSidebar() {
                                 <p>{t('nav.habits')}</p>
                             </a>
                         </li>
+                        <li className={`nav-item ${pathname?.startsWith('/projects') ? 'menu-open' : ''}`}>
+                            <a href="#" className={`nav-link ${pathname === '/projects' ? 'active' : ''}`} onClick={(e) => { e.preventDefault(); router.push('/projects'); }}>
+                                <i className="nav-icon fas fa-project-diagram"></i>
+                                <p>
+                                    {t('nav.projects')}
+                                    <i className="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul className="nav nav-treeview">
+                                <ProjectSidebarList />
+                            </ul>
+                        </li>
                         <li className="nav-item">
                             <a href="/settings" className={`nav-link ${pathname === '/settings' ? 'active' : ''}`}>
                                 <i className="nav-icon fas fa-cog"></i>
@@ -68,5 +84,50 @@ export default function MainSidebar() {
                 </nav>
             </div>
         </aside>
+    );
+}
+
+import { listenToProjectsUpdate } from '../utils/events';
+
+function ProjectSidebarList() {
+    const [projects, setProjects] = useState<any[]>([]);
+    const pathname = usePathname();
+
+    const fetchProjects = async () => {
+        try {
+            const res = await authenticatedFetch('/api/projects');
+            if (res.ok) {
+                const data = await res.json();
+                setProjects(data.projects);
+            }
+        } catch (error) {
+            console.error('Error loading sidebar projects', error);
+        }
+    };
+
+    useEffect(() => {
+        // Initial fetch
+        fetchProjects();
+
+        // Listen for updates using helper
+        const cleanup = listenToProjectsUpdate(() => {
+            console.log('Refreshing sidebar projects...');
+            fetchProjects();
+        });
+
+        return cleanup;
+    }, []);
+
+    return (
+        <>
+            {projects.map(p => (
+                <li className="nav-item" key={p._id}>
+                    <a href={`/projects/${p._id}`} className={`nav-link ${pathname === `/projects/${p._id}` ? 'active' : ''}`}>
+                        <i className="fas fa-clipboard-list nav-icon"></i>
+                        <p className="text-truncate">{p.name}</p>
+                    </a>
+                </li>
+            ))}
+        </>
     );
 }

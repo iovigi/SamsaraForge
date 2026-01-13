@@ -66,6 +66,10 @@ const HabitSchema = new mongoose.Schema({
     reminderCron: {
         type: String, // Cron expression
     },
+    order: {
+        type: Number,
+        default: 0,
+    },
     comments: [
         {
             text: { type: String, required: true },

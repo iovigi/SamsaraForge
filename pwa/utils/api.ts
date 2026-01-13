@@ -80,3 +80,22 @@ export function parseJwt(token: string) {
         return null;
     }
 }
+
+export const uploadFile = async (file: File) => {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    const token = localStorage.getItem('token');
+    const res = await fetch(`${API_BASE_URL}/api/upload`, {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${token}`
+        },
+        body: formData
+    });
+
+    if (res.ok) {
+        return res.json();
+    }
+    throw new Error('Upload failed');
+};

@@ -5,15 +5,16 @@ interface DailyHabitCardProps {
     title: string;
     description?: string;
     status: 'TODO' | 'DONE';
-    type?: 'SIMPLE' | 'TIMED' | 'COUNT'; // Future proofing
+    type?: 'SIMPLE' | 'TIMED' | 'COUNT';
     onComplete: () => void;
     completed?: boolean;
     streak?: number;
     onAddNote?: () => void;
     timeFrame?: { start: string; end: string };
+    dragListeners?: any; // Dnd Kit listeners
 }
 
-export default function DailyHabitCard({ title, description, status, type = 'SIMPLE', onComplete, streak, onAddNote, timeFrame }: DailyHabitCardProps) {
+export default function DailyHabitCard({ title, description, status, type = 'SIMPLE', onComplete, streak, onAddNote, timeFrame, dragListeners }: DailyHabitCardProps) {
     const { t } = useLanguage();
     const isDone = status === 'DONE';
 
@@ -34,26 +35,37 @@ export default function DailyHabitCard({ title, description, status, type = 'SIM
     return (
         <div className={`card shadow-sm border-0 mb-3 daily-habit-card ${isDone ? 'bg-light' : 'bg-white'}`} style={{ borderRadius: '15px', transition: 'all 0.2s', opacity: isDone ? 0.8 : 1 }}>
             <div className="card-body p-3">
-                <div className="d-flex justify-content-between align-items-start">
-                    <div>
-                        <div className="d-flex align-items-center mb-1">
-                            <h6 className={`font-weight-bold mb-0 ${isDone ? 'text-muted' : ''}`} style={{ textDecoration: isDone ? 'line-through' : 'none' }}>
-                                {title}
-                            </h6>
-                            {isExpiring && (
-                                <span className="badge badge-danger ml-2" style={{ fontSize: '0.65rem' }}>
-                                    <i className="fas fa-exclamation-triangle mr-1"></i> {t('kanban.expiresSoon')}
-                                </span>
-                            )}
-                            {(streak || 0) > 0 && (
-                                <span className="badge badge-warning ml-2 text-white" style={{ fontSize: '0.7rem' }}>
-                                    <i className="fas fa-fire mr-1"></i> {streak}
-                                </span>
-                            )}
+                <div className="d-flex align-items-start">
+                    {/* Drag Handle */}
+                    {dragListeners && (
+                        <div className="mr-3 mt-1 text-muted" {...dragListeners} style={{ cursor: 'grab', touchAction: 'none' }}>
+                            <i className="fas fa-grip-vertical fa-lg" style={{ opacity: 0.3 }}></i>
                         </div>
-                        {description && <p className="small text-muted mb-2">{description}</p>}
+                    )}
+
+                    <div className="flex-grow-1">
+                        <div className="d-flex justify-content-between">
+                            <div>
+                                <div className="d-flex align-items-center mb-1">
+                                    <h6 className={`font-weight-bold mb-0 ${isDone ? 'text-muted' : ''}`} style={{ textDecoration: isDone ? 'line-through' : 'none' }}>
+                                        {title}
+                                    </h6>
+                                    {isExpiring && (
+                                        <span className="badge badge-danger ml-2" style={{ fontSize: '0.65rem' }}>
+                                            <i className="fas fa-exclamation-triangle mr-1"></i> {t('kanban.expiresSoon')}
+                                        </span>
+                                    )}
+                                    {(streak || 0) > 0 && (
+                                        <span className="badge badge-warning ml-2 text-white" style={{ fontSize: '0.7rem' }}>
+                                            <i className="fas fa-fire mr-1"></i> {streak}
+                                        </span>
+                                    )}
+                                </div>
+                                {description && <p className="small text-muted mb-2">{description}</p>}
+                            </div>
+                            {isDone && <i className="fas fa-check-circle text-success ml-2" style={{ fontSize: '1.2rem' }}></i>}
+                        </div>
                     </div>
-                    {isDone && <i className="fas fa-check-circle text-success ml-2" style={{ fontSize: '1.2rem' }}></i>}
                 </div>
 
                 <div className="mt-2 d-flex justify-content-end">

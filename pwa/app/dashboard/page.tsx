@@ -7,6 +7,23 @@ import { useLanguage } from '../../context/LanguageContext';
 import DailyProgress from '../../components/DailyProgress';
 import DailyHabitCard from '../../components/DailyHabitCard';
 import confetti from 'canvas-confetti';
+import {
+    DndContext,
+    closestCenter,
+    KeyboardSensor,
+    PointerSensor,
+    TouchSensor,
+    useSensor,
+    useSensors,
+    DragEndEvent
+} from '@dnd-kit/core';
+import {
+    arrayMove,
+    SortableContext,
+    sortableKeyboardCoordinates,
+    verticalListSortingStrategy,
+} from '@dnd-kit/sortable';
+import { SortableHabitWrapper } from '../../components/SortableHabitWrapper';
 
 interface Habit {
     _id: string;
@@ -20,6 +37,7 @@ interface Habit {
     weekDays?: number[];
     monthDay?: number;
     timeFrame?: { start: string; end: string };
+    order?: number;
 }
 
 import { quotes } from '../../utils/quotes';
@@ -38,6 +56,33 @@ export default function DashboardPage() {
     // Note Modal State
     const [isNoteModalOpen, setIsNoteModalOpen] = useState(false);
     const [activeNoteHabitId, setActiveNoteHabitId] = useState<string | null>(null);
+
+    const sensors = useSensors(
+        useSensor(PointerSensor),
+        useSensor(TouchSensor), // Default config is fine with a handle
+        useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates })
+    );
+
+    const handleDragEnd = async (event: DragEndEvent) => {
+        const { active, over } = event;
+        if (active.id !== over?.id) {
+            setTodayHabits((items) => {
+                const oldIndex = items.findIndex(i => i._id === active.id);
+                const newIndex = items.findIndex(i => i._id === over?.id);
+                const newItems = arrayMove(items, oldIndex, newIndex);
+
+                // Persist order
+                const orderedIds = newItems.map(h => h._id);
+                authenticatedFetch('/api/habits/reorder', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ orderedIds })
+                }).catch(err => console.error('Failed to save order', err));
+
+                return newItems;
+            });
+        }
+    };
 
     useEffect(() => {
         // Random quote based on language
@@ -113,12 +158,15 @@ export default function DashboardPage() {
             return false;
         });
 
-        // Sort: Pending first, then Done. Then by time.
+        // Sort: Pending first, then Done. Then by Order.
         todays.sort((a, b) => {
             const aDone = isCompletedToday(a);
             const bDone = isCompletedToday(b);
-            if (aDone === bDone) return 0;
-            return aDone ? 1 : -1;
+            if (aDone !== bDone) {
+                return aDone ? 1 : -1;
+            }
+            // If status is same, sort by order
+            return (a.order || 0) - (b.order || 0);
         });
 
         setTodayHabits(todays);
@@ -286,20 +334,36 @@ export default function DashboardPage() {
                             <h5 className="mb-3 pl-1 font-weight-bold text-dark">{t('dashboard.today')}</h5>
 
                             {todayHabits.length > 0 ? (
-                                todayHabits.map(habit => (
-                                    <DailyHabitCard
-                                        key={habit._id}
-                                        title={habit.title}
-                                        description={habit.description}
-                                        status={isCompletedToday(habit) ? 'DONE' : 'TODO'}
-                                        onComplete={() => toggleComplete(habit)}
-                                        // Simple heuristic for type
-                                        type={habit.description?.toLowerCase().includes('timer') ? 'TIMED' : 'SIMPLE'}
-                                        streak={habit.streak}
-                                        onAddNote={() => handleOpenNote(habit._id)}
-                                        timeFrame={habit.timeFrame}
-                                    />
-                                ))
+                                <DndContext
+                                    sensors={sensors}
+                                    collisionDetection={closestCenter}
+                                    onDragEnd={handleDragEnd}
+                                >
+                                    <div style={{ touchAction: 'none' }}>
+                                        <SortableContext
+                                            items={todayHabits.map(h => h._id)}
+                                            strategy={verticalListSortingStrategy}
+                                        >
+                                            {todayHabits.map(habit => (
+                                                <SortableHabitWrapper key={habit._id} id={habit._id}>
+                                                    {(listeners: any) => (
+                                                        <DailyHabitCard
+                                                            title={habit.title}
+                                                            description={habit.description}
+                                                            status={isCompletedToday(habit) ? 'DONE' : 'TODO'}
+                                                            onComplete={() => toggleComplete(habit)}
+                                                            type={habit.description?.toLowerCase().includes('timer') ? 'TIMED' : 'SIMPLE'}
+                                                            streak={habit.streak}
+                                                            onAddNote={() => handleOpenNote(habit._id)}
+                                                            timeFrame={habit.timeFrame}
+                                                            dragListeners={listeners}
+                                                        />
+                                                    )}
+                                                </SortableHabitWrapper>
+                                            ))}
+                                        </SortableContext>
+                                    </div>
+                                </DndContext>
                             ) : (
                                 <div className="text-center py-5 text-muted">
                                     <i className="fas fa-mug-hot fa-3x mb-3 text-secondary" style={{ opacity: 0.5 }}></i>
