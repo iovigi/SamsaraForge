@@ -23,7 +23,7 @@ export default function ProjectCard({ project, onEdit, onDelete }: ProjectCardPr
 
     return (
         <div className="project-card h-100 shadow-sm position-relative">
-            <Link href={`/projects/${project._id}`} className="text-decoration-none h-100 d-block">
+            <Link href={`/projects/view?id=${project._id}`} className="text-decoration-none h-100 d-block">
                 <div className="project-card-img-wrapper">
                     {imageUrl ? (
                         <img src={imageUrl} alt={project.name} className="project-card-img" />

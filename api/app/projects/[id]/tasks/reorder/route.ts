@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
-import { connectToDB } from '../../../../../lib/db';
-import ProjectTask from '../../../../../lib/models/ProjectTask';
-import { verifyToken } from '../../../../../lib/services/auth';
+import connectToDB from '@/lib/db';
+import ProjectTask from '@/lib/models/ProjectTask';
+import { verifyToken } from '@/lib/services/auth';
 
 export async function POST(req: Request, { params }: { params: Promise<{ id: string }> }) {
     try {
