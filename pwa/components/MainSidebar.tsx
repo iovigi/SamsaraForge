@@ -122,7 +122,7 @@ function ProjectSidebarList() {
         <>
             {projects.map(p => (
                 <li className="nav-item" key={p._id}>
-                    <a href={`/projects/${p._id}`} className={`nav-link ${pathname === `/projects/${p._id}` ? 'active' : ''}`}>
+                    <a href={`/projects/view?id=${p._id}`} className={`nav-link ${pathname === `/projects/view` && window.location.search.includes(p._id) ? 'active' : ''}`}>
                         <i className="fas fa-clipboard-list nav-icon"></i>
                         <p className="text-truncate">{p.name}</p>
                     </a>
