@@ -318,73 +318,75 @@ export default function DashboardPage() {
 
     return (
         <div className="content-wrapper" style={{ backgroundColor: '#f4f6f9' }}> {/* Light gray background */}
-            <section className="content pt-4 pb-5">
-                <div className="container-fluid">
-                    <div className="row justify-content-center">
-                        <div className="col-12 col-md-8 col-lg-6">
+            <div style={{ height: '100%', overflowY: 'auto', WebkitOverflowScrolling: 'touch' }}>
+                <section className="content pt-4 pb-5">
+                    <div className="container-fluid">
+                        <div className="row justify-content-center">
+                            <div className="col-12 col-md-8 col-lg-6">
 
-                            {/* 1. Header & Progress */}
-                            <DailyProgress
-                                completed={completionStats.completed}
-                                total={completionStats.total}
-                                userName={userName}
-                            />
+                                {/* 1. Header & Progress */}
+                                <DailyProgress
+                                    completed={completionStats.completed}
+                                    total={completionStats.total}
+                                    userName={userName}
+                                />
 
-                            {/* 2. Today's List */}
-                            <h5 className="mb-3 pl-1 font-weight-bold text-dark">{t('dashboard.today')}</h5>
+                                {/* 2. Today's List */}
+                                <h5 className="mb-3 pl-1 font-weight-bold text-dark">{t('dashboard.today')}</h5>
 
-                            {todayHabits.length > 0 ? (
-                                <DndContext
-                                    sensors={sensors}
-                                    collisionDetection={closestCenter}
-                                    onDragEnd={handleDragEnd}
-                                >
-                                    <div style={{ touchAction: 'none' }}>
-                                        <SortableContext
-                                            items={todayHabits.map(h => h._id)}
-                                            strategy={verticalListSortingStrategy}
-                                        >
-                                            {todayHabits.map(habit => (
-                                                <SortableHabitWrapper key={habit._id} id={habit._id}>
-                                                    {(listeners: any) => (
-                                                        <DailyHabitCard
-                                                            title={habit.title}
-                                                            description={habit.description}
-                                                            status={isCompletedToday(habit) ? 'DONE' : 'TODO'}
-                                                            onComplete={() => toggleComplete(habit)}
-                                                            type={habit.description?.toLowerCase().includes('timer') ? 'TIMED' : 'SIMPLE'}
-                                                            streak={habit.streak}
-                                                            onAddNote={() => handleOpenNote(habit._id)}
-                                                            timeFrame={habit.timeFrame}
-                                                            dragListeners={listeners}
-                                                        />
-                                                    )}
-                                                </SortableHabitWrapper>
-                                            ))}
-                                        </SortableContext>
+                                {todayHabits.length > 0 ? (
+                                    <DndContext
+                                        sensors={sensors}
+                                        collisionDetection={closestCenter}
+                                        onDragEnd={handleDragEnd}
+                                    >
+                                        <div style={{ touchAction: 'none' }}>
+                                            <SortableContext
+                                                items={todayHabits.map(h => h._id)}
+                                                strategy={verticalListSortingStrategy}
+                                            >
+                                                {todayHabits.map(habit => (
+                                                    <SortableHabitWrapper key={habit._id} id={habit._id}>
+                                                        {(listeners: any) => (
+                                                            <DailyHabitCard
+                                                                title={habit.title}
+                                                                description={habit.description}
+                                                                status={isCompletedToday(habit) ? 'DONE' : 'TODO'}
+                                                                onComplete={() => toggleComplete(habit)}
+                                                                type={habit.description?.toLowerCase().includes('timer') ? 'TIMED' : 'SIMPLE'}
+                                                                streak={habit.streak}
+                                                                onAddNote={() => handleOpenNote(habit._id)}
+                                                                timeFrame={habit.timeFrame}
+                                                                dragListeners={listeners}
+                                                            />
+                                                        )}
+                                                    </SortableHabitWrapper>
+                                                ))}
+                                            </SortableContext>
+                                        </div>
+                                    </DndContext>
+                                ) : (
+                                    <div className="text-center py-5 text-muted">
+                                        <i className="fas fa-mug-hot fa-3x mb-3 text-secondary" style={{ opacity: 0.5 }}></i>
+                                        <p>{t('dashboard.noHabits')}</p>
+                                        <a href="/habits" className="btn btn-sm btn-outline-primary mt-2">{t('dashboard.manageHabits')}</a>
                                     </div>
-                                </DndContext>
-                            ) : (
-                                <div className="text-center py-5 text-muted">
-                                    <i className="fas fa-mug-hot fa-3x mb-3 text-secondary" style={{ opacity: 0.5 }}></i>
-                                    <p>{t('dashboard.noHabits')}</p>
-                                    <a href="/habits" className="btn btn-sm btn-outline-primary mt-2">{t('dashboard.manageHabits')}</a>
-                                </div>
-                            )}
+                                )}
 
-                            {/* 3. Motivation / Footer */}
-                            <div className="card bg-white mt-5 border-0 shadow-sm" style={{ borderRadius: '15px' }}>
-                                <div className="card-body">
-                                    <h6 className="font-weight-bold mb-2">{t('dashboard.motivationTitle')}</h6>
-                                    <p className="font-italic text-muted mb-0">"{currentQuote.text || t('dashboard.motivationText')}"</p>
-                                    <footer className="blockquote-footer mt-1">{currentQuote.author}</footer>
+                                {/* 3. Motivation / Footer */}
+                                <div className="card bg-white mt-5 border-0 shadow-sm" style={{ borderRadius: '15px' }}>
+                                    <div className="card-body">
+                                        <h6 className="font-weight-bold mb-2">{t('dashboard.motivationTitle')}</h6>
+                                        <p className="font-italic text-muted mb-0">"{currentQuote.text || t('dashboard.motivationText')}"</p>
+                                        <footer className="blockquote-footer mt-1">{currentQuote.author}</footer>
+                                    </div>
                                 </div>
+
                             </div>
-
                         </div>
                     </div>
-                </div>
-            </section>
+                </section>
+            </div>
 
             <NoteModal
                 isOpen={isNoteModalOpen}
