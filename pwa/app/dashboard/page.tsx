@@ -318,7 +318,7 @@ export default function DashboardPage() {
 
     return (
         <div className="content-wrapper" style={{ backgroundColor: '#f4f6f9' }}> {/* Light gray background */}
-            <section className="content pt-4">
+            <section className="content pt-4 pb-5">
                 <div className="container-fluid">
                     <div className="row justify-content-center">
                         <div className="col-12 col-md-8 col-lg-6">
