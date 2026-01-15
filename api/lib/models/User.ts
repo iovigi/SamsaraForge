@@ -26,10 +26,26 @@ const UserSchema = new mongoose.Schema({
         type: Date,
         default: null
     },
+    resetCode: {
+        type: String,
+        default: null
+    },
+    resetCodeExpires: {
+        type: Date,
+        default: null
+    },
     language: {
         type: String,
         enum: ['en', 'bg'],
         default: 'en'
+    },
+    emailNotifications: {
+        type: Boolean,
+        default: false
+    },
+    emailQuoteNotifications: {
+        type: Boolean,
+        default: false
     }
 });
 

@@ -2,12 +2,17 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { API_BASE_URL } from '@/utils/config';
+import { useLanguage } from '@/context/LanguageContext';
 
 export default function ForgotPassword() {
+    const { t } = useLanguage();
     const [email, setEmail] = useState('');
     const [message, setMessage] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
+    const router = useRouter();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -16,7 +21,7 @@ export default function ForgotPassword() {
         setLoading(true);
 
         try {
-            const res = await fetch('http://localhost:3000/api/auth/forgot-password', {
+            const res = await fetch(`${API_BASE_URL}/api/auth/forgot-password`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -27,10 +32,19 @@ export default function ForgotPassword() {
             const data = await res.json();
 
             if (!res.ok) {
-                throw new Error(data.message || 'Something went wrong');
+                // Map common API errors to localized strings
+                const msg = data.message;
+                if (msg === 'User not found') throw new Error(t('auth.error.userNotFound'));
+                if (msg === 'Failed to send email') throw new Error(t('auth.error.sendEmailFailed'));
+                throw new Error(data.message || t('auth.error.generic'));
             }
 
-            setMessage(data.message);
+            setMessage(t('auth.success.resetCodeSent'));
+            // Redirect to reset password page after 1.5 seconds so user sees the message
+            setTimeout(() => {
+                router.push(`/auth/reset-password?email=${encodeURIComponent(email)}`);
+            }, 1500);
+
         } catch (err: any) {
             setError(err.message);
         } finally {
@@ -48,7 +62,7 @@ export default function ForgotPassword() {
                 </div>
                 <div className="card">
                     <div className="card-body login-card-body">
-                        <p className="login-box-msg">You forgot your password? Here you can easily retrieve a new password.</p>
+                        <p className="login-box-msg">{t('auth.forgotPassword.instruction')}</p>
 
                         {message && <div className="alert alert-success">{message}</div>}
                         {error && <div className="alert alert-danger">{error}</div>}
@@ -58,7 +72,7 @@ export default function ForgotPassword() {
                                 <input
                                     type="email"
                                     className="form-control"
-                                    placeholder="Email"
+                                    placeholder={t('auth.email')}
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
                                     required
@@ -72,17 +86,17 @@ export default function ForgotPassword() {
                             <div className="row">
                                 <div className="col-12">
                                     <button type="submit" className="btn btn-primary btn-block" disabled={loading}>
-                                        {loading ? 'Requesting...' : 'Request new password'}
+                                        {loading ? t('auth.forgotPassword.submitting') : t('auth.forgotPassword.submit')}
                                     </button>
                                 </div>
                             </div>
                         </form>
 
                         <p className="mt-3 mb-1">
-                            <Link href="/auth/login">Login</Link>
+                            <Link href="/auth/login">{t('auth.signIn')}</Link>
                         </p>
                         <p className="mb-0">
-                            <Link href="/auth/register" className="text-center">Register a new membership</Link>
+                            <Link href="/auth/register" className="text-center">{t('auth.newMembership')}</Link>
                         </p>
                     </div>
                 </div>

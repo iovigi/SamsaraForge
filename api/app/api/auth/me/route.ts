@@ -59,7 +59,7 @@ export async function PUT(req: Request) {
         }
 
         const body = await req.json();
-        const { nickname, quoteNotifications, quoteNotificationIntervalMin, language } = body;
+        const { nickname, quoteNotifications, quoteNotificationIntervalMin, language, emailNotifications, emailQuoteNotifications } = body;
         console.log('PUT /me received nickname:', nickname);
 
         const user = await User.findById(decoded.userId);
@@ -74,6 +74,8 @@ export async function PUT(req: Request) {
         if (quoteNotifications !== undefined) user.quoteNotifications = quoteNotifications;
         if (quoteNotificationIntervalMin !== undefined) user.quoteNotificationIntervalMin = quoteNotificationIntervalMin;
         if (language !== undefined) user.language = language;
+        if (emailNotifications !== undefined) user.emailNotifications = emailNotifications;
+        if (emailQuoteNotifications !== undefined) user.emailQuoteNotifications = emailQuoteNotifications;
 
         await user.save();
         console.log('User saved with nickname:', user.nickname);

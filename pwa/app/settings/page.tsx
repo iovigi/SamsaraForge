@@ -19,6 +19,8 @@ export default function SettingsPage() {
     const [nickname, setNickname] = useState('');
     const [quoteNotifications, setQuoteNotifications] = useState(false);
     const [quoteNotificationIntervalMin, setQuoteNotificationIntervalMin] = useState(1440);
+    const [emailNotifications, setEmailNotifications] = useState(false);
+    const [emailQuoteNotifications, setEmailQuoteNotifications] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [message, setMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null);
 
@@ -32,6 +34,8 @@ export default function SettingsPage() {
                     setNickname(user.nickname || '');
                     setQuoteNotifications(user.quoteNotifications || false);
                     setQuoteNotificationIntervalMin(user.quoteNotificationIntervalMin || 1440);
+                    setEmailNotifications(user.emailNotifications || false);
+                    setEmailQuoteNotifications(user.emailQuoteNotifications || false);
                     if (user.language) setLanguage(user.language);
                 }
             } catch (error) {
@@ -57,6 +61,8 @@ export default function SettingsPage() {
                     nickname,
                     quoteNotifications,
                     quoteNotificationIntervalMin: Number(quoteNotificationIntervalMin),
+                    emailNotifications,
+                    emailQuoteNotifications,
                     language
                 }),
             });
@@ -128,7 +134,7 @@ export default function SettingsPage() {
     };
 
     return (
-        <div className="content-wrapper">
+        <div className="content-wrapper" style={{ overflowY: 'auto', maxHeight: '100vh' }}>
             <section className="content-header">
                 <div className="container-fluid">
                     <div className="row mb-2">
@@ -342,6 +348,65 @@ export default function SettingsPage() {
                                         <button type="submit" className="btn btn-danger">{t('settings.updatePassword')}</button>
                                     </div>
                                 </form>
+                            </div>
+
+                            {/* Email Settings */}
+                            <div className="card card-warning">
+                                <div className="card-header">
+                                    <h3 className="card-title">
+                                        <i className="fas fa-envelope mr-2"></i>
+                                        {t('settings.emailNotifications')}
+                                    </h3>
+                                </div>
+                                <div className="card-body">
+                                    {/* Email Reminders */}
+                                    <div className="form-group border-bottom pb-3">
+                                        <label>{t('settings.emailReminders')}</label>
+                                        <div className="custom-control custom-switch">
+                                            <input
+                                                type="checkbox"
+                                                className="custom-control-input"
+                                                id="emailReminderSwitch"
+                                                checked={emailNotifications}
+                                                onChange={(e) => setEmailNotifications(e.target.checked)}
+                                            />
+                                            <label className="custom-control-label" htmlFor="emailReminderSwitch">
+                                                {emailNotifications ? t('settings.pushEnabled') : t('settings.pushDisabled')}
+                                            </label>
+                                        </div>
+                                        <small className="form-text text-muted">
+                                            {t('settings.emailRemindersDesc')}
+                                        </small>
+                                    </div>
+
+                                    {/* Email Quote Notifications */}
+                                    <div className="form-group mt-3">
+                                        <label>{t('settings.emailQuoteNotifications')}</label>
+                                        <div className="custom-control custom-switch">
+                                            <input
+                                                type="checkbox"
+                                                className="custom-control-input"
+                                                id="emailQuoteSwitch"
+                                                checked={emailQuoteNotifications}
+                                                onChange={(e) => setEmailQuoteNotifications(e.target.checked)}
+                                            />
+                                            <label className="custom-control-label" htmlFor="emailQuoteSwitch">
+                                                {emailQuoteNotifications ? t('settings.pushEnabled') : t('settings.pushDisabled')}
+                                            </label>
+                                        </div>
+                                        <small className="form-text text-muted">
+                                            {t('settings.emailQuoteDesc')}
+                                        </small>
+                                    </div>
+
+                                    <button
+                                        type="button"
+                                        className="btn btn-warning mt-3"
+                                        onClick={handleUpdateProfile}
+                                    >
+                                        {t('settings.saveEmail')}
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
