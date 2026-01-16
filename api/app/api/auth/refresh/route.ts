@@ -16,7 +16,7 @@ export async function POST(req: Request) {
             const decoded: any = jwt.verify(refreshToken, JWT_SECRET);
 
             // Generate NEW Access Token
-            const accessToken = jwt.sign({ userId: decoded.userId, email: decoded.email }, JWT_SECRET, {
+            const accessToken = jwt.sign({ userId: decoded.userId, email: decoded.email, isAdmin: decoded.isAdmin }, JWT_SECRET, {
                 expiresIn: '15m',
             });
 

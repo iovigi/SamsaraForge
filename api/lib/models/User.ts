@@ -46,7 +46,15 @@ const UserSchema = new mongoose.Schema({
     emailQuoteNotifications: {
         type: Boolean,
         default: false
+    },
+    isAdmin: {
+        type: Boolean,
+        default: false
+    },
+    isBlocked: {
+        type: Boolean,
+        default: false
     }
-});
+}, { timestamps: true });
 
 export default mongoose.models.User || mongoose.model('User', UserSchema);

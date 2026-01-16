@@ -26,6 +26,13 @@ export async function POST(req: Request) {
             );
         }
 
+        if (user.isBlocked) {
+            return NextResponse.json(
+                { message: 'Your account has been blocked. Please contact support.' },
+                { status: 403 }
+            );
+        }
+
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
             return NextResponse.json(
@@ -34,11 +41,11 @@ export async function POST(req: Request) {
             );
         }
 
-        const accessToken = jwt.sign({ userId: user._id, email: user.email }, JWT_SECRET, {
+        const accessToken = jwt.sign({ userId: user._id, email: user.email, isAdmin: user.isAdmin }, JWT_SECRET, {
             expiresIn: '15m',
         });
 
-        const refreshToken = jwt.sign({ userId: user._id, email: user.email }, JWT_SECRET, {
+        const refreshToken = jwt.sign({ userId: user._id, email: user.email, isAdmin: user.isAdmin }, JWT_SECRET, {
             expiresIn: '7d',
         });
 

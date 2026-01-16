@@ -4,10 +4,11 @@ import { useEffect, useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 
 import { useLanguage } from '../context/LanguageContext';
-import { authenticatedFetch } from '../utils/api';
+import { authenticatedFetch, parseJwt } from '../utils/api';
 
 export default function MainSidebar() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [isAdmin, setIsAdmin] = useState(false);
     const pathname = usePathname();
     const router = useRouter();
     const { t } = useLanguage();
@@ -17,6 +18,12 @@ export default function MainSidebar() {
     useEffect(() => {
         const token = localStorage.getItem('token');
         setIsLoggedIn(!!token);
+        if (token) {
+            const decoded = parseJwt(token);
+            setIsAdmin(decoded?.isAdmin || false);
+        } else {
+            setIsAdmin(false);
+        }
     }, [pathname]); // Re-check on route change
 
     const handleLogout = () => {
@@ -74,6 +81,14 @@ export default function MainSidebar() {
                                 <p>{t('nav.settings')}</p>
                             </a>
                         </li>
+                        {isAdmin && (
+                            <li className="nav-item">
+                                <a href="/users" className={`nav-link ${pathname === '/users' ? 'active' : ''}`}>
+                                    <i className="nav-icon fas fa-users"></i>
+                                    <p>{t('nav.users')}</p>
+                                </a>
+                            </li>
+                        )}
                         <li className="nav-item">
                             <a href="#" className="nav-link" onClick={(e) => { e.preventDefault(); handleLogout(); }}>
                                 <i className="nav-icon fas fa-sign-out-alt"></i>
