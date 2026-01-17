@@ -6,6 +6,8 @@ import { authenticatedFetch } from '../../utils/api';
 import { useLanguage } from '../../context/LanguageContext';
 import DailyProgress from '../../components/DailyProgress';
 import DailyHabitCard from '../../components/DailyHabitCard';
+import HistoryHeatmap from '../../components/HistoryHeatmap';
+import HabitStats from '../../components/HabitStats';
 import confetti from 'canvas-confetti';
 import {
     DndContext,
@@ -48,10 +50,20 @@ export default function DashboardPage() {
     const { t, language } = useLanguage();
     const router = useRouter();
     const [todayHabits, setTodayHabits] = useState<Habit[]>([]);
+    const [allHabits, setAllHabits] = useState<Habit[]>([]); // Store all habits for history
     const [loading, setLoading] = useState(true);
     const [completionStats, setCompletionStats] = useState({ total: 0, completed: 0 });
     const [userName, setUserName] = useState('');
     const [currentQuote, setCurrentQuote] = useState({ text: '', author: '' });
+
+    // Stats State
+    const [dashboardStats, setDashboardStats] = useState({
+        totalVictories: 0,
+        bestStreak: 0,
+        currentStreak: 0,
+        perfectDays: 0,
+        heatmapData: [] as { date: string; count: number; level: number; total?: number }[]
+    });
 
     // Note Modal State
     const [isNoteModalOpen, setIsNoteModalOpen] = useState(false);
@@ -97,7 +109,9 @@ export default function DashboardPage() {
             const res = await authenticatedFetch('/api/habits');
             if (res.ok) {
                 const data = await res.json();
+                setAllHabits(data.habits);
                 filterTodayHabits(data.habits);
+                calculateStats(data.habits);
             } else {
                 if (res.status === 401) router.push('/auth/login');
             }
@@ -131,46 +145,20 @@ export default function DashboardPage() {
         fetchUser();
     }, []);
 
-    const filterTodayHabits = (allHabits: Habit[]) => {
-        const today = new Date();
-        const dayOfWeek = today.getDay(); // 0 = Sun
-        const dayOfMonth = today.getDate();
-        const dateString = today.toISOString().split('T')[0];
+    const isScheduled = (habit: Habit, date: Date) => {
+        const dayOfWeek = date.getDay(); // 0 = Sun
+        const dayOfMonth = date.getDate();
 
-        const todays = allHabits.filter(habit => {
-            // 1. Check if explicitly completed today already (show it as done)
-            const isCompletedToday = habit.completionDates?.some(d => d.startsWith(dateString));
-            if (isCompletedToday) return true;
-
-            // 2. Check scheduling rules
-            if (habit.recurrence === 'DAILY') return true;
-            if (habit.recurrence === 'WEEKLY' && habit.weekDays?.includes(dayOfWeek)) return true;
-            if (habit.recurrence === 'MONTHLY' && habit.monthDay === dayOfMonth) return true;
-            if (habit.recurrence === 'ONCE' && habit.scheduledDate) {
-                const sDate = new Date(habit.scheduledDate);
-                if (sDate.getDate() === dayOfMonth &&
-                    sDate.getMonth() === today.getMonth() &&
-                    sDate.getFullYear() === today.getFullYear()) {
-                    return true;
-                }
-            }
-
-            return false;
-        });
-
-        // Sort: Pending first, then Done. Then by Order.
-        todays.sort((a, b) => {
-            const aDone = isCompletedToday(a);
-            const bDone = isCompletedToday(b);
-            if (aDone !== bDone) {
-                return aDone ? 1 : -1;
-            }
-            // If status is same, sort by order
-            return (a.order || 0) - (b.order || 0);
-        });
-
-        setTodayHabits(todays);
-        updateStats(todays);
+        if (habit.recurrence === 'DAILY') return true;
+        if (habit.recurrence === 'WEEKLY' && habit.weekDays?.includes(dayOfWeek)) return true;
+        if (habit.recurrence === 'MONTHLY' && habit.monthDay === dayOfMonth) return true;
+        if (habit.recurrence === 'ONCE' && habit.scheduledDate) {
+            const sDate = new Date(habit.scheduledDate);
+            return sDate.getFullYear() === date.getFullYear() &&
+                sDate.getMonth() === date.getMonth() &&
+                sDate.getDate() === date.getDate();
+        }
+        return false;
     };
 
     const isCompletedToday = (habit: Habit) => {
@@ -191,6 +179,34 @@ export default function DashboardPage() {
         const total = habits.length;
         const completed = habits.filter(h => isCompletedToday(h)).length;
         setCompletionStats({ total, completed });
+    };
+
+    const filterTodayHabits = (allHabits: Habit[]) => {
+        const today = new Date();
+        const dateString = today.toISOString().split('T')[0];
+
+        const todays = allHabits.filter(habit => {
+            // 1. Check if explicitly completed today already (show it as done)
+            const isCompletedTodayCheck = habit.completionDates?.some(d => d.startsWith(dateString));
+            if (isCompletedTodayCheck) return true;
+
+            // 2. Check scheduling rules
+            return isScheduled(habit, today);
+        });
+
+        // Sort: Pending first, then Done. Then by Order.
+        todays.sort((a, b) => {
+            const aDone = isCompletedToday(a);
+            const bDone = isCompletedToday(b);
+            if (aDone !== bDone) {
+                return aDone ? 1 : -1;
+            }
+            // If status is same, sort by order
+            return (a.order || 0) - (b.order || 0);
+        });
+
+        setTodayHabits(todays);
+        updateStats(todays);
     };
 
     const toggleComplete = async (habit: Habit) => {
@@ -270,6 +286,10 @@ export default function DashboardPage() {
                 setTodayHabits(prev => prev.map(h =>
                     h._id === habit._id ? { ...h, ...data.habit } : h
                 ));
+                // Update allHabits too to reflect changes in stats immediately
+                const updatedAll = allHabits.map(h => h._id === habit._id ? { ...h, ...data.habit } : h);
+                setAllHabits(updatedAll);
+                calculateStats(updatedAll);
             }
         } catch (error) {
             console.error("Failed to update habit", error);
@@ -306,6 +326,112 @@ export default function DashboardPage() {
         }
     };
 
+    const calculateStats = (habits: Habit[]) => {
+        let totalVictories = 0;
+        let maxStreak = 0;
+        let runningStreakSum = 0; // Sum of current streaks of all active habits? Or just best single streak?
+        // User asked: "suming for multple days" -> maybe total active streaks?
+        // Let's go with Best Streak (Single max) and Current Streak (Sum of all streaks? No, that's weird).
+        // Let's show: Total Victories, MAX Streak (of any habit), Current Streak (of any habit? or sum?)
+        // Let's implement Sum of Streaks for "Active Streaks" (from localization) or "Current Streak" if singular.
+
+        // Date map for heatmap
+        const dateCounts: { [key: string]: number } = {};
+
+        habits.forEach(h => {
+            totalVictories += (h.completionDates?.length || 0);
+            if (h.streak > maxStreak) maxStreak = h.streak;
+            // runningStreakSum += h.streak; // If we want sum
+
+            h.completionDates?.forEach(dateStr => {
+                const d = dateStr.split('T')[0];
+                dateCounts[d] = (dateCounts[d] || 0) + 1;
+            });
+        });
+
+        // Current Streak context: usually "Longest current streak". 
+        // Let's calculate "Longest Current Streak" across all habits.
+        // Actually locally I have `streak` on habit.
+
+        let perfectDays = 0;
+        const heatmapData = [];
+        const todayStr = new Date().toISOString().split('T')[0];
+
+        // Fill heatmap (last 365 days? ActivityCalendar handles range, just need data)
+        // Activity Calendar expects one year usually or it auto-scales.
+        // We just pass the sparse data we have? No, it needs array.
+        // actually react-activity-calendar handles sparse data if start/end not provided? 
+        // We should map Object to Array.
+
+        // Generate a dense list of dates for the last 2 years (to allow previous year navigation)
+        const now = new Date();
+        const twoYearsAgo = new Date();
+        twoYearsAgo.setFullYear(now.getFullYear() - 2);
+
+        // Iterate day by day from twoYearsAgo to today
+        let loopDate = new Date(twoYearsAgo);
+        // Reset to midnight for consistent comparison
+        loopDate.setHours(0, 0, 0, 0);
+
+        const todayEnd = new Date();
+        todayEnd.setHours(23, 59, 59, 999);
+
+        while (loopDate <= todayEnd) {
+            const y = loopDate.getFullYear();
+            const m = loopDate.getMonth() + 1;
+            const dNum = loopDate.getDate();
+            const dateStr = `${y}-${String(m).padStart(2, '0')}-${String(dNum).padStart(2, '0')}`;
+
+            const count = dateCounts[dateStr] || 0;
+
+            // Check scheduling for this specific historic date
+            // Note: loopDate is already a Date object set to local time midnight (or whatever system local is)
+            const totalForDay = habits.filter(h => isScheduled(h, loopDate)).length;
+
+            // Percentage-based level logic
+            let level = 0;
+            if (count > 0 && totalForDay > 0) {
+                const percentage = count / totalForDay;
+                if (percentage <= 0.25) level = 1;
+                else if (percentage <= 0.50) level = 2;
+                else if (percentage <= 0.75) level = 3;
+                else level = 4;
+            } else if (count > 0 && totalForDay === 0) {
+                // If counting completions but no scheduled habits (e.g. recurrence changed), treat as max or level 1?
+                // Let's settle on level 1 for safety, or higher if high count.
+                // Or maybe just based on count raw value? 1->1, 2->2, 3->3, 4+->4
+                if (count === 1) level = 1;
+                else if (count === 2) level = 2;
+                else if (count === 3) level = 3;
+                else level = 4;
+            } else if (count === 0 && totalForDay > 0) {
+                // 0 completed, but some scheduled -> Level 0.
+                level = 0;
+            }
+
+            if (count >= 5) perfectDays++; // Keep legacy perfect day logic
+
+            heatmapData.push({ date: dateStr, count, level, total: totalForDay });
+
+            // Increment day
+            loopDate.setDate(loopDate.getDate() + 1);
+        }
+
+        // Add today if missing (with 0) to ensure calendar goes up to today? 
+        // Calendar usually handles this.
+
+        setDashboardStats({
+            totalVictories,
+            bestStreak: maxStreak,
+            currentStreak: maxStreak, // For now, Best Streak and Current Streak might be same if we don't distinguish "Historical Best". 
+            // The model stores 'streak' which is current. 
+            // So 'Best Streak' implies 'Longest Streak Ever'. We don't track historical max in model yet. 
+            // So we'll show "Best Streak" as the highest current streak among all habits.
+            perfectDays,
+            heatmapData
+        });
+    };
+
     if (loading) {
         return (
             <div className="content-wrapper d-flex justify-content-center align-items-center" style={{ minHeight: '100vh', backgroundColor: '#f4f6f9' }}>
@@ -322,7 +448,7 @@ export default function DashboardPage() {
                 <section className="content pt-4 pb-5">
                     <div className="container-fluid">
                         <div className="row justify-content-center">
-                            <div className="col-12 col-md-8 col-lg-6">
+                            <div className="col-12 col-md-10 col-lg-8"> {/* Widened slightly for Heatmap */}
 
                                 {/* 1. Header & Progress */}
                                 <DailyProgress
@@ -373,6 +499,18 @@ export default function DashboardPage() {
                                     </div>
                                 )}
 
+                                {/* 3. Stats & Heatmap */}
+                                <div className="mt-5">
+                                    <h5 className="mb-3 pl-1 font-weight-bold text-dark">{t('dashboard.totalVictories')}</h5> {/* Using title for section */}
+                                    <HabitStats
+                                        totalVictories={dashboardStats.totalVictories}
+                                        bestStreak={dashboardStats.bestStreak}
+                                        currentStreak={dashboardStats.currentStreak}
+                                        perfectDays={dashboardStats.perfectDays}
+                                    />
+                                    <HistoryHeatmap data={dashboardStats.heatmapData} />
+                                </div>
+
                                 {/* 3. Motivation / Footer */}
                                 <div className="card bg-white mt-5 border-0 shadow-sm" style={{ borderRadius: '15px' }}>
                                     <div className="card-body">
@@ -386,7 +524,7 @@ export default function DashboardPage() {
                         </div>
                     </div>
                 </section>
-            </div>
+            </div >
 
             <NoteModal
                 isOpen={isNoteModalOpen}
@@ -394,6 +532,6 @@ export default function DashboardPage() {
                 onSave={handleSaveNote}
                 title={todayHabits.find(h => h._id === activeNoteHabitId)?.title}
             />
-        </div>
+        </div >
     );
 }

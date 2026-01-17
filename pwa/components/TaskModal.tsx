@@ -273,7 +273,7 @@ export default function TaskModal({ isOpen, onClose, task, onSave, onUpdate }: T
                             {task && task.streak > 0 && (
                                 <div className="alert alert-warning">
                                     <i className="fas fa-fire mr-2"></i>
-                                    <strong>{task.streak}</strong> Day Streak! Keep it up!
+                                    <strong>{t('kanban.streakMessage').replace('{{count}}', String(task.streak))}</strong>
                                 </div>
                             )}
 
@@ -492,7 +492,7 @@ export default function TaskModal({ isOpen, onClose, task, onSave, onUpdate }: T
                                     <hr />
                                     {/* Activity Calendar */}
                                     <div className="form-group mb-4">
-                                        <label className="form-label font-weight-bold d-block mb-3">Consistency History</label>
+                                        <label className="form-label font-weight-bold d-block mb-3">{t('dashboard.habitHistory') || 'Habit History'}</label>
                                         <div className="d-flex justify-content-center p-3 bg-white rounded border">
                                             <ActivityCalendar
                                                 data={(() => {
@@ -528,8 +528,36 @@ export default function TaskModal({ isOpen, onClose, task, onSave, onUpdate }: T
                                                     dark: ['#161b22', '#0e4429', '#006d32', '#26a641', '#39d353'],
                                                 }}
                                                 labels={{
-                                                    totalCount: '{{count}} completions in the last year',
+                                                    totalCount: t('kanban.history.totalCount').replace('{{count}}', String(task.completionDates?.length || 0)),
+                                                    legend: {
+                                                        less: t('dashboard.heatmap.less') || 'Less',
+                                                        more: t('dashboard.heatmap.more') || 'More',
+                                                    },
+                                                    months: [
+                                                        t('common.months.short.jan'),
+                                                        t('common.months.short.feb'),
+                                                        t('common.months.short.mar'),
+                                                        t('common.months.short.apr'),
+                                                        t('common.months.short.may'),
+                                                        t('common.months.short.jun'),
+                                                        t('common.months.short.jul'),
+                                                        t('common.months.short.aug'),
+                                                        t('common.months.short.sep'),
+                                                        t('common.months.short.oct'),
+                                                        t('common.months.short.nov'),
+                                                        t('common.months.short.dec'),
+                                                    ],
+                                                    weekdays: [
+                                                        t('kanban.days.sun'),
+                                                        t('kanban.days.mon'),
+                                                        t('kanban.days.tue'),
+                                                        t('kanban.days.wed'),
+                                                        t('kanban.days.thu'),
+                                                        t('kanban.days.fri'),
+                                                        t('kanban.days.sat'),
+                                                    ],
                                                 }}
+                                                showWeekdayLabels
                                             />
                                         </div>
                                     </div>
