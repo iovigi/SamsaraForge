@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import MDEditor from '@uiw/react-md-editor';
 import { useLanguage } from '../context/LanguageContext';
-import { uploadFile } from '../utils/api';
+import { uploadFile, authenticatedFetch } from '../utils/api';
 import { API_BASE_URL } from '../utils/config';
 
 interface ProjectTaskModalProps {
@@ -30,6 +30,7 @@ export default function ProjectTaskModal({ isOpen, onClose, task, projectId, onS
     const [editingCommentIdx, setEditingCommentIdx] = useState<number | null>(null);
     const [editingCommentText, setEditingCommentText] = useState('');
     const [descUploading, setDescUploading] = useState(false);
+    const [currentUser, setCurrentUser] = useState<any>(null);
 
     useEffect(() => {
         if (task) {
@@ -50,6 +51,23 @@ export default function ProjectTaskModal({ isOpen, onClose, task, projectId, onS
             setComments([]);
         }
     }, [task, isOpen]);
+
+    useEffect(() => {
+        const fetchUser = async () => {
+            try {
+                const res = await authenticatedFetch('/api/auth/me');
+                if (res.ok) {
+                    const data = await res.json();
+                    setCurrentUser(data.user);
+                }
+            } catch (err) {
+                console.error('Failed to fetch user', err);
+            }
+        };
+        if (isOpen) {
+            fetchUser();
+        }
+    }, [isOpen]);
 
     const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files[0]) {
@@ -103,27 +121,54 @@ export default function ProjectTaskModal({ isOpen, onClose, task, projectId, onS
             estimatedTime,
             estimatedTimeUnit,
             files,
-            // Comments are handled separately usually, but for create/update we might pass them if model supports.
-            // For now, let's assume comments are added via separate specific tailored calls or just updated here.
-            // We'll simplisticly save them here if it's a new task or simple update.
             comments
         });
     };
 
-    const addComment = () => {
-        if (!commentText.trim()) return;
-        const newComment = {
-            text: commentText,
-            authorName: 'Me', // Placeholder, API should fill from token
-            createdAt: new Date().toISOString()
-        };
-        setComments([...comments, newComment]);
-        setCommentText('');
+    const saveCommentsToBackend = async (updatedComments: any[]) => {
+        // If task exists, save comments immediately
+        if (task && task._id) {
+            try {
+                // Check if we assume last write wins.
+                await authenticatedFetch(`/api/projects/${projectId}/tasks/${task._id}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ comments: updatedComments })
+                });
+                // We don't necessarily need to reload the whole task if we just assume it worked,
+                // but reloading might be safer to get correct timestamps if server sets them.
+                // For now, local update is enough for UI responsiveness.
+            } catch (err) {
+                console.error('Failed to save comments', err);
+                alert('Failed to save comment');
+            }
+        }
     };
 
-    const deleteComment = (idx: number) => {
+    const addComment = async () => {
+        if (!commentText.trim()) return;
+
+        const authorName = currentUser ? (currentUser.nickname || currentUser.email) : t('tasks.me');
+        const authorId = currentUser?._id;
+
+        const newComment = {
+            text: commentText,
+            authorName,
+            authorId,
+            createdAt: new Date().toISOString()
+        };
+        const updatedComments = [...comments, newComment];
+        setComments(updatedComments);
+        setCommentText('');
+
+        await saveCommentsToBackend(updatedComments);
+    };
+
+    const deleteComment = async (idx: number) => {
         if (confirm(t('tasks.confirmDeleteComment'))) {
-            setComments(comments.filter((_, i) => i !== idx));
+            const updatedComments = comments.filter((_, i) => i !== idx);
+            setComments(updatedComments);
+            await saveCommentsToBackend(updatedComments);
         }
     };
 
@@ -132,18 +177,29 @@ export default function ProjectTaskModal({ isOpen, onClose, task, projectId, onS
         setEditingCommentText(text);
     };
 
-    const saveEditComment = () => {
+    const saveEditComment = async () => {
         if (editingCommentIdx === null) return;
         const updatedComments = [...comments];
         updatedComments[editingCommentIdx].text = editingCommentText;
         setComments(updatedComments);
         setEditingCommentIdx(null);
         setEditingCommentText('');
+
+        await saveCommentsToBackend(updatedComments);
     };
 
     const cancelEditComment = () => {
         setEditingCommentIdx(null);
         setEditingCommentText('');
+    };
+
+    const canModifyComment = (comment: any) => {
+        // If we have currentUser, check ID matching
+        // If comment has no authorId (legacy), maybe allow? Or restrict?
+        // User wants: "only the comment's author".
+        if (!currentUser) return false;
+        if (!comment.authorId) return false; // Legacy comments can't be edited by check? Or maybe allow Admin?
+        return comment.authorId === currentUser._id;
     };
 
     if (!isOpen) return null;
@@ -258,11 +314,17 @@ export default function ProjectTaskModal({ isOpen, onClose, task, projectId, onS
                                             <div key={idx} className="card mb-2">
                                                 <div className="card-body py-2">
                                                     <div className="d-flex justify-content-between align-items-start">
-                                                        <h6 className="card-subtitle mb-2 text-muted" style={{ fontSize: '0.8rem' }}>{c.authorName} - {new Date(c.createdAt).toLocaleString()}</h6>
-                                                        <div>
-                                                            <button type="button" className="btn btn-link btn-sm p-0 mr-2" onClick={() => startEditComment(idx, c.text)}>{t('common.edit')}</button>
-                                                            <button type="button" className="btn btn-link btn-sm p-0 text-danger" onClick={() => deleteComment(idx)}>{t('common.delete')}</button>
-                                                        </div>
+                                                        <h6 className="card-subtitle mb-2 text-muted" style={{ fontSize: '0.8rem' }}>
+                                                            {t('tasks.commentBy' as any)
+                                                                .replace('{{name}}', c.authorName)
+                                                                .replace('{{date}}', new Date(c.createdAt).toLocaleString())}
+                                                        </h6>
+                                                        {canModifyComment(c) && (
+                                                            <div>
+                                                                <button type="button" className="btn btn-link btn-sm p-0 mr-2" onClick={() => startEditComment(idx, c.text)}>{t('common.edit')}</button>
+                                                                <button type="button" className="btn btn-link btn-sm p-0 text-danger" onClick={() => deleteComment(idx)}>{t('common.delete')}</button>
+                                                            </div>
+                                                        )}
                                                     </div>
                                                     {editingCommentIdx === idx ? (
                                                         <div className="mt-2">

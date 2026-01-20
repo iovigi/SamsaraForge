@@ -130,7 +130,13 @@ function ProjectSidebarList() {
             fetchProjects();
         });
 
-        return cleanup;
+        // Poll for updates (e.g. name changes from others)
+        const interval = setInterval(fetchProjects, 5000);
+
+        return () => {
+            cleanup();
+            clearInterval(interval);
+        };
     }, []);
 
     return (

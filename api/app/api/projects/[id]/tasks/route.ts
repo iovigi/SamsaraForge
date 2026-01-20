@@ -30,10 +30,17 @@ export async function GET(req: Request, { params }: { params: Promise<{ id: stri
 
         const { id } = await params;
 
-        // Verify project existence and ownership
-        const project = await Project.findOne({ _id: id, userId });
+        // Verify project existence and ownership (or membership)
+        const project = await Project.findOne({
+            _id: id,
+            $or: [
+                { userId },
+                { 'members.userId': userId }
+            ]
+        });
+
         if (!project) {
-            return NextResponse.json({ message: 'Project not found' }, { status: 404 });
+            return NextResponse.json({ message: 'Project not found or access denied' }, { status: 404 });
         }
 
         const tasks = await ProjectTask.find({ projectId: id }).sort({ order: 1, createdAt: -1 });
@@ -53,10 +60,17 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
 
         const { id } = await params;
 
-        // Verify project existence and ownership
-        const project = await Project.findOne({ _id: id, userId });
+        // Verify project existence and ownership (or membership)
+        const project = await Project.findOne({
+            _id: id,
+            $or: [
+                { userId },
+                { 'members.userId': userId }
+            ]
+        });
+
         if (!project) {
-            return NextResponse.json({ message: 'Project not found' }, { status: 404 });
+            return NextResponse.json({ message: 'Project not found or access denied' }, { status: 404 });
         }
 
         const body = await req.json();

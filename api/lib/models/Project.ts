@@ -32,6 +32,24 @@ const ProjectSchema = new mongoose.Schema({
             uploadedAt: { type: Date, default: Date.now }
         }
     ],
+    members: [
+        {
+            userId: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'User',
+                required: true
+            },
+            role: {
+                type: String,
+                enum: ['MEMBER'], // Can be expanded to ADMIN later if needed, but for now simple Member
+                default: 'MEMBER'
+            },
+            joinedAt: {
+                type: Date,
+                default: Date.now
+            }
+        }
+    ]
 }, { timestamps: true });
 
 export default mongoose.models.Project || mongoose.model('Project', ProjectSchema);

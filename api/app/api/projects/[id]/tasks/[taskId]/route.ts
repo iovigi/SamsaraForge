@@ -33,10 +33,17 @@ export async function PUT(req: Request, { params }: { params: Promise<{ id: stri
 
         const { id, taskId } = await params;
 
-        // 1. Verify Project Ownership
-        const project = await Project.findOne({ _id: id, userId });
+        // 1. Verify Project Ownership (or Membership)
+        const project = await Project.findOne({
+            _id: id,
+            $or: [
+                { userId },
+                { 'members.userId': userId }
+            ]
+        });
+
         if (!project) {
-            return NextResponse.json({ message: 'Project not found' }, { status: 404 });
+            return NextResponse.json({ message: 'Project not found or access denied' }, { status: 404 });
         }
 
         // 2. Update Task (Ensure it belongs to this project)
@@ -67,10 +74,17 @@ export async function DELETE(req: Request, { params }: { params: Promise<{ id: s
 
         const { id, taskId } = await params;
 
-        // 1. Verify Project Ownership
-        const project = await Project.findOne({ _id: id, userId });
+        // 1. Verify Project Ownership (or Membership)
+        const project = await Project.findOne({
+            _id: id,
+            $or: [
+                { userId },
+                { 'members.userId': userId }
+            ]
+        });
+
         if (!project) {
-            return NextResponse.json({ message: 'Project not found' }, { status: 404 });
+            return NextResponse.json({ message: 'Project not found or access denied' }, { status: 404 });
         }
 
         const task = await ProjectTask.findOneAndDelete({ _id: taskId, projectId: id });

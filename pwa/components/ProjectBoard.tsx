@@ -37,26 +37,53 @@ export default function ProjectBoard({ project, onEditProject }: { project: any,
         useSensor(TouchSensor, { activationConstraint: { delay: 250, tolerance: 5 } })
     );
 
-    const fetchTasks = async () => {
-        setLoading(true);
+    const fetchTasks = async (isSilent = false) => {
+        if (!isSilent) setLoading(true);
         try {
             const res = await authenticatedFetch(`/api/projects/${projectId}/tasks`);
             if (res.ok) {
                 const data = await res.json();
                 // Ensure they are sorted by order initially
                 const sorted = data.tasks.sort((a: any, b: any) => (a.order || 0) - (b.order || 0));
-                setTasks(sorted);
+
+                // Compare if changed? For now just set.
+                // Note: updating tasks while dragging might cancel drag.
+                // We should only update if not activeId?
+                // Or let React reconcile.
+                setTasks(prev => {
+                    // Simple optimization: if dragging, maybe pause updates or only update if fundamental change?
+                    // But requirement says "if other user change something to the task to come to all users".
+                    // If we blindly replace 'tasks', we might lose local state if DnD relies on it.
+                    // But DnD uses 'activeId' which is separate. 
+                    // However, if we replace the object references, it might cause re-render.
+                    // Let's just update.
+                    return sorted;
+                });
             }
         } catch (error) {
             console.error('Error fetching project tasks:', error);
         } finally {
-            setLoading(false);
+            if (!isSilent) setLoading(false);
         }
     };
 
     useEffect(() => {
         fetchTasks();
-    }, [projectId]);
+
+        // PLLING: Fetch every 2 seconds
+        const intervalId = setInterval(() => {
+            // Only fetch if not dragging (to avoid disrupting DnD)
+            // But how to access current activeId state in interval closure?
+            // Use functional state update or ref?
+            // Actually 'activeId' is in closure scope if we don't depend on it?
+            // useEffect dependency [projectId, activeId] -> resets interval on drag start/end.
+            if (!activeId) {
+                fetchTasks(true);
+            }
+        }, 2000);
+
+        return () => clearInterval(intervalId);
+    }, [projectId, activeId]); // Re-create interval when activeId changes (drag starts/ends)
 
     const handleDragStart = (event: DragStartEvent) => {
         setActiveId(event.active.id as string);

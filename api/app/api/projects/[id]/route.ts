@@ -29,9 +29,16 @@ export async function GET(req: Request, { params }: { params: Promise<{ id: stri
 
         const { id } = await params;
 
-        const project = await Project.findOne({ _id: id, userId });
+        const project = await Project.findOne({
+            _id: id,
+            $or: [
+                { userId },
+                { 'members.userId': userId }
+            ]
+        });
+
         if (!project) {
-            return NextResponse.json({ message: 'Project not found' }, { status: 404 });
+            return NextResponse.json({ message: 'Project not found or access denied' }, { status: 404 });
         }
 
         return NextResponse.json({ project });
@@ -50,14 +57,25 @@ export async function PUT(req: Request, { params }: { params: Promise<{ id: stri
 
         const { id } = await params;
         const body = await req.json();
+
+        // Check ownership or membership before update
+        // Security Note: We might want to restrict WHAT members can update (e.g. not name/description)
+        // For now, per requirements "Member can edit it", assuming full edit rights on project fields except maybe members.
+
         const project = await Project.findOneAndUpdate(
-            { _id: id, userId },
+            {
+                _id: id,
+                $or: [
+                    { userId },
+                    { 'members.userId': userId }
+                ]
+            },
             body,
             { new: true, runValidators: true }
         );
 
         if (!project) {
-            return NextResponse.json({ message: 'Project not found' }, { status: 404 });
+            return NextResponse.json({ message: 'Project not found or access denied' }, { status: 404 });
         }
 
         return NextResponse.json({ project });
@@ -75,10 +93,12 @@ export async function DELETE(req: Request, { params }: { params: Promise<{ id: s
         }
 
         const { id } = await params;
+
+        // Owner ONLY for delete
         const project = await Project.findOneAndDelete({ _id: id, userId });
 
         if (!project) {
-            return NextResponse.json({ message: 'Project not found' }, { status: 404 });
+            return NextResponse.json({ message: 'Project not found or unauthorized' }, { status: 404 });
         }
 
         return NextResponse.json({ message: 'Project deleted' });

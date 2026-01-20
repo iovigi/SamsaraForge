@@ -258,6 +258,25 @@ export const en = {
     'tasks.todo': 'To Do',
     'tasks.inProgress': 'In Progress',
     'tasks.done': 'Done',
+    'tasks.commentBy': '{{name}} - {{date}}',
+    'tasks.me': 'Me',
+
+    // Team Management
+    'team.owner': 'Owner',
+    'team.members': 'Members',
+    'team.invite': 'Invite User',
+    'team.search': 'Search by email...',
+    'team.remove': 'Remove',
+    'team.leave': 'Leave Project',
+    'team.removeConfirm': 'Are you sure you want to remove this member?',
+    'team.leaveConfirm': 'Are you sure you want to leave this project?',
+    'team.memberAdded': 'Member added successfully!',
+    'team.addFailed': 'Failed to add member',
+    'team.removeFailed': 'Failed to remove/leave',
+    'team.noMembers': 'No members yet.',
+    'team.userMustHaveAccount': 'User must have an account.',
+    'team.role': 'Role',
+
 
     // Terms
     'terms.title': 'Terms & Conditions',

@@ -262,6 +262,25 @@ export const bg: Dictionary = {
     'tasks.todo': 'За изпълнение',
     'tasks.inProgress': 'В Процес',
     'tasks.done': 'Готово',
+    'tasks.commentBy': '{{name}} - {{date}}',
+    'tasks.me': 'Аз',
+
+    // Team Management
+    'team.owner': 'Собственик',
+    'team.members': 'Членове',
+    'team.invite': 'Покани',
+    'team.search': 'Търси по имейл...',
+    'team.remove': 'Премахни',
+    'team.leave': 'Напусни',
+    'team.removeConfirm': 'Сигурни ли сте, че искате да премахнете този член?',
+    'team.leaveConfirm': 'Сигурни ли сте, че искате да напуснете проекта?',
+    'team.memberAdded': 'Членът е добавен успешно!',
+    'team.addFailed': 'Неуспешно добавяне',
+    'team.removeFailed': 'Неуспешно премахване/напускане',
+    'team.noMembers': 'Няма членове.',
+    'team.userMustHaveAccount': 'Потребителят трябва да има акаунт.',
+    'team.role': 'Роля',
+
 
     // Terms
     'terms.title': 'Общи условия',

@@ -1,11 +1,10 @@
 import { NextResponse } from 'next/server';
 import dbConnect from '@/lib/db';
-import Project from '@/lib/models/Project';
+import User from '@/lib/models/User';
 import jwt from 'jsonwebtoken';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
 
-// Helper to get user from token
 async function getUserFromRequest(req: Request) {
     const authHeader = req.headers.get('Authorization');
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
@@ -28,33 +27,22 @@ export async function GET(req: Request) {
             return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
         }
 
-        const projects = await Project.find({
-            $or: [
-                { userId },
-                { 'members.userId': userId }
-            ]
-        }).sort({ createdAt: -1 });
-        return NextResponse.json({ projects });
-    } catch (error: any) {
-        return NextResponse.json({ message: error.message }, { status: 500 });
-    }
-}
+        const { searchParams } = new URL(req.url);
+        const query = searchParams.get('q');
 
-export async function POST(req: Request) {
-    try {
-        await dbConnect();
-        const userId = await getUserFromRequest(req);
-        if (!userId) {
-            return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
+        if (!query || query.length < 3) {
+            return NextResponse.json({ users: [] });
         }
 
-        const body = await req.json();
-        const project = await Project.create({
-            ...body,
-            userId,
-        });
+        // Search by email or nickname
+        const users = await User.find({
+            $or: [
+                { email: { $regex: query, $options: 'i' } },
+                // { nickname: { $regex: query, $options: 'i' } } // Optional: strict email search might be better for privacy
+            ]
+        }).select('email nickname _id').limit(10);
 
-        return NextResponse.json({ project }, { status: 201 });
+        return NextResponse.json({ users });
     } catch (error: any) {
         return NextResponse.json({ message: error.message }, { status: 500 });
     }

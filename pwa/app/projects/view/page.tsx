@@ -16,8 +16,9 @@ function ProjectDetailsContent() {
     const [loading, setLoading] = useState(true);
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
-    const fetchProject = async () => {
+    const fetchProject = async (silent = false) => {
         if (!id) return;
+        if (!silent) setLoading(true);
         try {
             const res = await authenticatedFetch(`/api/projects/${id}`);
             if (res.ok) {
@@ -27,12 +28,16 @@ function ProjectDetailsContent() {
         } catch (error) {
             console.error(error);
         } finally {
-            setLoading(false);
+            if (!silent) setLoading(false);
         }
     };
 
     useEffect(() => {
         fetchProject();
+        const interval = setInterval(() => {
+            fetchProject(true);
+        }, 3000);
+        return () => clearInterval(interval);
     }, [id]);
 
     const handleProjectSave = async (updatedProject: any) => {
