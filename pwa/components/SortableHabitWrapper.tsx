@@ -20,8 +20,7 @@ export function SortableHabitWrapper({ id, children }: SortableHabitWrapperProps
     const style = {
         transform: CSS.Transform.toString(transform),
         transition,
-        opacity: isDragging ? 0.5 : 1,
-        // Remove touchAction: 'none' here to allow scrolling on the card body
+        touchAction: 'manipulation', // Allow scrolling/zooming but optimize for touch
     };
 
     return (

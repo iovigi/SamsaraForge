@@ -33,7 +33,7 @@ export default function DailyHabitCard({ title, description, status, type = 'SIM
     })();
 
     return (
-        <div className={`card shadow-sm border-0 mb-3 daily-habit-card ${isDone ? 'bg-light' : 'bg-white'}`} style={{ borderRadius: '15px', transition: 'all 0.2s', opacity: isDone ? 0.8 : 1 }}>
+        <div className={`card shadow-sm border-0 mb-3 daily-habit-card ${isDone ? 'bg-light' : 'bg-white'}`} style={{ borderRadius: '15px', transition: 'all 0.2s', opacity: isDone ? 0.8 : 1, touchAction: 'manipulation' }}>
             <div className="card-body p-3">
                 <div className="d-flex align-items-start">
                     {/* Drag Handle */}

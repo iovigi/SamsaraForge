@@ -365,3 +365,13 @@ a {
   display: flex;
   align-items: center;
 }
+
+/* Touch Action Utilities for Mobile Drag & Drop */
+.mobile-scroll-y {
+  touch-action: auto !important;
+}
+
+.drag-handle-touch {
+  touch-action: none !important;
+  cursor: grab;
+}

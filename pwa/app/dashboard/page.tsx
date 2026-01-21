@@ -14,6 +14,7 @@ import {
     closestCenter,
     KeyboardSensor,
     PointerSensor,
+    MouseSensor,
     TouchSensor,
     useSensor,
     useSensors,
@@ -70,8 +71,11 @@ export default function DashboardPage() {
     const [activeNoteHabitId, setActiveNoteHabitId] = useState<string | null>(null);
 
     const sensors = useSensors(
-        useSensor(PointerSensor),
-        useSensor(TouchSensor), // Default config is fine with a handle
+        useSensor(PointerSensor, {
+            activationConstraint: {
+                distance: 8,
+            },
+        }),
         useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates })
     );
 
@@ -466,7 +470,7 @@ export default function DashboardPage() {
                                         collisionDetection={closestCenter}
                                         onDragEnd={handleDragEnd}
                                     >
-                                        <div style={{ touchAction: 'none' }}>
+                                        <div>
                                             <SortableContext
                                                 items={todayHabits.map(h => h._id)}
                                                 strategy={verticalListSortingStrategy}
