@@ -2,6 +2,7 @@
 import { useEffect } from 'react';
 
 const PUBLIC_VAPID_KEY = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY;
+import { API_BASE_URL } from '../utils/config';
 import { urlBase64ToUint8Array } from '../utils/notifications';
 
 export default function PushManager() {
@@ -13,7 +14,7 @@ export default function PushManager() {
 
     const registerSw = async () => {
         try {
-            const registration = await navigator.serviceWorker.register('/sw.js');
+            const registration = await navigator.serviceWorker.register(`/sw.js?apiBase=${encodeURIComponent(API_BASE_URL)}`);
             console.log('SW registered', registration);
 
             // We no longer auto-subscribe here to avoid permission spam or "invalid key" errors if env is missing.

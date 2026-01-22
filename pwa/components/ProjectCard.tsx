@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { useLanguage } from '../context/LanguageContext';
+import { API_BASE_URL } from '../utils/config';
 
 interface ProjectCardProps {
     project: any;
@@ -16,7 +17,7 @@ export default function ProjectCard({ project, onEdit, onDelete }: ProjectCardPr
         if (url.startsWith('http')) return url;
         // Check if there is already a slash
         const path = url.startsWith('/') ? url : `/${url}`;
-        return `http://localhost:5000${path}`;
+        return `${API_BASE_URL}${path}`;
     };
 
     const imageUrl = getImageUrl(project.backgroundUrl);

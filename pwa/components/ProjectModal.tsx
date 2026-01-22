@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import { uploadFile, authenticatedFetch } from '../utils/api';
+import { API_BASE_URL } from '../utils/config';
 
 interface ProjectModalProps {
     isOpen: boolean;
@@ -252,7 +253,7 @@ export default function ProjectModal({ isOpen, onClose, project, onSave }: Proje
                                     {uploading && <small className="text-muted">{t('projects.uploading')}</small>}
                                     {backgroundUrl && (
                                         <div className="mt-2">
-                                            <img src={backgroundUrl.startsWith('http') ? backgroundUrl : `http://localhost:5000${backgroundUrl}`} alt="Preview" style={{ height: '60px', borderRadius: '4px' }} />
+                                            <img src={backgroundUrl.startsWith('http') ? backgroundUrl : `${API_BASE_URL}${backgroundUrl}`} alt="Preview" style={{ height: '60px', borderRadius: '4px' }} />
                                         </div>
                                     )}
                                 </div>

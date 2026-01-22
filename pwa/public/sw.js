@@ -23,7 +23,9 @@ self.addEventListener('notificationclick', function (event) {
     if (event.action === 'snooze') {
         // Handle Snooze Action
         const { taskId, snoozeToken } = event.notification.data;
-        const apiBase = 'http://localhost:5000'; // Define API Base (Env is hard in SW)
+        // Parse API Base from SW query string
+        const urlParams = new URLSearchParams(self.location.search);
+        const apiBase = urlParams.get('apiBase') || 'http://localhost:5000';
 
         const promise = fetch(`${apiBase}/api/habits/${taskId}/snooze`, {
             method: 'POST',

@@ -3,6 +3,7 @@
 import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { authenticatedFetch } from '../../../utils/api';
+import { API_BASE_URL } from '../../../utils/config';
 import ProjectBoard from '../../../components/ProjectBoard';
 import ProjectModal from '../../../components/ProjectModal';
 import Link from 'next/link';
@@ -78,7 +79,7 @@ function ProjectDetailsContent() {
             {/* Kanban Board Area */}
             <div className="flex-grow-1 overflow-hidden" style={{
                 backgroundImage: project.backgroundUrl
-                    ? `url(${project.backgroundUrl.startsWith('http') ? project.backgroundUrl : `http://localhost:5000${project.backgroundUrl}`})`
+                    ? `url(${project.backgroundUrl.startsWith('http') ? project.backgroundUrl : `${API_BASE_URL}${project.backgroundUrl}`})`
                     : 'none',
                 backgroundColor: '#f3f4f6',
                 backgroundSize: 'cover',
