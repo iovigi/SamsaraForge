@@ -230,6 +230,7 @@ export const en = {
     'projects.deleteTaskConfirm': 'Are you sure you want to delete this task?',
     'projects.empty': 'No projects yet. Create your first one!',
     'projects.loading': 'Loading...',
+    'projects.notFound': 'Project not found',
     'projects.name': 'Project Name',
     'projects.delete': 'Delete Project',
     'projects.description': 'Description',

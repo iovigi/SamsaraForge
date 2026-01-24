@@ -237,6 +237,7 @@ export const bg: Dictionary = {
     'projects.deleteTaskConfirm': 'Сигурни ли сте, че искате да изтриете тази задача?',
     'projects.empty': 'Все още няма проекти. Създайте първия!',
     'projects.loading': 'Зареждане...',
+    'projects.notFound': 'Проектът не е намерен',
     'projects.name': 'Име на Проекта',
     'projects.projectName': 'Име на Проекта',
     'projects.delete': 'Изтрий Проект',
