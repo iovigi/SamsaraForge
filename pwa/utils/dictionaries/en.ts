@@ -7,6 +7,7 @@ export const en = {
     'nav.habits': 'Habits',
     'nav.settings': 'Settings',
     'nav.projects': 'Projects',
+    'nav.teams': 'Teams',
 
     // Sidebar
     'sidebar.habitBoard': 'Habit Tracker',
@@ -106,6 +107,7 @@ export const en = {
     'kanban.monthly': 'Monthly',
     'kanban.comments': 'Comments',
     'kanban.addComment': 'Add Comment',
+    'kanban.deleteComment': 'Delete Comment',
     'kanban.noComments': 'No comments yet.',
     'kanban.writeComment': 'Write a comment...',
     'kanban.enableNotifications': 'Enable Notifications',
@@ -146,6 +148,8 @@ export const en = {
     'kanban.expiresSoon': 'Expires soon!',
     'kanban.history.totalCount': '{{count}} completions in the last year',
     'kanban.streakMessage': '{{count}} Day Streak! Keep it up!',
+    'kanban.saveError': 'Failed to save habit',
+
 
     // Landing
     'landing.title': 'Exit the loop. Forge the path.',
@@ -195,6 +199,7 @@ export const en = {
 
     // Common
     'common.close': 'Close',
+    'common.ok': 'OK',
     'common.edit': 'Edit',
     'common.preview': 'Preview',
     'common.months.short.jan': 'Jan',
@@ -226,6 +231,7 @@ export const en = {
     'projects.empty': 'No projects yet. Create your first one!',
     'projects.loading': 'Loading...',
     'projects.name': 'Project Name',
+    'projects.delete': 'Delete Project',
     'projects.description': 'Description',
     'projects.startDate': 'Start Date',
     'projects.endDate': 'End Date',
@@ -235,7 +241,8 @@ export const en = {
     'projects.team': 'Team',
     'common.active': 'Active',
     'projects.viewBoard': 'View Board',
-    'projects.notFound': 'Project not found',
+    'projects.noTeams': 'No teams added yet.',
+    'projects.projectName': 'Project Name',
 
     'tasks.add': 'Add Task',
     'tasks.edit': 'Edit Task',
@@ -264,7 +271,10 @@ export const en = {
     // Team Management
     'team.owner': 'Owner',
     'team.members': 'Members',
-    'team.invite': 'Invite User',
+    'teams.invite': 'Invite Member',
+    'teams.addMember': 'Add Member',
+    'teams.removeMember': 'Remove Member',
+    'projects.upload': 'Upload Image',
     'team.search': 'Search by email...',
     'team.remove': 'Remove',
     'team.leave': 'Leave Project',
@@ -276,6 +286,25 @@ export const en = {
     'team.noMembers': 'No members yet.',
     'team.userMustHaveAccount': 'User must have an account.',
     'team.role': 'Role',
+
+    'team.memberRemoved': 'Member removed successfully',
+    'teams.title': 'Teams',
+    'teams.create': 'Create Team',
+    'teams.delete': 'Delete Team',
+    'teams.edit': 'Edit Team',
+    'teams.pendingInvites': 'Pending Invitations',
+    'teams.invitedBy': 'You have been invited to join {{team}} by {{inviter}}',
+    'teams.noTeams': 'No Teams Found',
+    'teams.noTeamsDesc': 'You are not a member of any team yet. Create one or ask to be invited.',
+    'teams.notFound': 'Team not found',
+    'teams.noProjects': 'No projects assigned to this team.',
+    'teams.selectPlaceholder': 'Select a team to add...',
+    'common.remove': 'Remove',
+
+    'common.accept': 'Accept',
+    'common.reject': 'Reject',
+    'common.loading': 'Loading...',
+    'common.viewDetails': 'View Details',
 
 
     // Terms
@@ -341,6 +370,12 @@ export const en = {
     'dashboard.notePlaceholder': 'Enter your thoughts...',
     'common.save': 'Save',
     'common.cancel': 'Cancel',
+    'teams.enterName': 'Enter team name',
+    'users.passwordPlaceholder': 'Leave blank to keep current',
+    'projects.uploadFailed': 'File upload failed',
+    'projects.imageUploadFailed': 'Image upload failed',
+    'tasks.saveCommentFailed': 'Failed to save comment',
+    'kanban.intentionPlaceholder': 'E.g. I want to improve my health...',
 };
 
 export type Dictionary = typeof en;

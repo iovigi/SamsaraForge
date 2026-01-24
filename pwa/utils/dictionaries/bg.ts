@@ -10,6 +10,7 @@ export const bg: Dictionary = {
     'nav.habits': 'Навици',
     'nav.settings': 'Настройки',
     'nav.projects': 'Проекти',
+    'nav.teams': 'Екипи',
 
     // Sidebar
     'sidebar.habitBoard': 'Моите Навици',
@@ -93,6 +94,7 @@ export const bg: Dictionary = {
     'kanban.title': 'Същност',
     'kanban.description': 'Описание',
     'kanban.intention': 'Дълбоко Намерение',
+    'kanban.intentionPlaceholder': 'Напр. Искам да подобря здравето си...',
     'kanban.status': 'Състояние',
     'kanban.save': 'Запази',
     'kanban.cancel': 'Отказ',
@@ -109,6 +111,7 @@ export const bg: Dictionary = {
     'kanban.monthly': 'Месечно',
     'kanban.comments': 'Размисли',
     'kanban.addComment': 'Добави Размисъл',
+    'kanban.deleteComment': 'Изтрий размисъл',
     'kanban.noComments': 'Тишина...',
     'kanban.writeComment': 'Сподели размисъл...',
     'kanban.enableNotifications': 'Включи Гонг',
@@ -149,6 +152,8 @@ export const bg: Dictionary = {
     'kanban.expiresSoon': 'Изтича скоро!',
     'kanban.history.totalCount': '{{count}} изпълнения през последната година',
     'kanban.streakMessage': '{{count}}-дневна серия! Продължавай все така!',
+    'kanban.saveError': 'Неуспешно запазване на навика',
+
 
     // Landing
     'landing.title': 'Излез от Самсара. Изкови своя Път.',
@@ -199,6 +204,9 @@ export const bg: Dictionary = {
 
     // Common
     'common.close': 'Затвори',
+    'common.ok': 'ОК',
+    'common.save': 'Запази',
+    'common.cancel': 'Отказ',
     'common.edit': 'Редактирай',
     'common.preview': 'Преглед',
     'common.months.short.jan': 'Яну',
@@ -230,6 +238,8 @@ export const bg: Dictionary = {
     'projects.empty': 'Все още няма проекти. Създайте първия!',
     'projects.loading': 'Зареждане...',
     'projects.name': 'Име на Проекта',
+    'projects.projectName': 'Име на Проекта',
+    'projects.delete': 'Изтрий Проект',
     'projects.description': 'Описание',
     'projects.startDate': 'Начална Дата',
     'projects.endDate': 'Крайна Дата',
@@ -239,7 +249,7 @@ export const bg: Dictionary = {
     'projects.team': 'Екип',
     'common.active': 'Активен',
     'projects.viewBoard': 'Към таблото',
-    'projects.notFound': 'Проектът не е намерен',
+    'projects.noTeams': 'Все още няма добавени екипи.',
 
     'tasks.add': 'Добави Задача',
     'tasks.edit': 'Редактирай Задача',
@@ -268,7 +278,10 @@ export const bg: Dictionary = {
     // Team Management
     'team.owner': 'Собственик',
     'team.members': 'Членове',
-    'team.invite': 'Покани',
+    'teams.invite': 'Покани',
+    'teams.addMember': 'Добави член',
+    'teams.removeMember': 'Премахни член',
+    'projects.upload': 'Качи изображение',
     'team.search': 'Търси по имейл...',
     'team.remove': 'Премахни',
     'team.leave': 'Напусни',
@@ -280,6 +293,34 @@ export const bg: Dictionary = {
     'team.noMembers': 'Няма членове.',
     'team.userMustHaveAccount': 'Потребителят трябва да има акаунт.',
     'team.role': 'Роля',
+    'team.memberRemoved': 'Членът е премахнат успешно',
+
+    'teams.title': 'Екипи',
+    'teams.create': 'Създай Екип',
+    'teams.delete': 'Изтрий Екип',
+    'teams.edit': 'Редактирай Екип',
+    'teams.pendingInvites': 'Чакащи Покани',
+    'teams.invitedBy': 'Бяхте поканени да се присъедините към {{team}} от {{inviter}}',
+    'teams.noTeams': 'Няма намерени екипи',
+    'teams.noTeamsDesc': 'Все още не сте член на екип. Създайте такъв или поискайте покана.',
+    'teams.notFound': 'Екипът не е намерен',
+    'teams.noProjects': 'Няма проекти, възложени на този екип.',
+    'teams.selectPlaceholder': 'Изберете екип за добавяне...',
+    'common.remove': 'Премахни',
+    'teams.enterName': 'Въведете име на екипа',
+    'users.passwordPlaceholder': 'Оставете празно, за да запазите текущата',
+    'dashboard.addNote': 'Добави Бележка',
+    'dashboard.noteContent': 'Съдържание',
+    'dashboard.notePlaceholder': 'Въведете вашите мисли...',
+    'projects.uploadFailed': 'Неуспешно качване на файл',
+    'projects.imageUploadFailed': 'Неуспешно качване на изображение',
+    'tasks.saveCommentFailed': 'Неуспешно запазване на коментар',
+
+
+    'common.accept': 'Приеми',
+    'common.reject': 'Откажи',
+    'common.loading': 'Зареждане...',
+    'common.viewDetails': 'Виж Детайли',
 
 
     // Terms
@@ -340,9 +381,5 @@ export const bg: Dictionary = {
     'dashboard.motivationTitle': 'Защо това има значение',
     'dashboard.motivationText': 'Бъди във форма и пълен с енергия. Ако усещаш съпротива: Просто си обуй обувките!',
 
-    'dashboard.addNote': 'Добави Бележка',
-    'dashboard.noteContent': 'Съдържание',
-    'dashboard.notePlaceholder': 'Въведи своите мисли...',
-    'common.save': 'Запази',
-    'common.cancel': 'Отказ',
+
 };

@@ -49,6 +49,19 @@ const ProjectSchema = new mongoose.Schema({
                 default: Date.now
             }
         }
+    ],
+    teams: [
+        {
+            teamId: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'Team',
+                required: true
+            },
+            addedAt: {
+                type: Date,
+                default: Date.now
+            }
+        }
     ]
 }, { timestamps: true });
 

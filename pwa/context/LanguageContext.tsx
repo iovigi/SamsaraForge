@@ -9,7 +9,7 @@ type Language = 'en' | 'bg';
 interface LanguageContextType {
     language: Language;
     setLanguage: (lang: Language) => void;
-    t: (key: keyof Dictionary) => string;
+    t: (key: keyof Dictionary, params?: Record<string, string | number>) => string;
     isLoaded: boolean;
 }
 
@@ -35,9 +35,16 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
         localStorage.setItem('language', lang);
     };
 
-    const t = (key: keyof Dictionary): string => {
+    const t = (key: keyof Dictionary, params?: Record<string, string | number>): string => {
         const dict = language === 'bg' ? bg : en;
-        return dict[key] || key;
+        let text = dict[key] || key;
+
+        if (params) {
+            Object.entries(params).forEach(([k, v]) => {
+                text = text.replace(new RegExp(`{{${k}}}`, 'g'), String(v));
+            });
+        }
+        return text;
     };
 
     return (

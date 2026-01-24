@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useLanguage } from '../../context/LanguageContext';
+import { useModal } from '../../context/ModalContext';
 import { usePushSubscription } from '../../hooks/usePushSubscription';
 import { authenticatedFetch } from '../../utils/api';
 import { API_BASE_URL } from '../../utils/config';
@@ -82,14 +83,16 @@ export default function SettingsPage() {
         }
     };
 
+    const { showModal } = useModal();
+
     const handlePasswordChange = async (e: React.FormEvent) => {
         e.preventDefault();
         if (newPassword.length < 6) {
-            alert(t('auth.passwordTooShort') || 'Password must be at least 6 characters');
+            showModal({ title: t('settings.changePassword'), message: t('auth.passwordTooShort') || 'Password must be at least 6 characters', type: 'warning' });
             return;
         }
         if (newPassword !== confirmPassword) {
-            alert(t('auth.passwordMismatch') || 'Passwords do not match');
+            showModal({ title: t('settings.changePassword'), message: t('auth.passwordMismatch') || 'Passwords do not match', type: 'warning' });
             return;
         }
 
@@ -107,16 +110,16 @@ export default function SettingsPage() {
             const data = await res.json();
 
             if (res.ok) {
-                alert(t('settings.passwordUpdated') || 'Password updated successfully');
+                showModal({ title: t('settings.changePassword'), message: t('settings.passwordUpdated') || 'Password updated successfully', type: 'success' });
                 setCurrentPassword('');
                 setNewPassword('');
                 setConfirmPassword('');
             } else {
-                alert(data.message || t('settings.passwordUpdateFailed') || 'Failed to update password');
+                showModal({ title: t('settings.changePassword'), message: data.message || t('settings.passwordUpdateFailed') || 'Failed to update password', type: 'error' });
             }
         } catch (error) {
             console.error(error);
-            alert(t('settings.error') || 'An error occurred');
+            showModal({ title: t('settings.changePassword'), message: t('settings.error') || 'An error occurred', type: 'error' });
         }
     };
 

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useLanguage } from '../context/LanguageContext';
+import { useModal } from '../context/ModalContext';
 import { uploadFile, authenticatedFetch } from '../utils/api';
 import { API_BASE_URL } from '../utils/config';
 
@@ -14,6 +15,7 @@ interface ProjectModalProps {
 
 export default function ProjectModal({ isOpen, onClose, project, onSave }: ProjectModalProps) {
     const { t } = useLanguage();
+    const { showModal } = useModal();
     const [activeTab, setActiveTab] = useState('details');
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
@@ -28,6 +30,7 @@ export default function ProjectModal({ isOpen, onClose, project, onSave }: Proje
     const [inviteEmail, setInviteEmail] = useState('');
     const [searchResults, setSearchResults] = useState<any[]>([]);
     const [searching, setSearching] = useState(false);
+    const [myTeams, setMyTeams] = useState<any[]>([]);
 
     const [currentUser, setCurrentUser] = useState<any>(null);
 
@@ -44,6 +47,21 @@ export default function ProjectModal({ isOpen, onClose, project, onSave }: Proje
             }
         };
         fetchUser();
+
+        // Fetch user's teams for selection
+        const fetchMyTeams = async () => {
+            try {
+                const res = await authenticatedFetch('/api/teams');
+                if (res.ok) {
+                    const data = await res.json();
+                    setMyTeams(data.teams);
+                }
+            } catch (err) {
+                console.error(err);
+            }
+        };
+        fetchMyTeams();
+
 
         if (project) {
             setName(project.name);
@@ -107,36 +125,42 @@ export default function ProjectModal({ isOpen, onClose, project, onSave }: Proje
                 setMembers(data.members);
                 setInviteEmail('');
                 setSearchResults([]);
-                alert(t('team.memberAdded' as any));
+                showModal({ title: t('teams.addMember'), message: t('team.memberAdded' as any), type: 'success' });
             } else {
                 const err = await res.json();
-                alert(err.message || t('team.addFailed' as any));
+                showModal({ title: t('teams.addMember'), message: err.message || t('team.addFailed' as any), type: 'error' });
             }
         } catch (err: any) {
-            alert(err.message);
+            showModal({ title: t('teams.addMember'), message: err.message, type: 'error' });
         }
     };
 
     const handleRemoveMember = async (userId: string) => {
-        // If removing self? But here we need to know who we are? 
-        // We relied on button logic. But confirm message needs localization.
-        // We can't easily distinguish 'remove myself' vs 'remove other' for confirm blindly.
-        // Let's just say "Are you sure?" which is generic. Or use new keys.
-        if (!confirm(t('team.removeConfirm' as any))) return;
-        try {
-            const res = await authenticatedFetch(`/api/projects/${project._id}/members?userId=${userId}`, {
-                method: 'DELETE'
-            });
-            if (res.ok) {
-                const data = await res.json();
-                setMembers(data.members);
-            } else {
-                const err = await res.json();
-                alert(err.message || t('team.removeFailed' as any));
+        showModal({
+            title: t('teams.removeMember'),
+            message: t('team.removeConfirm' as any),
+            type: 'warning',
+            confirmText: t('common.delete'),
+            cancelText: t('common.cancel'),
+            onConfirm: async () => {
+                try {
+                    const res = await authenticatedFetch(`/api/projects/${project._id}/members?userId=${userId}`, {
+                        method: 'DELETE'
+                    });
+                    if (res.ok) {
+                        const data = await res.json();
+                        setMembers(data.members);
+                        showModal({ title: t('teams.removeMember'), message: 'Member removed successfully', type: 'success' });
+                    } else {
+                        const err = await res.json();
+                        showModal({ title: t('teams.removeMember'), message: err.message || t('team.removeFailed' as any), type: 'error' });
+                    }
+                } catch (err) {
+                    console.error(err);
+                    showModal({ title: t('teams.removeMember'), message: 'An error occurred', type: 'error' });
+                }
             }
-        } catch (err) {
-            console.error(err);
-        }
+        });
     };
 
     const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -147,7 +171,7 @@ export default function ProjectModal({ isOpen, onClose, project, onSave }: Proje
                 setBackgroundUrl(res.url);
             } catch (err) {
                 console.error('Upload failed', err);
-                alert('Failed to upload image');
+                showModal({ title: t('projects.upload'), message: 'Failed to upload image', type: 'error' });
             } finally {
                 setUploading(false);
             }
@@ -261,6 +285,55 @@ export default function ProjectModal({ isOpen, onClose, project, onSave }: Proje
                         ) : (
                             <div className="team-management">
                                 <div className="mb-4">
+                                    <h6>{t('teams.title')}</h6>
+                                    {/* List added teams */}
+                                    {project?.teams && project.teams.length > 0 ? (
+                                        <ul className="list-group mb-3">
+                                            {project.teams.map((pt: any) => (
+                                                <li key={pt._id || pt.teamId._id} className="list-group-item d-flex justify-content-between align-items-center">
+                                                    <div>
+                                                        <strong>{pt.teamId.name}</strong>
+                                                        <small className="ml-2 text-muted">({pt.teamId.members?.length || '?'} members)</small>
+                                                    </div>
+                                                    <button className="btn btn-sm btn-outline-danger" onClick={() => {
+                                                        const newTeams = project.teams.filter((t: any) => (t.teamId._id || t.teamId) !== (pt.teamId._id || pt.teamId));
+                                                        onSave({ ...project, teams: newTeams });
+                                                    }}>{t('common.remove' as any)}</button>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    ) : (
+                                        <p className="text-muted">{t('projects.noTeams' as any)}</p>
+                                    )}
+
+                                    {/* Add Team */}
+                                    <div className="input-group mb-3">
+                                        <select className="custom-select" id="teamSelect" onChange={(e) => {
+                                            if (e.target.value) {
+                                                const teamId = e.target.value;
+                                                const selectedTeam = myTeams.find(t => t._id === teamId);
+                                                if (selectedTeam) {
+                                                    // Check if already added
+                                                    if (project.teams && project.teams.some((pt: any) => (pt.teamId._id || pt.teamId) === teamId)) {
+                                                        showModal({ title: t('teams.create'), message: 'Team already added', type: 'warning' });
+                                                        return;
+                                                    }
+                                                    const newTeams = [...(project.teams || []), { teamId: selectedTeam, addedAt: new Date() }];
+                                                    onSave({ ...project, teams: newTeams });
+                                                }
+                                                e.target.value = ''; // Reset
+                                            }
+                                        }}>
+                                            <option value="">{t('teams.selectPlaceholder' as any)}</option>
+                                            {myTeams.map(team => (
+                                                <option key={team._id} value={team._id}>{team.name}</option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <hr />
+                                <div className="mb-4">
                                     <h6>{t('team.owner' as any)}</h6>
                                     {owner && (
                                         <div className="media align-items-center mb-3">
@@ -295,7 +368,7 @@ export default function ProjectModal({ isOpen, onClose, project, onSave }: Proje
 
                                 {currentUser && owner && currentUser._id === owner._id && (
                                     <div className="mb-3">
-                                        <h6>{t('team.invite' as any)}</h6>
+                                        <h6>{t('teams.invite' as any)}</h6>
                                         <div className="position-relative">
                                             <input
                                                 type="text"

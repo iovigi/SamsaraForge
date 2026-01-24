@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useLanguage } from '../context/LanguageContext';
+import { useModal } from '../context/ModalContext';
 import { authenticatedFetch } from '../utils/api';
 import { ActivityCalendar } from 'react-activity-calendar';
 
@@ -15,6 +16,7 @@ interface TaskModalProps {
 
 export default function TaskModal({ isOpen, onClose, task, onSave, onUpdate }: TaskModalProps) {
     const { t } = useLanguage();
+    const { showModal } = useModal();
     const [title, setTitle] = useState('');
 
     const [description, setDescription] = useState('');
@@ -44,6 +46,9 @@ export default function TaskModal({ isOpen, onClose, task, onSave, onUpdate }: T
     const [cronHourlyMinute, setCronHourlyMinute] = useState(0);
     const [cronHourlyStart, setCronHourlyStart] = useState(0);
 
+    const [cronTab, setCronTab] = useState<'minutes' | 'hourly'>('minutes');
+    const [currentUser, setCurrentUser] = useState<any>(null);
+
     // Generate Cron string based on Builder State
     useEffect(() => {
         let newCron = reminderCron;
@@ -70,6 +75,14 @@ export default function TaskModal({ isOpen, onClose, task, onSave, onUpdate }: T
             setReminderCron(newCron);
         }
     }, [cronType, cronMinutesInterval, cronHourlyInterval, cronHourlyMinute, cronHourlyStart]);
+
+    const isDarkMode = typeof document !== 'undefined' && document.body.classList.contains('dark-mode');
+    const currentStreak = task?.streak || 0;
+    const historyData = task?.completionDates?.map((date: string) => ({
+        date: new Date(date).toISOString().split('T')[0],
+        count: 1,
+        level: 1
+    })) || [];
 
     // Initialize State from Task
     useEffect(() => {
@@ -150,6 +163,7 @@ export default function TaskModal({ isOpen, onClose, task, onSave, onUpdate }: T
                 const res = await authenticatedFetch('/api/auth/me');
                 if (res.ok) {
                     const data = await res.json();
+                    setCurrentUser(data.user);
                     const label = data.user?.nickname || data.user?.email || 'User';
                     setCurrentUserEmail(label); // Keeping state name for minimal refactor, but it holds the display label
                 }
@@ -159,6 +173,17 @@ export default function TaskModal({ isOpen, onClose, task, onSave, onUpdate }: T
         };
         initUser();
     }, []);
+
+    const toggleWeekDay = (dayIdx: number) => {
+        setWeekDays(prev =>
+            prev.includes(dayIdx) ? prev.filter(d => d !== dayIdx) : [...prev, dayIdx]
+        );
+    };
+
+    const canModifyComment = (comment: any) => {
+        if (!currentUser) return false;
+        return comment.authorEmail === currentUser.email || comment.authorEmail === currentUser.nickname;
+    };
 
     const handleAddComment = async () => {
         if (!newComment.trim() || !task) return;
@@ -174,9 +199,18 @@ export default function TaskModal({ isOpen, onClose, task, onSave, onUpdate }: T
     };
 
     const handleDeleteComment = async (index: number) => {
-        if (!confirm('Are you sure you want to delete this comment?')) return;
-        const updatedComments = comments.filter((_, i) => i !== index);
-        await syncComments(updatedComments);
+        showModal({
+            title: t('kanban.deleteComment'),
+            message: 'Are you sure you want to delete this comment?',
+            type: 'warning',
+            confirmText: t('common.delete'),
+            cancelText: t('common.cancel'),
+            onConfirm: async () => {
+                const updatedComments = comments.filter((_, i) => i !== index);
+                await syncComments(updatedComments);
+                showModal({ title: t('kanban.deleteComment'), message: 'Comment deleted', type: 'success' });
+            }
+        });
     };
 
     const startEdit = (index: number, text: string) => {
@@ -194,6 +228,39 @@ export default function TaskModal({ isOpen, onClose, task, onSave, onUpdate }: T
             setEditText('');
         }
     };
+
+    // Alias functions for UI
+    const addComment = handleAddComment;
+    const deleteComment = handleDeleteComment;
+    const startEditComment = (idx: number, text: string) => startEdit(idx, text);
+    const saveEditComment = () => editIndex !== null && handleSaveEdit(editIndex);
+    const cancelEditComment = () => { setEditIndex(null); setEditText(''); };
+
+    // Naming harmony aliases for UI
+    const minuteInterval = cronMinutesInterval;
+    const setMinuteInterval = setCronMinutesInterval;
+    const startHour = cronHourlyStart;
+    const setStartHour = setCronHourlyStart;
+    const startMinute = 0; // Simplified
+    const hourInterval = cronHourlyInterval;
+    const setHourInterval = setCronHourlyInterval;
+    const atMinute = cronHourlyMinute;
+    const setAtMinute = setCronHourlyMinute;
+    const cronExpression = reminderCron;
+    const selectedWeekDays = weekDays;
+    const selectedMonthDay = monthDay;
+    const setSelectedMonthDay = setMonthDay;
+    const startTime = timeFrameStart;
+    const setStartTime = setTimeFrameStart;
+    const endTime = timeFrameEnd;
+    const setEndTime = setTimeFrameEnd;
+    const enableNotifications = notify;
+    const setEnableNotifications = setNotify;
+    const commentText = newComment;
+    const setCommentText = setNewComment;
+    const editingCommentIdx = editIndex;
+    const editingCommentText = editText;
+    const setEditingCommentText = setEditText;
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -235,70 +302,135 @@ export default function TaskModal({ isOpen, onClose, task, onSave, onUpdate }: T
                 onSave(data.habit);
             } else {
                 const data = await res.json();
-                alert(data.message);
+                showModal({ title: t('kanban.saveError'), message: data.message, type: 'error' });
             }
         } catch (err) {
             console.error(err);
+            showModal({ title: t('kanban.saveError'), message: 'An unexpected error occurred', type: 'error' });
         }
     };
 
     if (!isOpen) return null;
 
     return (
-        <div className="modal fade show" style={{ display: 'block', backgroundColor: 'rgba(0,0,0,0.5)' }}>
-            <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div className="modal d-block" style={{ backgroundColor: 'rgba(0,0,0,0.5)', overflowY: 'auto' }}>
+            <div className="modal-dialog modal-lg">
                 <div className="modal-content">
                     <div className="modal-header">
-                        <h4 className="modal-title">{task ? t('kanban.editTask') : t('kanban.newTask')}</h4>
+                        <h5 className="modal-title">{task ? t('kanban.editTask') : t('kanban.newTask')}</h5>
                         <button type="button" className="close" onClick={onClose}>
-                            <span aria-hidden="true">&times;</span>
+                            <span>&times;</span>
                         </button>
                     </div>
                     <form onSubmit={handleSubmit}>
-                        <div className="modal-body" style={{ maxHeight: '70vh', overflowY: 'auto' }}>
-                            <div className="form-group">
-                                <label>{t('kanban.title')}</label>
-                                <input type="text" className="form-control" value={title} onChange={e => setTitle(e.target.value)} required />
-                            </div>
-                            <div className="form-group">
-                                <label>{t('kanban.description')}</label>
-                                <textarea className="form-control" rows={3} value={description} onChange={e => setDescription(e.target.value)}></textarea>
-                            </div>
-
-                            <div className="form-group">
-                                <label>{t('kanban.intention') || 'Intention (Why are you doing this?)'}</label>
-                                <textarea className="form-control" rows={2} value={intention} onChange={e => setIntention(e.target.value)} placeholder="E.g. I want to improve my health..."></textarea>
-                            </div>
-
-                            {task && task.streak > 0 && (
-                                <div className="alert alert-warning">
+                        <div className="modal-body">
+                            {/* Streak info */}
+                            {task && currentStreak > 0 && (
+                                <div className="alert alert-success">
                                     <i className="fas fa-fire mr-2"></i>
-                                    <strong>{t('kanban.streakMessage').replace('{{count}}', String(task.streak))}</strong>
+                                    {t('kanban.streakMessage', { count: currentStreak })}
                                 </div>
                             )}
 
                             <div className="form-group">
-                                <label>{t('kanban.status')}</label>
-                                <select className="form-control" value={status} onChange={e => setStatus(e.target.value)}>
-                                    <option value="TODO">{t('kanban.todo')}</option>
-                                    <option value="IN_PROGRESS">{t('kanban.inProgress')}</option>
-                                    <option value="DONE">{t('kanban.done')}</option>
-                                </select>
+                                <label>{t('kanban.title')}</label>
+                                <input type="text" className="form-control" value={title} onChange={e => setTitle(e.target.value)} required />
                             </div>
 
                             <div className="form-group">
-                                <label>{t('kanban.recurrence')}</label>
-                                <select className="form-control" value={recurrence} onChange={e => setRecurrence(e.target.value)}>
-                                    <option value="ONCE">{t('kanban.once')}</option>
-                                    <option value="DAILY">{t('kanban.daily')}</option>
-                                    <option value="WEEKLY">{t('kanban.weekly')}</option>
-                                    <option value="MONTHLY">{t('kanban.monthly')}</option>
-                                </select>
+                                <label>{t('kanban.intention')}</label>
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    value={intention}
+                                    onChange={e => setIntention(e.target.value)}
+                                    placeholder={t('kanban.intentionPlaceholder')}
+                                />
                             </div>
+
+                            <div className="form-row">
+                                <div className="form-group col-md-6">
+                                    <label>{t('kanban.status')}</label>
+                                    <select className="form-control" value={status} onChange={e => setStatus(e.target.value)}>
+                                        <option value="TODO">{t('kanban.todo')}</option>
+                                        <option value="IN_PROGRESS">{t('kanban.inProgress')}</option>
+                                        <option value="DONE">{t('kanban.done')}</option>
+                                    </select>
+                                </div>
+                                <div className="form-group col-md-6">
+                                    <label>{t('kanban.recurrence')}</label>
+                                    <select className="form-control" value={recurrence} onChange={e => setRecurrence(e.target.value)}>
+                                        <option value="ONCE">{t('kanban.once')}</option>
+                                        <option value="DAILY">{t('kanban.daily')}</option>
+                                        <option value="WEEKLY">{t('kanban.weekly')}</option>
+                                        <option value="MONTHLY">{t('kanban.monthly')}</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            {/* Cron Builder UI */}
+                            {recurrence !== 'ONCE' && (
+                                <div className="card mb-3">
+                                    <div className="card-header">
+                                        {t('kanban.reminder')}
+                                    </div>
+                                    <div className="card-body">
+                                        <ul className="nav nav-tabs mb-3">
+                                            <li className="nav-item">
+                                                <a className={`nav-link ${cronTab === 'minutes' ? 'active' : ''}`} onClick={() => setCronTab('minutes')} href="#">
+                                                    {t('kanban.frequency.minutes')}
+                                                </a>
+                                            </li>
+                                            <li className="nav-item">
+                                                <a className={`nav-link ${cronTab === 'hourly' ? 'active' : ''}`} onClick={() => setCronTab('hourly')} href="#">
+                                                    {t('kanban.frequency.hourly')}
+                                                </a>
+                                            </li>
+                                        </ul>
+
+                                        {cronTab === 'minutes' && (
+                                            <div>
+                                                <div className="form-group">
+                                                    <label>{t('kanban.cron.prefix.every')}
+                                                        <input type="number" className="form-control d-inline-block mx-2" style={{ width: '80px' }} value={minuteInterval} onChange={e => setMinuteInterval(Number(e.target.value))} min={1} max={59} />
+                                                        {minuteInterval === 1 ? t('kanban.cron.suffix.minute') : t('kanban.cron.suffix.minutes')}
+                                                    </label>
+                                                </div>
+                                                <div className="form-group">
+                                                    <label>{t('kanban.cron.startingAt')}
+                                                        <input type="number" className="form-control d-inline-block mx-2" style={{ width: '80px' }} value={startHour} onChange={e => setStartHour(Number(e.target.value))} min={0} max={23} />
+                                                        : {startMinute.toString().padStart(2, '0')}
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        )}
+
+                                        {cronTab === 'hourly' && (
+                                            <div>
+                                                <div className="form-group">
+                                                    <label>{t('kanban.cron.prefix.every')}
+                                                        <input type="number" className="form-control d-inline-block mx-2" style={{ width: '80px' }} value={hourInterval} onChange={e => setHourInterval(Number(e.target.value))} min={1} max={23} />
+                                                        {hourInterval === 1 ? t('kanban.cron.suffix.hour') : t('kanban.cron.suffix.hours')}
+                                                    </label>
+                                                </div>
+                                                <div className="form-group">
+                                                    <label>{t('kanban.cron.atMinute')}
+                                                        <input type="number" className="form-control d-inline-block mx-2" style={{ width: '80px' }} value={atMinute} onChange={e => setAtMinute(Number(e.target.value))} min={0} max={59} />
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        )}
+
+                                        <div className="mt-2 text-muted">
+                                            <small>{t('kanban.generatedCron')}: <code>{cronExpression}</code></small>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
 
                             {recurrence === 'ONCE' && (
                                 <div className="form-group">
-                                    <label>{t('kanban.scheduledDate') || 'Date'}</label>
+                                    <label>{t('kanban.scheduledDate')}</label>
                                     <input
                                         type="date"
                                         className="form-control"
@@ -311,22 +443,17 @@ export default function TaskModal({ isOpen, onClose, task, onSave, onUpdate }: T
 
                             {recurrence === 'WEEKLY' && (
                                 <div className="form-group">
-                                    <label>{t('kanban.weekDays') || 'Week Days'}</label>
+                                    <label>{t('kanban.weekDays')}</label>
                                     <div className="d-flex flex-wrap">
-                                        {['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'].map((dayKey, idx) => (
-                                            <div key={dayKey} className="form-check mr-3">
+                                        {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day, idx) => (
+                                            <div key={day} className="form-check mr-3">
                                                 <input
                                                     className="form-check-input"
                                                     type="checkbox"
-                                                    checked={weekDays.includes(idx)}
-                                                    onChange={e => {
-                                                        if (e.target.checked) setWeekDays([...weekDays, idx]);
-                                                        else setWeekDays(weekDays.filter(d => d !== idx));
-                                                    }}
+                                                    checked={selectedWeekDays.includes(idx)}
+                                                    onChange={() => toggleWeekDay(idx)}
                                                 />
-                                                <label className="form-check-label">
-                                                    {t(`kanban.days.${dayKey}` as any) || dayKey.charAt(0).toUpperCase() + dayKey.slice(1)}
-                                                </label>
+                                                <label className="form-check-label">{t(`kanban.days.${day.toLowerCase()}` as any)}</label>
                                             </div>
                                         ))}
                                     </div>
@@ -335,273 +462,147 @@ export default function TaskModal({ isOpen, onClose, task, onSave, onUpdate }: T
 
                             {recurrence === 'MONTHLY' && (
                                 <div className="form-group">
-                                    <label>{t('kanban.monthDay') || 'Day of Month'}</label>
+                                    <label>{t('kanban.monthDay')}</label>
                                     <input
                                         type="number"
+                                        className="form-control"
                                         min="1"
                                         max="31"
-                                        className="form-control"
-                                        value={monthDay}
-                                        onChange={e => setMonthDay(Math.min(31, Math.max(1, parseInt(e.target.value) || 1)))}
+                                        value={selectedMonthDay}
+                                        onChange={e => setSelectedMonthDay(Number(e.target.value))}
                                     />
                                 </div>
                             )}
 
-                            <div className="form-group">
-                                <label>{t('kanban.startTime') || 'Start Time'}</label>
-                                <input
-                                    type="time"
-                                    className="form-control"
-                                    value={timeFrameStart}
-                                    onChange={e => setTimeFrameStart(e.target.value)}
-                                    onClick={(e) => e.currentTarget.showPicker()}
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label>{t('kanban.endTime') || 'End Time'}</label>
-                                <input
-                                    type="time"
-                                    className="form-control"
-                                    value={timeFrameEnd}
-                                    onChange={e => setTimeFrameEnd(e.target.value)}
-                                    onClick={(e) => e.currentTarget.showPicker()}
-                                />
-                            </div>
-
-                            <div className="form-group">
-                                <div className="custom-control custom-switch">
-                                    <input
-                                        type="checkbox"
-                                        className="custom-control-input"
-                                        id="notifySwitch"
-                                        checked={notify}
-                                        onChange={e => setNotify(e.target.checked)}
-                                    />
-                                    <label className="custom-control-label" htmlFor="notifySwitch">
-                                        {t('kanban.enableNotifications') || 'Enable Notifications'}
-                                    </label>
-                                </div>
-                            </div>
-
-                            {notify && (
-                                <div className="form-group">
-                                    <label>{t('kanban.reminder')}</label>
-                                    <div className="cron-wrapper">
-                                        <ul className="nav nav-tabs mb-3">
-                                            <li className="nav-item">
-                                                <a
-                                                    className={`nav-link ${cronType === 'MINUTES' ? 'active' : ''}`}
-                                                    href="#"
-                                                    onClick={(e) => { e.preventDefault(); setCronType('MINUTES'); }}
-                                                >
-                                                    {t('kanban.frequency.minutes') || 'Minutes'}
-                                                </a>
-                                            </li>
-                                            <li className="nav-item">
-                                                <a
-                                                    className={`nav-link ${cronType === 'HOURLY' ? 'active' : ''}`}
-                                                    href="#"
-                                                    onClick={(e) => { e.preventDefault(); setCronType('HOURLY'); }}
-                                                >
-                                                    {t('kanban.frequency.hourly') || 'Hourly'}
-                                                </a>
-                                            </li>
-                                        </ul>
-
-                                        <div className="tab-content mb-3">
-                                            {cronType === 'MINUTES' && (
-                                                <div className="tab-pane active">
-                                                    <div className="form-inline">
-                                                        <label className="mr-2">{t('kanban.cron.prefix.every') || 'Every'}</label>
-                                                        <input
-                                                            type="number"
-                                                            min="1"
-                                                            max="59"
-                                                            className="form-control form-control-sm mr-2"
-                                                            style={{ width: '70px' }}
-                                                            value={cronMinutesInterval}
-                                                            onChange={(e) => setCronMinutesInterval(Math.max(1, parseInt(e.target.value) || 1))}
-                                                        />
-                                                        <label>{cronMinutesInterval === 1 ? (t('kanban.cron.suffix.minute') || 'minute') : (t('kanban.cron.suffix.minutes') || 'minutes')}</label>
-                                                    </div>
-                                                </div>
-                                            )}
-
-                                            {cronType === 'HOURLY' && (
-                                                <div className="tab-pane active">
-                                                    <div className="d-flex flex-column">
-                                                        <div className="d-flex align-items-center mb-2">
-                                                            <label className="mr-2" style={{ minWidth: '120px' }}>{t('kanban.cron.prefix.every') || 'Every'}</label>
-                                                            <input
-                                                                type="number"
-                                                                min="1"
-                                                                max="23"
-                                                                className="form-control form-control-sm mr-2"
-                                                                style={{ width: '70px' }}
-                                                                value={cronHourlyInterval}
-                                                                onChange={(e) => setCronHourlyInterval(Math.max(1, parseInt(e.target.value) || 1))}
-                                                            />
-                                                            <label>{cronHourlyInterval === 1 ? (t('kanban.cron.suffix.hour') || 'hour') : (t('kanban.cron.suffix.hours') || 'hours')}</label>
-                                                        </div>
-
-                                                        <div className="d-flex align-items-center mb-2">
-                                                            <label className="mr-2" style={{ minWidth: '120px' }}>{t('kanban.cron.startingAt') || 'Starting at hour'}</label>
-                                                            <input
-                                                                type="number"
-                                                                min="0"
-                                                                max="23"
-                                                                className="form-control form-control-sm mr-2"
-                                                                style={{ width: '70px' }}
-                                                                value={cronHourlyStart}
-                                                                onChange={(e) => setCronHourlyStart(Math.min(23, Math.max(0, parseInt(e.target.value) || 0)))}
-                                                            />
-                                                        </div>
-
-                                                        <div className="d-flex align-items-center">
-                                                            <label className="mr-2" style={{ minWidth: '120px' }}>{t('kanban.cron.atMinute') || 'At minute'}</label>
-                                                            <input
-                                                                type="number"
-                                                                min="0"
-                                                                max="59"
-                                                                className="form-control form-control-sm mr-2"
-                                                                style={{ width: '70px' }}
-                                                                value={cronHourlyMinute}
-                                                                onChange={(e) => setCronHourlyMinute(Math.min(59, Math.max(0, parseInt(e.target.value) || 0)))}
-                                                            />
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            )}
-                                        </div>
-                                    </div>
-                                    <div className="mt-2">
-                                        <label className="text-muted small">{t('kanban.generatedCron') || 'Generated Cron'}:</label>
+                            {recurrence !== 'ONCE' && (
+                                <div className="form-row">
+                                    <div className="form-group col-md-6">
+                                        <label>{t('kanban.startTime')}</label>
                                         <input
-                                            type="text"
-                                            className="form-control form-control-sm"
-                                            value={reminderCron}
-                                            onChange={e => setReminderCron(e.target.value)}
-                                            placeholder="* * * * *"
+                                            type="time"
+                                            className="form-control"
+                                            value={startTime}
+                                            onChange={e => setStartTime(e.target.value)}
+                                        />
+                                    </div>
+                                    <div className="form-group col-md-6">
+                                        <label>{t('kanban.endTime')}</label>
+                                        <input
+                                            type="time"
+                                            className="form-control"
+                                            value={endTime}
+                                            onChange={e => setEndTime(e.target.value)}
                                         />
                                     </div>
                                 </div>
                             )}
 
-                            {task && (
-                                <>
-                                    <hr />
-                                    {/* Activity Calendar */}
-                                    <div className="form-group mb-4">
-                                        <label className="form-label font-weight-bold d-block mb-3">{t('dashboard.habitHistory') || 'Habit History'}</label>
-                                        <div className="d-flex justify-content-center p-3 bg-white rounded border">
-                                            <ActivityCalendar
-                                                data={(() => {
-                                                    const startDate = new Date();
-                                                    startDate.setFullYear(startDate.getFullYear() - 1);
-                                                    const endDate = new Date();
+                            <div className="form-group form-check">
+                                <input
+                                    type="checkbox"
+                                    className="form-check-input"
+                                    id="enableNotifications"
+                                    checked={enableNotifications}
+                                    onChange={(e) => setEnableNotifications(e.target.checked)}
+                                />
+                                <label className="form-check-label" htmlFor="enableNotifications">{t('kanban.enableNotifications')}</label>
+                            </div>
 
-                                                    const history = task.completionDates?.reduce((acc: any[], dateString: string) => {
-                                                        const date = new Date(dateString).toISOString().split('T')[0];
-                                                        const existing = acc.find((item: any) => item.date === date);
-                                                        if (existing) {
-                                                            existing.count += 1;
-                                                            existing.level = Math.min(existing.count, 4);
-                                                        } else {
-                                                            acc.push({ date, count: 1, level: 1 });
-                                                        }
-                                                        return acc;
-                                                    }, []) || [];
-
-                                                    // Ensure at least one entry exists to prevent crash
-                                                    if (history.length === 0) {
-                                                        return [{
-                                                            date: new Date().toISOString().split('T')[0],
-                                                            count: 0,
-                                                            level: 0
-                                                        }];
-                                                    }
-
-                                                    return history;
-                                                })()}
-                                                theme={{
-                                                    light: ['#ebedf0', '#9be9a8', '#40c463', '#30a14e', '#216e39'],
-                                                    dark: ['#161b22', '#0e4429', '#006d32', '#26a641', '#39d353'],
-                                                }}
-                                                labels={{
-                                                    totalCount: t('kanban.history.totalCount').replace('{{count}}', String(task.completionDates?.length || 0)),
-                                                    legend: {
-                                                        less: t('dashboard.heatmap.less') || 'Less',
-                                                        more: t('dashboard.heatmap.more') || 'More',
-                                                    },
-                                                    months: [
-                                                        t('common.months.short.jan'),
-                                                        t('common.months.short.feb'),
-                                                        t('common.months.short.mar'),
-                                                        t('common.months.short.apr'),
-                                                        t('common.months.short.may'),
-                                                        t('common.months.short.jun'),
-                                                        t('common.months.short.jul'),
-                                                        t('common.months.short.aug'),
-                                                        t('common.months.short.sep'),
-                                                        t('common.months.short.oct'),
-                                                        t('common.months.short.nov'),
-                                                        t('common.months.short.dec'),
-                                                    ],
-                                                    weekdays: [
-                                                        t('kanban.days.sun'),
-                                                        t('kanban.days.mon'),
-                                                        t('kanban.days.tue'),
-                                                        t('kanban.days.wed'),
-                                                        t('kanban.days.thu'),
-                                                        t('kanban.days.fri'),
-                                                        t('kanban.days.sat'),
-                                                    ],
-                                                }}
-                                                showWeekdayLabels
-                                            />
-                                        </div>
+                            {/* Habit Completion History Heatmap */}
+                            {task && task._id && (
+                                <div className="mt-4">
+                                    <h5>{t('dashboard.habitHistory')}</h5>
+                                    <div className="d-flex justify-content-center">
+                                        <ActivityCalendar
+                                            data={historyData}
+                                            labels={{
+                                                legend: {
+                                                    less: t('dashboard.heatmap.less'),
+                                                    more: t('dashboard.heatmap.more')
+                                                },
+                                                months: [
+                                                    t('common.months.short.jan'), t('common.months.short.feb'), t('common.months.short.mar'),
+                                                    t('common.months.short.apr'), t('common.months.short.may'), t('common.months.short.jun'),
+                                                    t('common.months.short.jul'), t('common.months.short.aug'), t('common.months.short.sep'),
+                                                    t('common.months.short.oct'), t('common.months.short.nov'), t('common.months.short.dec')
+                                                ],
+                                                weekdays: [
+                                                    t('kanban.days.sun'), t('kanban.days.mon'), t('kanban.days.tue'), t('kanban.days.wed'),
+                                                    t('kanban.days.thu'), t('kanban.days.fri'), t('kanban.days.sat')
+                                                ],
+                                                totalCount: t('kanban.history.totalCount')
+                                            }}
+                                            colorScheme={isDarkMode ? 'dark' : 'light'}
+                                            theme={{
+                                                light: ['#EBEDF0', '#9BE9A8', '#40C463', '#30A14E', '#216E39'],
+                                                dark: ['#161B22', '#0E4429', '#006D32', '#26A641', '#39D353'],
+                                            }}
+                                            maxLevel={4}
+                                        />
                                     </div>
+                                </div>
+                            )}
 
-                                    {/* Comments Section */}
-                                    <div className="form-group mb-4">
-                                        <label className="form-label font-weight-bold">{t('kanban.comments')}</label>
-                                        <div className="comments-section p-3 bg-light rounded" style={{ maxHeight: '200px', overflowY: 'auto' }}>
-                                            {comments.length === 0 ? (
-                                                <p className="text-muted small">{t('kanban.noComments')}</p>
+                            <hr />
+                            <h5>{t('kanban.comments')}</h5>
+                            <div className="comments-section mb-3" style={{ maxHeight: '200px', overflowY: 'auto' }}>
+                                {comments.length === 0 && <p className="text-muted text-center">{t('kanban.noComments')}</p>}
+                                {comments.map((c, idx) => (
+                                    <div key={idx} className="card mb-2">
+                                        <div className="card-body p-2">
+                                            <div className="d-flex justify-content-between">
+                                                <small className="text-muted">
+                                                    <strong>{c.authorName}</strong> - {new Date(c.createdAt).toLocaleString()}
+                                                </small>
+                                                {canModifyComment(c) && (
+                                                    <div>
+                                                        <button type="button" className="btn btn-sm btn-link p-0 mr-2" onClick={() => startEditComment(idx, c.text)}>
+                                                            <i className="fas fa-edit"></i>
+                                                        </button>
+                                                        <button type="button" className="btn btn-sm btn-link p-0 text-danger" onClick={() => deleteComment(idx)}>
+                                                            <i className="fas fa-trash"></i>
+                                                        </button>
+                                                    </div>
+                                                )}
+                                            </div>
+                                            {editingCommentIdx === idx ? (
+                                                <div className="mt-2">
+                                                    <textarea
+                                                        className="form-control mb-2"
+                                                        rows={2}
+                                                        value={editingCommentText}
+                                                        onChange={(e) => setEditingCommentText(e.target.value)}
+                                                    />
+                                                    <button type="button" className="btn btn-sm btn-primary mr-2" onClick={saveEditComment}>{t('common.save')}</button>
+                                                    <button type="button" className="btn btn-sm btn-secondary" onClick={cancelEditComment}>{t('common.cancel')}</button>
+                                                </div>
                                             ) : (
-                                                <ul className="list-unstyled mb-0">
-                                                    {comments.map((comment: any, index: number) => (
-                                                        <li key={index} className="mb-2 pb-2 border-bottom last-no-border">
-                                                            <div className="d-flex justify-content-between">
-                                                                <strong className="small">{comment.authorEmail || 'User'}</strong>
-                                                                <span className="text-muted" style={{ fontSize: '0.7rem' }}>
-                                                                    {new Date(comment.createdAt).toLocaleString()}
-                                                                </span>
-                                                            </div>
-                                                            <p className="mb-0 small">{comment.text}</p>
-                                                        </li>
-                                                    ))}
-                                                </ul>
+                                                <p className="mb-0">{c.text}</p>
                                             )}
                                         </div>
-                                        <div className="input-group mt-2">
-                                            <input
-                                                type="text"
-                                                className="form-control form-control-sm"
-                                                placeholder={t('kanban.writeComment')}
-                                                value={newComment}
-                                                onChange={(e) => setNewComment(e.target.value)}
-                                                onKeyPress={(e) => e.key === 'Enter' && handleAddComment()}
-                                            />
-                                            <div className="input-group-append">
-                                                <button className="btn btn-sm btn-secondary" type="button" onClick={handleAddComment}>
-                                                    <i className="fas fa-paper-plane"></i>
-                                                </button>
-                                            </div>
-                                        </div>
                                     </div>
-                                </>
-                            )}
+                                ))}
+                            </div>
+                            <div className="input-group">
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    placeholder={t('kanban.writeComment')}
+                                    value={commentText}
+                                    onChange={(e) => setCommentText(e.target.value)}
+                                    onKeyDown={(e) => {
+                                        if (e.key === 'Enter' && !e.shiftKey) {
+                                            e.preventDefault();
+                                            addComment();
+                                        }
+                                    }}
+                                />
+                                <div className="input-group-append">
+                                    <button type="button" className="btn btn-outline-secondary" onClick={addComment}>
+                                        <i className="fas fa-paper-plane"></i>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                         <div className="modal-footer justify-content-between">
                             <button type="button" className="btn btn-default" onClick={onClose}>{t('common.close')}</button>
@@ -609,7 +610,7 @@ export default function TaskModal({ isOpen, onClose, task, onSave, onUpdate }: T
                         </div>
                     </form>
                 </div>
-            </div >
-        </div >
+            </div>
+        </div>
     );
 }

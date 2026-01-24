@@ -8,6 +8,7 @@ import ProjectBoard from '../../../components/ProjectBoard';
 import ProjectModal from '../../../components/ProjectModal';
 import Link from 'next/link';
 import { useLanguage } from '../../../context/LanguageContext';
+import { useModal } from '../../../context/ModalContext';
 
 function ProjectDetailsContent() {
     const { t } = useLanguage();
@@ -41,6 +42,8 @@ function ProjectDetailsContent() {
         return () => clearInterval(interval);
     }, [id]);
 
+    const { showModal } = useModal();
+
     const handleProjectSave = async (updatedProject: any) => {
         try {
             const res = await authenticatedFetch(`/api/projects/${updatedProject._id}`, {
@@ -53,11 +56,11 @@ function ProjectDetailsContent() {
                 setIsEditModalOpen(false);
                 window.location.reload(); // Refresh the whole page as requested
             } else {
-                alert('Failed to update project');
+                showModal({ title: t('projects.edit'), message: 'Failed to update project', type: 'error' });
             }
         } catch (error) {
             console.error(error);
-            alert('Error updating project');
+            showModal({ title: t('projects.edit'), message: 'Error updating project', type: 'error' });
         }
     };
 

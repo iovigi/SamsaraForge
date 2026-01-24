@@ -29,16 +29,39 @@ export async function GET(req: Request, { params }: { params: Promise<{ id: stri
 
         const { id } = await params;
 
-        const project = await Project.findOne({
-            _id: id,
-            $or: [
-                { userId },
-                { 'members.userId': userId }
-            ]
-        });
+        let project = await Project.findOne({ _id: id })
+            .populate('members.userId', 'nickname email')
+            .populate('teams.teamId', 'name members'); // Populate needed fields
 
         if (!project) {
-            return NextResponse.json({ message: 'Project not found or access denied' }, { status: 404 });
+            return NextResponse.json({ message: 'Project not found' }, { status: 404 });
+        }
+
+        const isOwner = project.userId.toString() === userId;
+        const isMember = project.members.some((m: any) => m.userId?._id?.toString() === userId || m.userId?.toString() === userId);
+
+        let isTeamMember = false;
+        if (!isOwner && !isMember && project.teams && project.teams.length > 0) {
+            // Check if user is in any of the teams
+            // We populated teams.teamId, so we can access members
+            // But Team model members might not be fully transparent here depending on populate depth.
+            // Team model members is array of objects { userId, role }.
+            // We populated 'teams.teamId' which is the Team document.
+            // So project.teams[i].teamId.members should exist.
+
+            for (const pt of project.teams) {
+                if (pt.teamId && pt.teamId.members) {
+                    const found = pt.teamId.members.some((tm: any) => tm.userId.toString() === userId);
+                    if (found) {
+                        isTeamMember = true;
+                        break;
+                    }
+                }
+            }
+        }
+
+        if (!isOwner && !isMember && !isTeamMember) {
+            return NextResponse.json({ message: 'Access denied' }, { status: 403 });
         }
 
         return NextResponse.json({ project });
@@ -58,27 +81,37 @@ export async function PUT(req: Request, { params }: { params: Promise<{ id: stri
         const { id } = await params;
         const body = await req.json();
 
-        // Check ownership or membership before update
-        // Security Note: We might want to restrict WHAT members can update (e.g. not name/description)
-        // For now, per requirements "Member can edit it", assuming full edit rights on project fields except maybe members.
-
-        const project = await Project.findOneAndUpdate(
-            {
-                _id: id,
-                $or: [
-                    { userId },
-                    { 'members.userId': userId }
-                ]
-            },
-            body,
-            { new: true, runValidators: true }
-        );
+        // Retrieve project first to check access
+        const project = await Project.findById(id).populate('teams.teamId');
 
         if (!project) {
-            return NextResponse.json({ message: 'Project not found or access denied' }, { status: 404 });
+            return NextResponse.json({ message: 'Project not found' }, { status: 404 });
         }
 
-        return NextResponse.json({ project });
+        const isOwner = project.userId.toString() === userId;
+        const isMember = project.members.some((m: any) => m.userId.toString() === userId);
+
+        let isTeamMember = false;
+        if (!isOwner && !isMember && project.teams && project.teams.length > 0) {
+            for (const pt of project.teams) {
+                if (pt.teamId && pt.teamId.members) {
+                    const found = pt.teamId.members.some((tm: any) => tm.userId.toString() === userId);
+                    if (found) {
+                        isTeamMember = true;
+                        break;
+                    }
+                }
+            }
+        }
+
+        if (!isOwner && !isMember && !isTeamMember) {
+            return NextResponse.json({ message: 'Access denied' }, { status: 403 });
+        }
+
+        const updatedProject = await Project.findByIdAndUpdate(id, body, { new: true, runValidators: true })
+            .populate('teams.teamId', 'name');
+
+        return NextResponse.json({ project: updatedProject });
     } catch (error: any) {
         return NextResponse.json({ message: error.message }, { status: 500 });
     }

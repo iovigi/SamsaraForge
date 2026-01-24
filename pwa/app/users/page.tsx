@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import UserModal from '../../components/UserModal';
 import { useLanguage } from '../../context/LanguageContext';
+import { useModal } from '../../context/ModalContext';
 import { authenticatedFetch, parseJwt } from '../../utils/api';
 import { User } from '../../types/auth'; // Ensure this path is correct
 
@@ -53,23 +54,33 @@ export default function UsersPage() {
         setIsModalOpen(true);
     };
 
-    const handleDelete = async (userId: string) => {
-        if (!window.confirm(t('users.deleteConfirm'))) return;
+    const { showModal } = useModal();
 
-        try {
-            const res = await authenticatedFetch(`/api/users/${userId}`, {
-                method: 'DELETE'
-            });
-            if (res.ok) {
-                setUsers(users.filter(u => u._id !== userId));
-            } else {
-                const errorData = await res.json();
-                alert(`${t('users.deleteFailed')}: ${errorData.message}`);
+    const handleDelete = (userId: string) => {
+        showModal({
+            title: t('users.delete'),
+            message: t('users.deleteConfirm'),
+            type: 'warning',
+            confirmText: t('common.delete'),
+            cancelText: t('common.cancel'),
+            onConfirm: async () => {
+                try {
+                    const res = await authenticatedFetch(`/api/users/${userId}`, {
+                        method: 'DELETE'
+                    });
+                    if (res.ok) {
+                        setUsers(users.filter(u => u._id !== userId));
+                        showModal({ title: t('users.delete'), message: t('users.userDeleted'), type: 'success' });
+                    } else {
+                        const errorData = await res.json();
+                        showModal({ title: t('users.delete'), message: `${t('users.deleteFailed')}: ${errorData.message}`, type: 'error' });
+                    }
+                } catch (error) {
+                    console.error('Error deleting user', error);
+                    showModal({ title: t('users.delete'), message: t('settings.error'), type: 'error' });
+                }
             }
-        } catch (error) {
-            console.error('Error deleting user', error);
-            alert(t('settings.error'));
-        }
+        });
     };
 
     const toggleBlock = async (user: User) => {
@@ -87,11 +98,11 @@ export default function UsersPage() {
             } else {
                 const errorData = await res.json();
                 console.error('Failed to toggle block:', errorData);
-                alert(`Error: ${errorData.message || 'Failed to update user status'}`);
+                showModal({ title: t('users.status'), message: `Error: ${errorData.message || 'Failed to update user status'}`, type: 'error' });
             }
         } catch (error) {
             console.error('Error toggling block', error);
-            alert('An unexpected error occurred while updating user status');
+            showModal({ title: t('users.status'), message: 'An unexpected error occurred while updating user status', type: 'error' });
         }
     };
 

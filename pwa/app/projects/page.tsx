@@ -7,6 +7,7 @@ import ProjectModal from '../../components/ProjectModal';
 import { triggerProjectsUpdate } from '../../utils/events';
 
 import { useLanguage } from '../../context/LanguageContext';
+import { useModal } from '../../context/ModalContext';
 
 export default function ProjectsPage() {
     const { t } = useLanguage();
@@ -34,6 +35,8 @@ export default function ProjectsPage() {
         fetchProjects();
     }, []);
 
+    const { showModal } = useModal();
+
     const handleSave = async (project: any) => {
         try {
             let res;
@@ -55,22 +58,35 @@ export default function ProjectsPage() {
                 setIsModalOpen(false);
                 fetchProjects();
                 triggerProjectsUpdate();
+                showModal({ title: t('projects.save'), message: 'Project saved successfully', type: 'success' });
+            } else {
+                showModal({ title: t('projects.save'), message: 'Failed to save project', type: 'error' });
             }
         } catch (error) {
             console.error(error);
-            alert('Failed to save project');
+            showModal({ title: t('projects.save'), message: 'Error saving project', type: 'error' });
         }
     };
 
-    const handleDelete = async (id: string) => {
-        if (!confirm(t('projects.deleteConfirm'))) return;
-        try {
-            await authenticatedFetch(`/api/projects/${id}`, { method: 'DELETE' });
-            setProjects(prev => prev.filter((p: any) => p._id !== id));
-            triggerProjectsUpdate();
-        } catch (error) {
-            console.error(error);
-        }
+    const handleDelete = (id: string) => {
+        showModal({
+            title: t('projects.delete'),
+            message: t('projects.deleteConfirm'),
+            type: 'warning',
+            confirmText: t('common.delete'),
+            cancelText: t('common.cancel'),
+            onConfirm: async () => {
+                try {
+                    await authenticatedFetch(`/api/projects/${id}`, { method: 'DELETE' });
+                    setProjects(prev => prev.filter((p: any) => p._id !== id));
+                    triggerProjectsUpdate();
+                    showModal({ title: t('projects.delete'), message: 'Project deleted successfully', type: 'success' });
+                } catch (error) {
+                    console.error(error);
+                    showModal({ title: t('projects.delete'), message: 'Failed to delete project', type: 'error' });
+                }
+            }
+        });
     };
 
     const openCreate = () => {

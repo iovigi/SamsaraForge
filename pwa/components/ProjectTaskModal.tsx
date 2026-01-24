@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import MDEditor from '@uiw/react-md-editor';
 import { useLanguage } from '../context/LanguageContext';
+import { useModal } from '../context/ModalContext';
 import { uploadFile, authenticatedFetch } from '../utils/api';
 import { API_BASE_URL } from '../utils/config';
 
@@ -16,6 +17,7 @@ interface ProjectTaskModalProps {
 
 export default function ProjectTaskModal({ isOpen, onClose, task, projectId, onSave }: ProjectTaskModalProps) {
     const { t } = useLanguage();
+    const { showModal } = useModal();
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [status, setStatus] = useState('TODO');
@@ -83,7 +85,7 @@ export default function ProjectTaskModal({ isOpen, onClose, task, projectId, onS
                 setFiles([...files, newFile]);
             } catch (err) {
                 console.error('Upload failed', err);
-                alert('File upload failed');
+                showModal({ title: t('projects.upload'), message: t('projects.uploadFailed'), type: 'error' });
             } finally {
                 setUploading(false);
             }
@@ -101,7 +103,7 @@ export default function ProjectTaskModal({ isOpen, onClose, task, projectId, onS
                 setDescription(prev => prev + imageMarkdown);
             } catch (err) {
                 console.error('Image upload failed', err);
-                alert('Image upload failed');
+                showModal({ title: t('projects.upload'), message: t('projects.imageUploadFailed'), type: 'error' });
             } finally {
                 setDescUploading(false);
                 // Clear input
@@ -140,7 +142,7 @@ export default function ProjectTaskModal({ isOpen, onClose, task, projectId, onS
                 // For now, local update is enough for UI responsiveness.
             } catch (err) {
                 console.error('Failed to save comments', err);
-                alert('Failed to save comment');
+                showModal({ title: t('tasks.discussion'), message: t('tasks.saveCommentFailed'), type: 'error' });
             }
         }
     };
@@ -165,11 +167,18 @@ export default function ProjectTaskModal({ isOpen, onClose, task, projectId, onS
     };
 
     const deleteComment = async (idx: number) => {
-        if (confirm(t('tasks.confirmDeleteComment'))) {
-            const updatedComments = comments.filter((_, i) => i !== idx);
-            setComments(updatedComments);
-            await saveCommentsToBackend(updatedComments);
-        }
+        showModal({
+            title: t('kanban.deleteComment'),
+            message: t('tasks.confirmDeleteComment'),
+            type: 'warning',
+            confirmText: t('common.delete'),
+            cancelText: t('common.cancel'),
+            onConfirm: async () => {
+                const updatedComments = comments.filter((_, i) => i !== idx);
+                setComments(updatedComments);
+                await saveCommentsToBackend(updatedComments);
+            }
+        });
     };
 
     const startEditComment = (idx: number, text: string) => {

@@ -111,7 +111,7 @@ export default function UserModal({ user, isOpen, onClose, onSave }: UserModalPr
                                     className="form-control"
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
-                                    placeholder="Leave blank to keep current"
+                                    placeholder={t('users.passwordPlaceholder')}
                                 />
                             </div>
 

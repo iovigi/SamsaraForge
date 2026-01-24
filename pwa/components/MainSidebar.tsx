@@ -76,6 +76,12 @@ export default function MainSidebar() {
                             </ul>
                         </li>
                         <li className="nav-item">
+                            <a href="/teams" className={`nav-link ${pathname === '/teams' ? 'active' : ''}`}>
+                                <i className="nav-icon fas fa-users-cog"></i>
+                                <p>{t('nav.teams') || 'Teams'}</p>
+                            </a>
+                        </li>
+                        <li className="nav-item">
                             <a href="/settings" className={`nav-link ${pathname === '/settings' ? 'active' : ''}`}>
                                 <i className="nav-icon fas fa-cog"></i>
                                 <p>{t('nav.settings')}</p>
