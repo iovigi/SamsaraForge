@@ -381,6 +381,12 @@ export const bg: Dictionary = {
     'dashboard.manageHabits': 'Управление',
     'dashboard.motivationTitle': 'Защо това има значение',
     'dashboard.motivationText': 'Бъди във форма и пълен с енергия. Ако усещаш съпротива: Просто си обуй обувките!',
-
-
+    'nav.notifications': 'Известия',
+    'notifications.empty': 'Няма нови известия',
+    'notifications.markAllRead': 'Маркирай всичко като прочетено',
+    'notifications.viewAll': 'Виж всички известия',
+    'notifications.title': 'Известия',
+    'notifications.all': 'Всички известия',
+    'notifications.unread': 'Само непрочетени',
+    'notifications.markRead': 'Маркирай като прочетено',
 };

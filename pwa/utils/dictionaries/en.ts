@@ -377,6 +377,14 @@ export const en = {
     'projects.imageUploadFailed': 'Image upload failed',
     'tasks.saveCommentFailed': 'Failed to save comment',
     'kanban.intentionPlaceholder': 'E.g. I want to improve my health...',
+    'nav.notifications': 'Notifications',
+    'notifications.empty': 'No notifications',
+    'notifications.markAllRead': 'Mark all as read',
+    'notifications.viewAll': 'See All Notifications',
+    'notifications.title': 'Notifications',
+    'notifications.all': 'All Notifications',
+    'notifications.unread': 'Unread Only',
+    'notifications.markRead': 'Mark as Read',
 };
 
 export type Dictionary = typeof en;

@@ -3,6 +3,8 @@
 import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 
+import NotificationBell from './NotificationBell';
+
 export default function Navbar() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const pathname = usePathname();
@@ -22,6 +24,10 @@ export default function Navbar() {
                 <li className="nav-item">
                     <a className="nav-link" data-widget="pushmenu" href="#" role="button"><i className="fas fa-bars"></i></a>
                 </li>
+            </ul>
+
+            <ul className="navbar-nav ml-auto">
+                <NotificationBell />
             </ul>
         </nav>
     );

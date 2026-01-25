@@ -39,13 +39,6 @@ export async function GET(req: Request) {
         // We can do an aggregation or find user's teams first.
 
         // Step 1: Find all teams user belongs to
-        const Team = mongoose.models.Team || mongoose.model('Team');
-        // We need to import Team model properly potentially if not already loaded, but dbConnect should handle models usually if registered.
-        // Best practice: Import it or rely on existing registration. 
-        // Let's assume Team model is registered because we use it elsewhere or do a dynamic import if needed.
-        // Actually best to query Project directly if possible, but 'teams.teamId' refers to a Team doc.
-        // We can find all projects where 'teams.teamId' is IN [list of user's team IDs].
-
         const userTeams = await Team.find({ 'members.userId': userId }).select('_id');
         const userTeamIds = userTeams.map((t: any) => t._id);
 
@@ -60,6 +53,7 @@ export async function GET(req: Request) {
 
         return NextResponse.json({ projects });
     } catch (error: any) {
+        console.error('Projects GET error:', error);
         return NextResponse.json({ message: error.message }, { status: 500 });
     }
 }
