@@ -385,6 +385,7 @@ export const en = {
     'notifications.all': 'All Notifications',
     'notifications.unread': 'Unread Only',
     'notifications.markRead': 'Mark as Read',
+    'notifications.teamInvitation.title': 'Team Invitation',
 };
 
 export type Dictionary = typeof en;

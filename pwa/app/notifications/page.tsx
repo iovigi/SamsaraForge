@@ -9,9 +9,16 @@ interface NotificationType {
     _id: string;
     title: string;
     message: string;
-    type: 'info' | 'warning' | 'error' | 'success';
+    type: 'info' | 'warning' | 'error' | 'success' | 'team_invitation';
     isRead: boolean;
     link?: string;
+    metadata?: {
+        invitationId: string;
+        teamId: string;
+        teamName?: string;
+        inviterName?: string;
+        token: string;
+    };
     createdAt: string;
 }
 
@@ -68,6 +75,30 @@ export default function NotificationsPage() {
         }
     };
 
+    const handleInvitationResponse = async (notificationId: string, invitationId: string, accept: boolean) => {
+        const token = localStorage.getItem('token');
+        if (!token) return;
+
+        try {
+            const res = await fetch(`${API_BASE_URL}/api/invitations/${invitationId}/respond`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ accept })
+            });
+            const data = await res.json();
+            if (res.ok) {
+                await markAsRead(notificationId);
+            } else {
+                alert(data.message || 'Failed to respond to invitation');
+            }
+        } catch (error) {
+            console.error('Failed to respond to invitation', error);
+        }
+    };
+
     useEffect(() => {
         fetchNotifications();
     }, [showUnreadOnly]);
@@ -77,6 +108,7 @@ export default function NotificationsPage() {
             case 'success': return 'fas fa-check-circle text-success';
             case 'warning': return 'fas fa-exclamation-triangle text-warning';
             case 'error': return 'fas fa-times-circle text-danger';
+            case 'team_invitation': return 'fas fa-users text-primary';
             default: return 'fas fa-info-circle text-info';
         }
     };
@@ -136,16 +168,47 @@ export default function NotificationsPage() {
                                                     <td>
                                                         <div className="d-flex justify-content-between">
                                                             <Link href={n.link || '#'} className="text-dark">
-                                                                <strong className="d-block">{n.title}</strong>
-                                                                <span className="text-muted">{n.message}</span>
+                                                                <strong className="d-block">
+                                                                    {n.type === 'team_invitation' ? t('notifications.teamInvitation.title') : n.title}
+                                                                </strong>
+                                                                <span className="text-muted">
+                                                                    {n.type === 'team_invitation' && n.metadata
+                                                                        ? t('teams.invitedBy', { team: n.metadata.teamName || '', inviter: n.metadata.inviterName || '' })
+                                                                        : n.message}
+                                                                </span>
                                                             </Link>
                                                             <small className="text-muted">
                                                                 {new Date(n.createdAt).toLocaleString()}
                                                             </small>
                                                         </div>
                                                     </td>
-                                                    <td style={{ width: '150px' }} className="text-right">
-                                                        {!n.isRead && (
+                                                    <td style={{ width: '250px' }} className="text-right">
+                                                        {n.type === 'team_invitation' && !n.isRead && n.metadata && (
+                                                            <div className="btn-group">
+                                                                <button
+                                                                    onClick={() => handleInvitationResponse(n._id, n.metadata!.invitationId, true)}
+                                                                    className="btn btn-xs btn-success mr-1"
+                                                                >
+                                                                    <i className="fas fa-check mr-1"></i>
+                                                                    {t('common.accept')}
+                                                                </button>
+                                                                <button
+                                                                    onClick={() => handleInvitationResponse(n._id, n.metadata!.invitationId, false)}
+                                                                    className="btn btn-xs btn-danger mr-1"
+                                                                >
+                                                                    <i className="fas fa-times mr-1"></i>
+                                                                    {t('common.reject')}
+                                                                </button>
+                                                                <Link
+                                                                    href={n.link || '#'}
+                                                                    className="btn btn-xs btn-outline-primary"
+                                                                >
+                                                                    <i className="fas fa-eye mr-1"></i>
+                                                                    {t('common.viewDetails')}
+                                                                </Link>
+                                                            </div>
+                                                        )}
+                                                        {!n.isRead && n.type !== 'team_invitation' && (
                                                             <button
                                                                 onClick={() => markAsRead(n._id)}
                                                                 className="btn btn-xs btn-outline-success"

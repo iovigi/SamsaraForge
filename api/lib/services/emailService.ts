@@ -38,9 +38,24 @@ export const sendEmail = async ({ to, subject, text, html }: EmailOptions) => {
     }
 };
 
-export const sendTeamInvitationEmail = async (email: string, teamName: string, inviterName: string, acceptLink: string) => {
-    const subject = `Invitation to join team ${teamName}`;
-    const html = `
+export const sendTeamInvitationEmail = async (email: string, teamName: string, inviterName: string, acceptLink: string, language: string = 'en') => {
+    const subject = language === 'bg'
+        ? `Покана за присъединяване към екип ${teamName}`
+        : `Invitation to join team ${teamName}`;
+
+    const html = language === 'bg' ? `
+        <div style="font-family: Arial, sans-serif; padding: 20px; color: #333;">
+            <h2>Имате покана!</h2>
+            <p><strong>${inviterName}</strong> ви покани да се присъедините към екипа <strong>${teamName}</strong> в Samsara Forge.</p>
+            <p>Кликнете върху бутона по-долу, за да приемете поканата:</p>
+            <div style="margin: 25px 0;">
+                <a href="${acceptLink}" style="background-color: #4CAF50; color: white; padding: 12px 24px; text-decoration: none; border-radius: 4px; font-weight: bold;">Приемам поканата</a>
+            </div>
+            <p>Или копирайте и поставете тази връзка във вашия браузър:</p>
+            <p><a href="${acceptLink}">${acceptLink}</a></p>
+            <p style="font-size: 12px; color: #777; margin-top: 30px;">Ако не сте очаквали тази покана, можете спокойно да игнорирате този имейл.</p>
+        </div>
+    ` : `
         <div style="font-family: Arial, sans-serif; padding: 20px; color: #333;">
             <h2>You've been invited!</h2>
             <p><strong>${inviterName}</strong> has invited you to join the team <strong>${teamName}</strong> on Samsara Forge.</p>
@@ -53,7 +68,10 @@ export const sendTeamInvitationEmail = async (email: string, teamName: string, i
             <p style="font-size: 12px; color: #777; margin-top: 30px;">If you didn't expect this invitation, you can safely ignore this email.</p>
         </div>
     `;
-    const text = `${inviterName} has invited you to join the team ${teamName}. Go to ${acceptLink} to accept.`;
+
+    const text = language === 'bg'
+        ? `${inviterName} ви покани да се присъедините към екипа ${teamName}. Отидете на ${acceptLink} за да приемете.`
+        : `${inviterName} has invited you to join the team ${teamName}. Go to ${acceptLink} to accept.`;
 
     return sendEmail({ to: email, subject, text, html });
 };

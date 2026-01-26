@@ -389,4 +389,5 @@ export const bg: Dictionary = {
     'notifications.all': 'Всички известия',
     'notifications.unread': 'Само непрочетени',
     'notifications.markRead': 'Маркирай като прочетено',
+    'notifications.teamInvitation.title': 'Покана за екип',
 };

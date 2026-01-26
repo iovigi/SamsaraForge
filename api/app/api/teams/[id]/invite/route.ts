@@ -85,6 +85,32 @@ export async function POST(req: NextRequest, props: { params: Promise<{ id: stri
 
         await newInvite.save();
 
+        // Create Database Notification if user exists
+        const invitedUser = await User.findOne({ email });
+        const userLang = invitedUser?.language || 'en';
+        const notificationTitle = userLang === 'bg' ? 'Покана за екип' : 'Team Invitation';
+        const notificationMessage = userLang === 'bg'
+            ? `${inviterName} ви покани да се присъедините към ${team.name}`
+            : `${inviterName} invited you to join ${team.name}`;
+
+        if (invitedUser) {
+            const Notification = (await import('@/lib/models/Notification')).default;
+            await Notification.create({
+                userId: invitedUser._id,
+                title: notificationTitle,
+                message: notificationMessage,
+                type: 'team_invitation',
+                link: `/teams?invite=${token}`,
+                metadata: {
+                    invitationId: newInvite._id,
+                    teamId: team._id,
+                    teamName: team.name,
+                    inviterName: inviterName,
+                    token: token
+                }
+            });
+        }
+
         // Send Email
         // Construct accept link (pointing to frontend)
         // Assuming frontend is running on same domain or we can use generic URL
@@ -92,15 +118,15 @@ export async function POST(req: NextRequest, props: { params: Promise<{ id: stri
         const origin = req.headers.get('origin') || 'http://localhost:3000';
         const acceptLink = `${origin}/teams?invite=${token}`;
 
-        await sendTeamInvitationEmail(email, team.name, inviterName, acceptLink);
+        await sendTeamInvitationEmail(email, team.name, inviterName, acceptLink, userLang);
 
         // Send Push Notification if user exists and has subscription
-        const invitedUser = await User.findOne({ email });
-        if (invitedUser) {
-            const subscriptions = await Subscription.find({ userId: invitedUser._id });
+        const userToNotify = await User.findOne({ email });
+        if (userToNotify) {
+            const subscriptions = await Subscription.find({ userId: userToNotify._id });
             const payload = {
-                title: 'Team Invitation',
-                body: `${inviterName} invited you to join ${team.name}`,
+                title: notificationTitle,
+                body: notificationMessage,
                 url: `/teams?invite=${token}` // Action URL
             };
 

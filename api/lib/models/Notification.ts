@@ -17,7 +17,7 @@ const NotificationSchema = new mongoose.Schema({
     },
     type: {
         type: String,
-        enum: ['info', 'warning', 'error', 'success'],
+        enum: ['info', 'warning', 'error', 'success', 'team_invitation'],
         default: 'info'
     },
     isRead: {
@@ -27,6 +27,10 @@ const NotificationSchema = new mongoose.Schema({
     },
     link: {
         type: String,
+        required: false
+    },
+    metadata: {
+        type: mongoose.Schema.Types.Mixed,
         required: false
     },
     createdAt: {

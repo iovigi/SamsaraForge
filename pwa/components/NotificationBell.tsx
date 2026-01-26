@@ -9,9 +9,16 @@ interface NotificationType {
     _id: string;
     title: string;
     message: string;
-    type: 'info' | 'warning' | 'error' | 'success';
+    type: 'info' | 'warning' | 'error' | 'success' | 'team_invitation';
     isRead: boolean;
     link?: string;
+    metadata?: {
+        invitationId: string;
+        teamId: string;
+        teamName?: string;
+        inviterName?: string;
+        token: string;
+    };
     createdAt: string;
 }
 
@@ -75,6 +82,7 @@ export default function NotificationBell() {
             case 'success': return 'fas fa-check-circle text-success';
             case 'warning': return 'fas fa-exclamation-triangle text-warning';
             case 'error': return 'fas fa-times-circle text-danger';
+            case 'team_invitation': return 'fas fa-users text-primary';
             default: return 'fas fa-info-circle text-info';
         }
     };
@@ -105,8 +113,14 @@ export default function NotificationBell() {
                                         <i className={getIconClass(n.type)}></i>
                                     </div>
                                     <div className="media-body">
-                                        <p className="text-sm font-weight-bold mb-0">{n.title}</p>
-                                        <p className="text-sm text-muted mb-0">{n.message}</p>
+                                        <p className="text-sm font-weight-bold mb-0">
+                                            {n.type === 'team_invitation' ? t('notifications.teamInvitation.title') : n.title}
+                                        </p>
+                                        <p className="text-sm text-muted mb-0">
+                                            {n.type === 'team_invitation' && n.metadata
+                                                ? t('teams.invitedBy', { team: n.metadata.teamName || '', inviter: n.metadata.inviterName || '' })
+                                                : n.message}
+                                        </p>
                                         <p className="text-sm text-muted">
                                             <i className="far fa-clock mr-1"></i>
                                             {new Date(n.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
