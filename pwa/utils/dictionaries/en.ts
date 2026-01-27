@@ -109,6 +109,7 @@ export const en = {
     'kanban.addComment': 'Add Comment',
     'kanban.deleteComment': 'Delete Comment',
     'kanban.noComments': 'No comments yet.',
+    'kanban.noHistory': 'No completion history available yet.',
     'kanban.writeComment': 'Write a comment...',
     'kanban.enableNotifications': 'Enable Notifications',
     'kanban.cron.atMinute': 'At minute',
@@ -300,6 +301,10 @@ export const en = {
     'teams.notFound': 'Team not found',
     'teams.noProjects': 'No projects assigned to this team.',
     'teams.selectPlaceholder': 'Select a team to add...',
+    'teams.logo': 'Team Logo',
+    'teams.uploadLogo': 'Upload Logo',
+    'teams.changeLogo': 'Change Logo',
+    'teams.removeLogo': 'Remove Logo',
     'common.remove': 'Remove',
 
     'common.accept': 'Accept',

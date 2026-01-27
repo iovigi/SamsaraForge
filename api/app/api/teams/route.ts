@@ -42,7 +42,7 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
         }
 
-        const { name } = await req.json();
+        const { name, logoUrl } = await req.json();
 
         if (!name) {
             return NextResponse.json({ message: 'Team name is required' }, { status: 400 });
@@ -51,6 +51,7 @@ export async function POST(req: NextRequest) {
         const newTeam = new Team({
             name,
             ownerId: user.userId,
+            logoUrl: logoUrl || '',
             members: [{
                 userId: user.userId,
                 role: 'ADMIN',

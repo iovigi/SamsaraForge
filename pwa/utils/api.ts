@@ -1,4 +1,5 @@
 import { API_BASE_URL } from './config';
+export { API_BASE_URL };
 
 export const authenticatedFetch = async (url: string, options: RequestInit = {}) => {
     let token = localStorage.getItem('token'); // This is now accessToken

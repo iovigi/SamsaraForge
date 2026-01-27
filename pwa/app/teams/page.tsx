@@ -6,6 +6,7 @@ import { authenticatedFetch } from '../../utils/api';
 import TeamModal from '@/components/TeamModal';
 import { useLanguage } from '../../context/LanguageContext';
 import { useModal } from '../../context/ModalContext';
+import { API_BASE_URL } from '../../utils/api';
 
 function TeamsContent() {
     const [teams, setTeams] = useState<any[]>([]);
@@ -62,12 +63,12 @@ function TeamsContent() {
 
     const { showModal } = useModal();
 
-    const handleCreateTeam = async (name: string) => {
+    const handleCreateTeam = async (name: string, logoUrl?: string) => {
         try {
             const res = await authenticatedFetch('/api/teams', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name })
+                body: JSON.stringify({ name, logoUrl })
             });
             if (res.ok) {
                 setShowCreateModal(false);
@@ -160,7 +161,21 @@ function TeamsContent() {
                                 <div className="col-md-4" key={team._id}>
                                     <div className="card card-primary card-outline">
                                         <div className="card-header">
-                                            <h3 className="card-title">{team.name}</h3>
+                                            <div className="d-flex align-items-center">
+                                                {team.logoUrl ? (
+                                                    <img
+                                                        src={team.logoUrl.startsWith('http') ? team.logoUrl : `${API_BASE_URL}${team.logoUrl}`}
+                                                        alt={team.name}
+                                                        className="mr-2"
+                                                        style={{ width: '40px', height: '40px', objectFit: 'cover', borderRadius: '50%' }}
+                                                    />
+                                                ) : (
+                                                    <div className="mr-2 bg-secondary d-flex align-items-center justify-content-center" style={{ width: '40px', height: '40px', borderRadius: '50%' }}>
+                                                        <i className="fas fa-users"></i>
+                                                    </div>
+                                                )}
+                                                <h3 className="card-title">{team.name}</h3>
+                                            </div>
                                         </div>
                                         <div className="card-body">
                                             <p>{t('team.members') || 'Members'}: {team.members?.length || 0}</p>

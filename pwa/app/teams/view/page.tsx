@@ -8,6 +8,7 @@ import EditTeamModal from '../../../components/EditTeamModal';
 import ProjectModal from '../../../components/ProjectModal';
 import { useLanguage } from '../../../context/LanguageContext';
 import { useModal } from '../../../context/ModalContext';
+import { API_BASE_URL } from '../../../utils/api';
 
 function TeamDetailsContent() {
     const searchParams = useSearchParams();
@@ -129,12 +130,12 @@ function TeamDetailsContent() {
         }
     };
 
-    const handleEditTeam = async (name: string) => {
+    const handleEditTeam = async (name: string, logoUrl?: string) => {
         try {
             const res = await authenticatedFetch(`/api/teams/${id}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name })
+                body: JSON.stringify({ name, logoUrl })
             });
             if (res.ok) {
                 fetchTeam();
@@ -223,7 +224,21 @@ function TeamDetailsContent() {
                 <div className="container-fluid">
                     <div className="row mb-2">
                         <div className="col-sm-6">
-                            <h1>{team.name}</h1>
+                            <div className="d-flex align-items-center">
+                                {team.logoUrl ? (
+                                    <img
+                                        src={team.logoUrl.startsWith('http') ? team.logoUrl : `${API_BASE_URL}${team.logoUrl}`}
+                                        alt={team.name}
+                                        className="mr-3"
+                                        style={{ width: '60px', height: '60px', objectFit: 'cover', borderRadius: '50%', border: '3px solid #fff', boxShadow: '0 2px 4px rgba(0,0,0,0.1)' }}
+                                    />
+                                ) : (
+                                    <div className="mr-3 bg-secondary d-flex align-items-center justify-content-center" style={{ width: '60px', height: '60px', borderRadius: '50%' }}>
+                                        <i className="fas fa-users fa-2x"></i>
+                                    </div>
+                                )}
+                                <h1 className="m-0">{team.name}</h1>
+                            </div>
                         </div>
                         <div className="col-sm-6">
                             {isAdmin && (
@@ -378,6 +393,7 @@ function TeamDetailsContent() {
             {showEditModal && (
                 <EditTeamModal
                     teamName={team.name}
+                    teamLogo={team.logoUrl}
                     onClose={() => setShowEditModal(false)}
                     onSubmit={handleEditTeam}
                 />

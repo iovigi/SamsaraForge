@@ -28,7 +28,11 @@ const TeamSchema = new mongoose.Schema({
                 default: Date.now
             }
         }
-    ]
+    ],
+    logoUrl: {
+        type: String,
+        default: ''
+    }
 }, { timestamps: true });
 
 export default mongoose.models.Team || mongoose.model('Team', TeamSchema);

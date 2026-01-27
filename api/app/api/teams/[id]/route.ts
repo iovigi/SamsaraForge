@@ -54,7 +54,8 @@ export async function PUT(req: NextRequest, props: { params: Promise<{ id: strin
             return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
         }
 
-        const { name } = await req.json();
+
+        const { name, logoUrl } = await req.json();
         const team = await Team.findById(params.id);
 
         if (!team) {
@@ -68,6 +69,7 @@ export async function PUT(req: NextRequest, props: { params: Promise<{ id: strin
         }
 
         team.name = name || team.name;
+        if (logoUrl !== undefined) team.logoUrl = logoUrl;
         await team.save();
 
         return NextResponse.json({ team }, { status: 200 });

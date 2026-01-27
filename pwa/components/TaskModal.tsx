@@ -512,33 +512,40 @@ export default function TaskModal({ isOpen, onClose, task, onSave, onUpdate }: T
                             {task && task._id && (
                                 <div className="mt-4">
                                     <h5>{t('dashboard.habitHistory')}</h5>
-                                    <div className="d-flex justify-content-center">
-                                        <ActivityCalendar
-                                            data={historyData}
-                                            labels={{
-                                                legend: {
-                                                    less: t('dashboard.heatmap.less'),
-                                                    more: t('dashboard.heatmap.more')
-                                                },
-                                                months: [
-                                                    t('common.months.short.jan'), t('common.months.short.feb'), t('common.months.short.mar'),
-                                                    t('common.months.short.apr'), t('common.months.short.may'), t('common.months.short.jun'),
-                                                    t('common.months.short.jul'), t('common.months.short.aug'), t('common.months.short.sep'),
-                                                    t('common.months.short.oct'), t('common.months.short.nov'), t('common.months.short.dec')
-                                                ],
-                                                weekdays: [
-                                                    t('kanban.days.sun'), t('kanban.days.mon'), t('kanban.days.tue'), t('kanban.days.wed'),
-                                                    t('kanban.days.thu'), t('kanban.days.fri'), t('kanban.days.sat')
-                                                ],
-                                                totalCount: t('kanban.history.totalCount')
-                                            }}
-                                            colorScheme={isDarkMode ? 'dark' : 'light'}
-                                            theme={{
-                                                light: ['#EBEDF0', '#9BE9A8', '#40C463', '#30A14E', '#216E39'],
-                                                dark: ['#161B22', '#0E4429', '#006D32', '#26A641', '#39D353'],
-                                            }}
-                                            maxLevel={4}
-                                        />
+                                    <div className="d-flex justify-content-center w-100">
+                                        {historyData.length > 0 ? (
+                                            <ActivityCalendar
+                                                data={historyData}
+                                                labels={{
+                                                    legend: {
+                                                        less: t('dashboard.heatmap.less'),
+                                                        more: t('dashboard.heatmap.more')
+                                                    },
+                                                    months: [
+                                                        t('common.months.short.jan'), t('common.months.short.feb'), t('common.months.short.mar'),
+                                                        t('common.months.short.apr'), t('common.months.short.may'), t('common.months.short.jun'),
+                                                        t('common.months.short.jul'), t('common.months.short.aug'), t('common.months.short.sep'),
+                                                        t('common.months.short.oct'), t('common.months.short.nov'), t('common.months.short.dec')
+                                                    ],
+                                                    weekdays: [
+                                                        t('kanban.days.sun'), t('kanban.days.mon'), t('kanban.days.tue'), t('kanban.days.wed'),
+                                                        t('kanban.days.thu'), t('kanban.days.fri'), t('kanban.days.sat')
+                                                    ],
+                                                    totalCount: t('kanban.history.totalCount')
+                                                }}
+                                                colorScheme={isDarkMode ? 'dark' : 'light'}
+                                                theme={{
+                                                    light: ['#EBEDF0', '#9BE9A8', '#40C463', '#30A14E', '#216E39'],
+                                                    dark: ['#161B22', '#0E4429', '#006D32', '#26A641', '#39D353'],
+                                                }}
+                                                maxLevel={4}
+                                            />
+                                        ) : (
+                                            <div className="text-center text-muted p-4 w-100 border rounded" style={{ backgroundColor: 'rgba(0,0,0,0.02)' }}>
+                                                <i className="fas fa-calendar-times mb-2 d-block fa-2x opacity-50"></i>
+                                                {t('kanban.noHistory')}
+                                            </div>
+                                        )}
                                     </div>
                                 </div>
                             )}
